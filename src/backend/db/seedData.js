@@ -102,22 +102,93 @@ async function createTables() {
   }
 }
 
+async function createInitialUsers() {
+  console.log("Starting to create users...");
+  try {
+    const usersToCreate = [
+      { username: "albert", password: "bertie99" , firstName: "Albert", lastName: "bertie", address:"123 Elmer Lane", telephone: "555-555-5555", email: "user@123.com"},
+      { username: "sandra", password: "sandra123", firstName: "Sandra", lastName: "Parker", address:"123 Elmer Lane", telephone: "123-123-1234", email: ""},
+      { username: "glamgal", password: "glamgal123", firstName: "Glamgal", lastName: "Glamerous", address:"123 Elmer Lane", telephone: "", email: "Glamgal@123.com" },
+    ];
+    const users = await Promise.all(usersToCreate.map(createUser));
+
+    console.log("Users created:");
+    console.log(users);
+    console.log("Finished creating users!");
+  } catch (error) {
+    console.error("Error creating users!");
+    throw error;
+  }
+}
+
+async function createInitialProducts() {
+  console.log('Starting to create Products');
+  try {
+    const productsToCreate = [
+      {name: "glasses", description: "desc1", SKU: "001-001-001", category: "glasses", price: "4.99", photoURL: "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260"},
+
+      {name: "glasses1", description: "desc2", SKU: "002-002-002", category: "glasses", price: "2.99", photoURL: "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260"},
+
+      {name: "glasses2", description: "desc3", SKU: "003-003-003", category: "accessories", price: "5.99", photoURL: "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260"},
+
+      {name: "glasses3", description: "desc4", SKU: "004-004-004", category: "glasses", price: "7.99", photoURL: "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260"},
+           
+    ]
+    const products = await Promise.all(productsToCreate.map(createProducts));
+
+    console.log('Products Created');
+    console.log(products);
+    console.log('Finished creating products');
+  } catch (error) {
+    console.log('Error Creating Products'); 
+    throw error;
+  }
+    
+}
+
+async function createInitalOrderDetails() {
+  console.log('Starting to create order details');
+
+  
+  try {
+    const orderDetailsToCreate = [
+      {userId: "3", totalPrice: "5.99"},
+      {userId: "4", totalPrice: "20.99"},
+      {userId: "5", totalPrice: "3.99"},
+      {userId: "6", totalPrice: "0.99"},
+
+    ]
+    const orderDetails = await Promise.all(orderDetailsToCreate.map(createOrderDetails))
+    console.log("Order details created", orderDetails);
+  } catch (error) {
+    console.log('Error creating order details');
+    throw error;
+  } 
+}
+
+
 async function rebuildDB() {
   try {
     await dropTables();
     await createTables();
+    await createInitialUsers();
+    await createInitialProducts();
+    await createInitalOrderDetails();
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
   }
 }
 
+
+
 module.exports = {
   rebuildDB,
   dropTables,
   createTables,
+  createInitialUsers,
+  createInitialProducts,
+  createInitalOrderDetails,
 };
 
-// CHECK ORDER_DTAIL AND PRODUCTS-- does "usersId" need to be user_id and wehn we reference "sessionId and ProductId, does our reference look good??"
-//timeStamp????
-// DO ALL TABLES NEED TO BE PUT IN QUOTATIONS WHEN BEING REFERENCED
+// looking at fitness tracker for function createInitialRoutineActivities, how do we know what info to provide?
