@@ -12,8 +12,7 @@ export const productsInitState = {
 //cartInitState
 export const cartInitState = {
   cart: [],
-  itemCount: 0,
-  session: {},
+  itemCount: 0
 };
 
 //ordersInitState
@@ -58,16 +57,17 @@ export const productReducer = (draft, action) => {
   }
 };
 
+// Revisit: Add case for adjusting quantity of specific item(s) in cart
 export const cartReducer = (draft, action) => {
   const { type, payload } = action;
   switch (type) {
     case "add_item_to_cart":
       draft.cart.push(payload);
-      itemCount += payload.qty;
+      draft.itemCount += payload.qty;
       break;
     case "remove_item_from_cart":
-      draft.cart = draft.cart.filter((cartItem) => cartItem.id !== payload);
-      itemCount -= payload.qty;
+      draft.cart = draft.cart.filter((cartItem) => cartItem.id !== payload.id);
+      draft.itemCount -= payload.qty;
       break;
     default:
       throw new Error(`No case for type ${type} found in cartReducer.`);
