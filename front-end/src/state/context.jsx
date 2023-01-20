@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import {useImmerReducer} from "use-immer";
+import { useImmerReducer } from "use-immer";
 import { userInitState, userReducer, productsInitState, productReducer, cartInitState, cartReducer, ordersInitState, orderReducer } from "./reducers";
 
 const UserContext = createContext(userInitState)
@@ -63,6 +63,8 @@ export const ProductsProvider = ({children}) => {
         })
     }
 
+    // Revisit "edit product listing" functionality
+
     const addReview = (review, productId) => {
         dispatch({
             type: 'add_review',
@@ -73,11 +75,13 @@ export const ProductsProvider = ({children}) => {
         })
     }
 
-    const removeReview = (review, productId) => {
+    // Revisit "edit review" functionality
+
+    const removeReview = (reviewId, productId) => {
         dispatch({
             type: 'remove_review',
             payload: {
-                review: review,
+                reviewId: reviewId,
                 productId: productId
             }
         })
@@ -85,6 +89,7 @@ export const ProductsProvider = ({children}) => {
 
     const value = {
         products: state.products,
+        reviews: state.reviews,
         populateProducts,
         addProduct,
         removeProduct,
@@ -96,26 +101,90 @@ export const ProductsProvider = ({children}) => {
 
 export const UserProvider = ({children}) => {
     const [state, dispatch] = useImmerReducer(userReducer, userInitState)
-  
+
     const setUser = (user) => {
-      dispatch({
+        dispatch({
         type: 'set_user',
         payload: user
-      })
+        })
     }
-  
+
     const setToken = (token) => {
-      dispatch({
+        dispatch({
         type: 'set_token',
         payload: token
-      })
+        })
     }
-  
+
     const value = {
-      user: state.user,
-      token: state.token,
-      setUser,
-      setToken
+        user: state.user,
+        token: state.token,
+        setUser,
+        setToken
     }
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
-  }
+}
+
+// Revisit: Add case for adjusting quantity of specific item(s) in cart
+export const CartProvider = ({children}) => {
+    const [state, dispatch] = useImmerReducer(cartReducer, cartInitState)
+
+    const addItem = (cartItem) => {
+        dispatch({
+            type: 'add_item_to_cart',
+            payload: cartItem
+        })
+    }
+
+    const removeItem = (cartItemId, qty) => {
+        dispatch({
+            type: 'remove_item_from_cart',
+            payload: {
+                id: cartItemId,
+                qty: qty
+            }
+        })
+    }
+
+    const value = {
+        cart: state.cart,
+        itemCount: state.itemCount,
+        addItem,
+        removeItem
+    }
+    return <CartContext.Provider value={value}>{children}</CartContext.Provider>
+}
+
+export const OrderProvider = ({children}) => {
+    const [state, dispatch] = useImmerReducer(orderReducer, orderInitState)
+
+    const populateOrders = (orders) => {
+        dispatch({
+            type: 'populate_orders',
+            payload: orders
+        })
+    }
+
+    const placeOrder = (order) => {
+        dispatch({
+            type: 'place_order',
+            payload: order
+        })
+    }
+
+    const populateOrderLines = (lines) => {
+        dispatch({
+            type: 'populate_order_lines',
+            payload: lines
+        })
+    }
+
+    const value = {
+        orders: state.orders,
+        lines: state.lines,
+        populateOrders,
+        placeOrder,
+        populateOrderLines
+    }
+    return <OrderContext.Provider value={value}>{children}</OrderContext.Provider>
+}
