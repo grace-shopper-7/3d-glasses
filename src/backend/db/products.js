@@ -24,7 +24,8 @@ async function createProducts({
     // console.log("This is a user ------------>", user);
     return products;
   } catch (error) {
-    throw error;
+    console.error("Error in createProducts", error);
+    throw error
   }
 }
 
@@ -42,7 +43,8 @@ async function getProductById(id) {
     );
     return product;
   } catch (error) {
-    throw error;
+    console.error("Error in getProductById", error);
+    throw error
   }
 }
 
@@ -56,7 +58,8 @@ async function getProductsWithoutReviews() {
         `);
     return products;
   } catch (error) {
-    throw error;
+    console.error("Error in getRewiewsWithoutReviews", error);
+    throw error
   }
 }
 
@@ -68,13 +71,63 @@ async function getAllProducts() {
         JOIN reviews ON products.id = reviews."productId";
         `);
   } catch (error) {
-    throw error;
+    console.error("Error in getAllProducts", error);
+    throw error
   }
 }
+
+async function getProductsByPrice(price) {
+  try {
+    const { rows: products } = await client.query(`
+        SELECT *
+        From products
+        WHERE price = $1
+        `, [price]);
+    return products
+  } catch (error) {
+    console.error("Error in getProductsByPrice", error);
+    throw error
+  }
+}
+
+async function getProductsByCategory(category) {
+  try {
+    const { rows: products } = await client.query(`
+        SELECT *
+        From products
+        WHERE category = $1
+        `, [category]);
+    return products
+  } catch (error) {
+    console.error("Error in getProductsByCategory", error);
+    throw error
+  }
+}
+
+async function deleteProduct(id) {
+  try {
+    const {
+      rows: [deleted],
+    } = await client.query(
+      `DELETE FROM product
+    WHERE id= $1
+    RETURNING *;`,
+      [id]
+    );
+    return deleted;
+  } catch (error) {
+    console.error("Error in deleteProducts", error);
+    throw error
+  }
+}
+
 
 module.exports = {
   createProducts,
   getProductById,
   getProductsWithoutReviews,
   getAllProducts,
+  getProductsByPrice,
+  getProductsByCategory, 
+  deleteProduct,
 };
