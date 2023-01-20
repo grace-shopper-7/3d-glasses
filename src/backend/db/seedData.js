@@ -44,15 +44,14 @@ async function createTables() {
         description VARCHAR(255) NOT NULL,
         SKU VARCHAR(255) NOT NULL,
         category VARCHAR(255) NOT NULL,
-        price DECIMAL,
+        price NUMERIC (5, 2),
         "photoURL" VARCHAR(255) NOT NULL
     );
 
     CREATE TABLE order_details (
         id SERIAL PRIMARY KEY,
         "userId" REFERENCES users,
-        totalPrice DECIMAL,
-        "paymentId" REFERENCES payment_details,
+        totalPrice NUMERIC (5, 2),
         "createdAt" TIMESTAMP,
         "modifiedAt" TIMESTAMP
     );
@@ -74,7 +73,7 @@ async function createTables() {
     CREATE TABLE session (
         id SERIAL PRIMARY KEY,
         "userId" REFERENCES users,
-        total DECIMAL
+        total NUMERIC (5, 2)
     );
 
     CREATE TABLE cart_items (
@@ -106,9 +105,33 @@ async function createInitialUsers() {
   console.log("Starting to create users...");
   try {
     const usersToCreate = [
-      { username: "albert", password: "bertie99" , firstName: "Albert", lastName: "bertie", address:"123 Elmer Lane", telephone: "555-555-5555", email: "user@123.com"},
-      { username: "sandra", password: "sandra123", firstName: "Sandra", lastName: "Parker", address:"123 Elmer Lane", telephone: "123-123-1234", email: ""},
-      { username: "glamgal", password: "glamgal123", firstName: "Glamgal", lastName: "Glamerous", address:"123 Elmer Lane", telephone: "", email: "Glamgal@123.com" },
+      {
+        username: "albert",
+        password: "bertie99",
+        firstName: "Albert",
+        lastName: "bertie",
+        address: "123 Elmer Lane",
+        telephone: "555-555-5555",
+        email: "user@123.com",
+      },
+      {
+        username: "sandra",
+        password: "sandra123",
+        firstName: "Sandra",
+        lastName: "Parker",
+        address: "123 Elmer Lane",
+        telephone: "123-123-1234",
+        email: "",
+      },
+      {
+        username: "glamgal",
+        password: "glamgal123",
+        firstName: "Glamgal",
+        lastName: "Glamerous",
+        address: "123 Elmer Lane",
+        telephone: "",
+        email: "Glamgal@123.com",
+      },
     ];
     const users = await Promise.all(usersToCreate.map(createUser));
 
@@ -122,50 +145,80 @@ async function createInitialUsers() {
 }
 
 async function createInitialProducts() {
-  console.log('Starting to create Products');
+  console.log("Starting to create Products");
   try {
     const productsToCreate = [
-      {name: "glasses", description: "desc1", SKU: "001-001-001", category: "glasses", price: "4.99", photoURL: "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260"},
+      {
+        name: "glasses",
+        description: "desc1",
+        SKU: "001-001-001",
+        category: "glasses",
+        price: "4.99",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
 
-      {name: "glasses1", description: "desc2", SKU: "002-002-002", category: "glasses", price: "2.99", photoURL: "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260"},
+      {
+        name: "glasses1",
+        description: "desc2",
+        SKU: "002-002-002",
+        category: "glasses",
+        price: "2.99",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
 
-      {name: "glasses2", description: "desc3", SKU: "003-003-003", category: "accessories", price: "5.99", photoURL: "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260"},
+      {
+        name: "glasses2",
+        description: "desc3",
+        SKU: "003-003-003",
+        category: "accessories",
+        price: "5.99",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
 
-      {name: "glasses3", description: "desc4", SKU: "004-004-004", category: "glasses", price: "7.99", photoURL: "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260"},
-           
-    ]
+      {
+        name: "glasses3",
+        description: "desc4",
+        SKU: "004-004-004",
+        category: "glasses",
+        price: "7.99",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
+    ];
     const products = await Promise.all(productsToCreate.map(createProducts));
 
-    console.log('Products Created');
+    console.log("Products Created");
     console.log(products);
-    console.log('Finished creating products');
+    console.log("Finished creating products");
   } catch (error) {
-    console.log('Error Creating Products'); 
+    console.log("Error Creating Products");
     throw error;
   }
-    
 }
 
 async function createInitalOrderDetails() {
-  console.log('Starting to create order details');
+  console.log("Starting to create order details");
+  const [albert, sandra, glamgal] = await getAllUsers();
+  const []
 
-  
   try {
     const orderDetailsToCreate = [
-      {userId: "3", totalPrice: "5.99"},
-      {userId: "4", totalPrice: "20.99"},
-      {userId: "5", totalPrice: "3.99"},
-      {userId: "6", totalPrice: "0.99"},
-
-    ]
-    const orderDetails = await Promise.all(orderDetailsToCreate.map(createOrderDetails))
+      { userId: albert.id, totalPrice: "5.99", createdAt:  },
+      { userId: sandra.id, totalPrice: "20.99" },
+      { userId: sandra.id, totalPrice: "3.99" },
+    ];
+    const orderDetails = await Promise.all(
+      orderDetailsToCreate.map(createOrderDetails)
+    );
     console.log("Order details created", orderDetails);
   } catch (error) {
-    console.log('Error creating order details');
+    console.log("Error creating order details");
     throw error;
-  } 
+  }
 }
-
 
 async function rebuildDB() {
   try {
@@ -179,8 +232,6 @@ async function rebuildDB() {
     throw error;
   }
 }
-
-
 
 module.exports = {
   rebuildDB,
