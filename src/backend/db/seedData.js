@@ -1,5 +1,7 @@
 const client = require("./client");
+const { createOrderDetails } = require("./orders");
 const { createProducts } = require("./products");
+const { createUser } = require("./users");
 
 async function dropTables() {
   try {
@@ -53,8 +55,9 @@ async function createTables() {
         id SERIAL PRIMARY KEY,
         "userId" REFERENCES users,
         totalPrice NUMERIC (6, 2),
-        "createdAt" TIMESTAMP,
-        "modifiedAt" TIMESTAMP
+        "createdAt" DATETIME DEFAULT CURRENT_TIMESTAMP,
+        "modifiedAt" DATETIME DEFAULT CURRENT_TIMESTAMP
+          ON UPDATE CURRENT_TIMESTAMP
     );
 
     CREATE TABLE payment_details (
@@ -224,6 +227,11 @@ async function createInitalOrderDetails() {
     console.log("Error creating order details");
     throw error;
   }
+}
+
+async function createInitialOrderLines() {
+  console.log("Starting to create order lines.");
+  const [albertOrder1, sandraOrder1, sandraOrder2, glamgalOrder1] = await getAllOrders();
 }
 
 async function rebuildDB() {
