@@ -1,4 +1,7 @@
 const client = require("./client");
+const { createOrderDetails } = require("./orders");
+const { createProducts } = require("./products");
+const { createUser } = require("./users");
 
 async function dropTables() {
   try {
@@ -13,7 +16,7 @@ async function dropTables() {
     DROP TABLE IF EXISTS order_details;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS users;
-        `);
+        `)
     console.log("Finished dropping tables!");
   } catch (error) {
     console.error("Error dropping tables!");
@@ -44,16 +47,17 @@ async function createTables() {
         description VARCHAR(255) NOT NULL,
         SKU VARCHAR(255) NOT NULL,
         category VARCHAR(255) NOT NULL,
-        price NUMERIC (5, 2),
+        price NUMERIC (6, 2),
         "photoURL" VARCHAR(255) NOT NULL
     );
 
     CREATE TABLE order_details (
         id SERIAL PRIMARY KEY,
         "userId" REFERENCES users,
-        totalPrice NUMERIC (5, 2),
-        "createdAt" TIMESTAMP,
-        "modifiedAt" TIMESTAMP
+        totalPrice NUMERIC (6, 2),
+        "createdAt" DATETIME DEFAULT CURRENT_TIMESTAMP,
+        "modifiedAt" DATETIME DEFAULT CURRENT_TIMESTAMP
+          ON UPDATE CURRENT_TIMESTAMP
     );
 
     CREATE TABLE payment_details (
@@ -67,20 +71,23 @@ async function createTables() {
     CREATE TABLE order_lines (
         id SERIAL PRIMARY KEY,
         "orderId" INTEGER REFERENCES order_details,
-        "productId" INTEGER REFERENCES products
+        "productId" INTEGER REFERENCES products,
+        quantity INTEGER,
+        UNIQUE ("orderId", "productId")
     );
 
     CREATE TABLE session (
         id SERIAL PRIMARY KEY,
         "userId" REFERENCES users,
-        total NUMERIC (5, 2)
+        total NUMERIC (6, 2)
     );
 
     CREATE TABLE cart_items (
         id SERIAL PRIMARY KEY,
         "sessionId" INTEGER REFERENCES session,
         "productId" INTEGER REFERENCES products,
-        quantity INTEGER
+        quantity INTEGER,
+        UNIQUE ("sessionId", "productId")
     );
     
     CREATE TABLE reviews (
@@ -88,7 +95,8 @@ async function createTables() {
         "productId" INTEGER REFERENCES products,
         "userId" INTEGER REFERENCES users,
         title VARCHAR(255) NOT NULL,
-        content VARCHAR(255) NOT NULL
+        content VARCHAR(255) NOT NULL,
+        UNIQUE ("productId", "userId")
     );
     
     `
@@ -202,14 +210,15 @@ async function createInitialProducts() {
 async function createInitalOrderDetails() {
   console.log("Starting to create order details");
   const [albert, sandra, glamgal] = await getAllUsers();
-  const []
 
   try {
     const orderDetailsToCreate = [
-      { userId: albert.id, totalPrice: "5.99", createdAt:  },
+      { userId: albert.id, totalPrice: "5.99"},
       { userId: sandra.id, totalPrice: "20.99" },
       { userId: sandra.id, totalPrice: "3.99" },
+      { userId: glamgal.id, totalPrice: "3.99" }
     ];
+    // Revisit: add createdAt/modifiedAt timestamps to above orderDetails
     const orderDetails = await Promise.all(
       orderDetailsToCreate.map(createOrderDetails)
     );
@@ -218,6 +227,11 @@ async function createInitalOrderDetails() {
     console.log("Error creating order details");
     throw error;
   }
+}
+
+async function createInitialOrderLines() {
+  console.log("Starting to create order lines.");
+  const [albertOrder1, sandraOrder1, sandraOrder2, glamgalOrder1] = await getAllOrders();
 }
 
 async function rebuildDB() {
