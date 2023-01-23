@@ -1,12 +1,12 @@
 const client = require("./client");
 
-async function createCartItems( sessionId, productId, quantity) {
+async function createCartItems(sessionId, productId, quantity) {
   try {
     const {
       rows: [cartItems],
     } = await client.query(
       `
-        INSERT INTO reviews ("sessionId", "productId", quantity)
+        INSERT INTO cartitems ("sessionId", "productId", quantity)
         VALUES ($1, $2, $3)
         RETURNING *;
         `,
@@ -15,10 +15,9 @@ async function createCartItems( sessionId, productId, quantity) {
     return cartItems;
   } catch (error) {
     console.error("Error in createCartItems", error);
-    throw error
+    throw error;
   }
 }
-
 
 async function getAllCartItems() {
   try {
@@ -27,10 +26,10 @@ async function getAllCartItems() {
         From cartItems
         
         `);
-    return cartItems    
+    return cartItems;
   } catch (error) {
     console.error("Error in getAllCartItems", error);
-    throw error
+    throw error;
   }
 }
 
@@ -55,7 +54,7 @@ async function updateCartItemsQuantity({ id, ...fields }) {
     }
   } catch (error) {
     console.error("Error in updateCartItemsQuantity", error);
-    throw error
+    throw error;
   }
 }
 
@@ -72,7 +71,7 @@ async function deleteCartItem(id) {
     return deleted;
   } catch (error) {
     console.error("Error in delete cart item", error);
-    throw error
+    throw error;
   }
 }
 
@@ -80,5 +79,5 @@ module.exports = {
   createCartItems,
   getAllCartItems,
   updateCartItemsQuantity,
-  deleteCartItem
-}
+  deleteCartItem,
+};
