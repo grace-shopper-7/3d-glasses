@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
 import './App.css';
-// import Test from '../front-end/src/components/test'
-
-import Navbar from '../front-end/src/pages/Navbar';
+import { fetchMe } from '../front-end/src/api/auth';
 import Home from '../front-end/src/pages/Homepage';
-
+import Header from '../front-end/src/components/Header';
 function App() {
   const [token, setToken] = useState(null);
-
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    if(!user) {
+      const getMe = async () => {
+        const response = await fetchMe();
+        const user = await response;
+        setUser(user)
+        console.log("USER HERE: ", user)
+      }
+      getMe()
+  }
+}, [user])
   return (
     <div className="App">
-      <header>
-        <h1 className="LOGO">3D Glasses</h1>
-        <Navbar token={ token }/>
-      </header>
+      <Header token={token} setToken={setToken} user={user} setUser={setUser}/>
       <div className='mainBody'>
         <Routes>
           <Route path='/' 
