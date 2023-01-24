@@ -28,6 +28,7 @@ function App() {
   return (
     <div className="App">
       <Header token={token} setToken={setToken} user={user} setUser={setUser}/>
+      <Navbar token={token} />
       <div className='mainBody'>
         <Routes>
           <Route path='/' 
