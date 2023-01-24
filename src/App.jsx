@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
 import './App.css';
-import { fetchMe } from './front-end/src/api/auth';
-import Home from './front-end/src/pages/Homepage';
-import Header from './front-end/src/components/Header';
-import AuthPage from './front-end/src/pages/AuthPage';
-import Profile from './front-end/src/pages/Profile';
-import OrderHistory from './front-end/src/pages/OrderHistory';
-import Products from './front-end/src/pages/Products';
-import ReviewOrder from './front-end/src/pages/ReviewOrder';
-import Checkout from './front-end/src/pages/Checkout';
-import OrderComplete from './front-end/src/pages/OrderComplete';
+import { fetchMe } from './front-end/api/auth';
+import Home from './front-end/pages/Homepage';
+import Header from './front-end/components/Header';
+import AuthPage from './front-end/pages/AuthPage';
+import Profile from './front-end/pages/Profile';
+import OrderHistory from './front-end/pages/OrderHistory';
+import Products from './front-end/pages/Products';
+import ReviewOrder from './front-end/pages/ReviewOrder';
+import Checkout from './front-end/pages/Checkout';
+import OrderComplete from './front-end/pages/OrderComplete';
+import Navbar from './front-end/components/Navbar';
+
 function App() {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState({});
