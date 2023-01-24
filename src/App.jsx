@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
 import './App.css';
-import { fetchMe } from '../front-end/src/api/auth';
-import Home from '../front-end/src/pages/Homepage';
-import Header from '../front-end/src/components/Header';
+import { fetchMe } from './front-end/api/auth';
+import Home from './front-end/pages/Homepage';
+import Header from './front-end/components/Header';
+import Navbar from './front-end/components/Navbar';
+
 function App() {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState({});
@@ -21,6 +23,7 @@ function App() {
   return (
     <div className="App">
       <Header token={token} setToken={setToken} user={user} setUser={setUser}/>
+      <Navbar token={token} />
       <div className='mainBody'>
         <Routes>
           <Route path='/' 

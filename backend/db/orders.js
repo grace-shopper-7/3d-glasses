@@ -23,15 +23,50 @@ async function createOrderDetails({
   }
 }
 
-// async function getAllOrders() {
-//     try {
-//         const {rows: []}
-//     } catch (error) {
-//         console.error("Error in getAllOrders:", error);
-//         throw error;
-//     }
-// }
+async function getAllOrders() {
+    try {
+        const { rows: [ orders ] } = await client.query(`
+          SELECT *
+          FROM order_details;
+        `);
+        return orders;
+    } catch (error) {
+        console.error("Error in getAllOrders:", error);
+        throw error;
+    }
+}
+
+async function getOrdersByUserId(userId) {
+  try {
+      const { rows: [ orders ] } = await client.query(`
+        SELECT *
+        FROM order_details
+        WHERE "userId" = $1;
+      `, [userId]);
+      return orders;
+  } catch (error) {
+      console.error("Error in getOrdersByUserId:", error);
+      throw error;
+  }
+}
+
+async function getOrdersById(orderId) {
+  try {
+      const { rows: [ orders ] } = await client.query(`
+        SELECT *
+        FROM order_details
+        WHERE id = $1;
+      `, [orderId]);
+      return orders;
+  } catch (error) {
+      console.error("Error in getOrdersByUserId:", error);
+      throw error;
+  }
+}
 
 module.exports = {
     createOrderDetails,
+    getAllOrders,
+    getOrdersByUserId,
+    getOrdersById
 }

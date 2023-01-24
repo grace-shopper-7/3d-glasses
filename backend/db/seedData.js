@@ -1,7 +1,13 @@
 const client = require("./client");
 const { createOrderDetails } = require("./orders");
 const { createProducts } = require("./products");
-const { createUser } = require("./users");
+const { 
+  createUser,
+  getUser,
+  getUserById,
+  getUserByUsername,
+  getAllUsers, 
+} = require("./users");
 
 async function dropTables() {
   try {
@@ -16,7 +22,7 @@ async function dropTables() {
     DROP TABLE IF EXISTS order_details;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS users;
-        `)
+        `);
     console.log("Finished dropping tables!");
   } catch (error) {
     console.error("Error dropping tables!");
@@ -29,19 +35,19 @@ async function createTables() {
     console.log("Starting to build tables...");
 
     await client.query(
-      `
-    CREATE TABLE users (
-        id SERIAL PRIMARY KEY,
-        username VARCHAR(255) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        "firstName" VARCHAR(255) NOT NULL,
-        "lastName" VARCHAR(255) NOT NULL,
-        address VARCHAR(255) NOT NULL,
-        telephone INTEGER,
-        email VARCHAR(255) UNIQUE
-    );
+    `
+      CREATE TABLE users (
+          id SERIAL PRIMARY KEY,
+          username VARCHAR(255) UNIQUE NOT NULL,
+          password VARCHAR(255) NOT NULL,
+          "firstName" VARCHAR(255) NOT NULL,
+          "lastName" VARCHAR(255) NOT NULL,
+          address VARCHAR(255) NOT NULL,
+          telephone TEXT,
+          email VARCHAR(255) UNIQUE
+      );
 
-    CREATE TABLE products (
+      CREATE TABLE products (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) UNIQUE NOT NULL,
         description VARCHAR(255) NOT NULL,
@@ -49,56 +55,53 @@ async function createTables() {
         category VARCHAR(255) NOT NULL,
         price NUMERIC (6, 2),
         "photoURL" VARCHAR(255) NOT NULL
-    );
+      );
 
-    CREATE TABLE order_details (
+      CREATE TABLE order_details (
         id SERIAL PRIMARY KEY,
-        "userId" REFERENCES users,
-        totalPrice NUMERIC (6, 2),
-        "createdAt" DATETIME DEFAULT CURRENT_TIMESTAMP,
-        "modifiedAt" DATETIME DEFAULT CURRENT_TIMESTAMP
-          ON UPDATE CURRENT_TIMESTAMP
-    );
+        "userId" INTEGER REFERENCES users(id),
+        "totalPrice" NUMERIC (6, 2),
+        "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
 
-    CREATE TABLE payment_details (
-        id SERIAL PRIMARY KEY,
-        "orderId" REFERENCES order_details,
-        amount INTEGER,
-        provider VARCHAR(255) NOT NULL,
-        status VARCHAR(255) NOT NULL
-    );
+      CREATE TABLE payment_details (
+          id SERIAL PRIMARY KEY,
+          "orderId" INTEGER REFERENCES order_details(id),
+          amount INTEGER,
+          provider VARCHAR(255) NOT NULL,
+          status VARCHAR(255) NOT NULL
+      );
 
-    CREATE TABLE order_lines (
-        id SERIAL PRIMARY KEY,
-        "orderId" INTEGER REFERENCES order_details,
-        "productId" INTEGER REFERENCES products,
-        quantity INTEGER,
-        UNIQUE ("orderId", "productId")
-    );
+      CREATE TABLE order_lines (
+          id SERIAL PRIMARY KEY,
+          "orderId" INTEGER REFERENCES order_details(id),
+          "productId" INTEGER REFERENCES products(id),
+          quantity INTEGER,
+          UNIQUE ("orderId", "productId")
+      );
 
-    CREATE TABLE session (
-        id SERIAL PRIMARY KEY,
-        "userId" REFERENCES users,
-        total NUMERIC (6, 2)
-    );
+      CREATE TABLE session (
+          id SERIAL PRIMARY KEY,
+          "userId" INTEGER REFERENCES users(id),
+          total NUMERIC (6, 2)
+      );
 
-    CREATE TABLE cart_items (
-        id SERIAL PRIMARY KEY,
-        "sessionId" INTEGER REFERENCES session,
-        "productId" INTEGER REFERENCES products,
-        quantity INTEGER,
-        UNIQUE ("sessionId", "productId")
-    );
+      CREATE TABLE cart_items (
+          id SERIAL PRIMARY KEY,
+          "sessionId" INTEGER REFERENCES session(id),
+          "productId" INTEGER REFERENCES products(id),
+          quantity INTEGER,
+          UNIQUE ("sessionId", "productId")
+      );
     
-    CREATE TABLE reviews (
-        id SERIAL PRIMARY KEY,
-        "productId" INTEGER REFERENCES products,
-        "userId" INTEGER REFERENCES users,
-        title VARCHAR(255) NOT NULL,
-        content VARCHAR(255) NOT NULL,
-        UNIQUE ("productId", "userId")
-    );
-    
+      CREATE TABLE reviews (
+          id SERIAL PRIMARY KEY,
+          "productId" INTEGER REFERENCES products(id),
+          "userId" INTEGER REFERENCES users(id),
+          title VARCHAR(255) NOT NULL,
+          content VARCHAR(255) NOT NULL,
+          UNIQUE ("productId", "userId")
+      );
     `
     );
 
@@ -218,7 +221,7 @@ async function createInitalOrderDetails() {
       { userId: sandra.id, totalPrice: "3.99" },
       { userId: glamgal.id, totalPrice: "3.99" }
     ];
-    // Revisit: add createdAt/modifiedAt timestamps to above orderDetails
+    // Revisit: add modifiedAt timestamps to above orderDetails
     const orderDetails = await Promise.all(
       orderDetailsToCreate.map(createOrderDetails)
     );
