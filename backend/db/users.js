@@ -2,6 +2,7 @@ const client = require("./client");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+// POST Functions
 async function createUser({
   username,
   password,
@@ -31,6 +32,7 @@ async function createUser({
   }
 }
 
+// GET Functions
 async function getUser({ username, password }) {
   const user = await getUserByUsername(username);
   const hashedPassword = user.password;
@@ -94,10 +96,42 @@ async function getAllUsers() {
   }
 }
 
+// PATCH Functions
+async function editUser({ id, ...fields }) {
+  const keys = Object.keys(fields);
+
+  const setString = keys.map(
+    (key, index) => `"${key}"=$${index + 1}`
+  ).join(', ');
+
+  try {
+    if (setString.length > 0) {
+      const { rows: [ updatedUser ] } = await client.query(`
+        UPDATE users
+        SET ${setString}
+        WHERE id=${id}
+        RETURNING *;
+      `, Object.values(fields));
+
+      delete updatedUser.password;
+
+      return updatedUser;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error in editUser:", error);
+    throw error;
+  }
+}
+
+// DELETE Functions
+
 module.exports = {
   createUser,
   getUser,
   getUserById,
   getUserByUsername,
   getAllUsers,
+  editUser,
 };
