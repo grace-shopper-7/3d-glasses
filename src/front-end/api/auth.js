@@ -13,6 +13,7 @@ export const registerUser = async (username, password) => {
       }),
     });
     const result = await response.json();
+    console.log("THIS IS THE RESULT IN REGISTERUSER", result);
     return result;
   } catch (err) {
     console.error("There was a problem registering: ", err);
