@@ -50,13 +50,12 @@ async function getProductById(id) {
 
 async function getProductsWithoutReviews() {
   try {
-    const {
-      rows: [products],
-    } = await client.query(`
-        SEELCT * 
-        FROM products;
-        `);
-    return products;
+    const { rows } = await client.query(`
+      SELECT * 
+      FROM products;
+    `);
+    
+    return rows;
   } catch (error) {
     console.error("Error in getRewiewsWithoutReviews", error);
     throw error

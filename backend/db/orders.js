@@ -25,11 +25,11 @@ async function createOrderDetails({
 
 async function getAllOrders() {
     try {
-        const { rows: [ orders ] } = await client.query(`
+        const { rows } = await client.query(`
           SELECT *
           FROM order_details;
         `);
-        return orders;
+        return rows;
     } catch (error) {
         console.error("Error in getAllOrders:", error);
         throw error;

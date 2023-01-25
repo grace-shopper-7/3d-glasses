@@ -1,12 +1,14 @@
 const client = require("./client");
-const { createOrderDetails } = require("./orders");
+const { createOrderLine } = require("./orderItems");
+const { createOrderDetails, getAllOrders } = require("./orders");
 const { createProducts } = require("./products");
 const { 
   createUser,
   getUser,
   getUserById,
   getUserByUsername,
-  getAllUsers, 
+  getAllUsers,
+  editUser, 
 } = require("./users");
 
 async function dropTables() {
@@ -155,6 +157,52 @@ async function createInitialUsers() {
   }
 }
 
+async function editInitialUsers() {
+  console.log("Starting to edit users...");
+  try {
+    const usersToEdit = [
+      {
+        id: 1,
+        username: "albert1",
+        password: "bertie99",
+        firstName: "Alberto",
+        lastName: "Bernie",
+        address: "123 Elmer Fudd Lane",
+        telephone: "565-656-5656",
+        email: "user@12334.com",
+      },
+      {
+        id: 2,
+        username: "sandra2",
+        password: "sandra123",
+        firstName: "Sandran",
+        lastName: "Parkery",
+        address: "123 Elmer Lane",
+        telephone: "123-123-1234",
+        email: "somethingsomething@hotmail.com",
+      },
+      {
+        id: 3,
+        username: "glamgal3",
+        password: "glamgal123",
+        firstName: "Glamgal",
+        lastName: "Glamerous",
+        address: "123 Elmer Lane",
+        telephone: "867-5309",
+        email: "Glamgal@123.com",
+      },
+    ];
+    const users = await Promise.all(usersToEdit.map(editUser));
+
+    console.log("Users edited:");
+    console.log(users);
+    console.log("Finished editing users!");
+  } catch (error) {
+    console.error("Error editing users!");
+    throw error;
+  }
+}
+
 async function createInitialProducts() {
   console.log("Starting to create Products");
   try {
@@ -234,7 +282,60 @@ async function createInitalOrderDetails() {
 
 async function createInitialOrderLines() {
   console.log("Starting to create order lines.");
-  const [albertOrder1, sandraOrder1, sandraOrder2, glamgalOrder1] = await getAllOrders();
+  const [order1, order2, order3, order4] = await getAllOrders();
+
+  try {
+    const orderLinesToCreate = [
+      {
+        orderId: order1.id,
+        productId: 4,
+        quantity: 3
+      },
+      {
+        orderId: order1.id,
+        productId: 2,
+        quantity: 1
+      },
+      {
+        orderId: order2.id,
+        productId: 1,
+        quantity: 2
+      },
+      {
+        orderId: order2.id,
+        productId: 4,
+        quantity: 3
+      },
+      {
+        orderId: order3.id,
+        productId: 1,
+        quantity: 3
+      },
+      {
+        orderId: order3.id,
+        productId: 2,
+        quantity: 3
+      },
+      {
+        orderId: order4.id,
+        productId: 3,
+        quantity: 1
+      },
+      {
+        orderId: order4.id,
+        productId: 4,
+        quantity: 2
+      },
+    ];
+    const productLines = await Promise.all(orderLinesToCreate.map(createOrderLine));
+
+    console.log("Orders with lines created:");
+    console.log(productLines);
+    console.log("Finished creating order lines!");
+  } catch (error) {
+    console.error("Error creating order lines!");
+    throw error;
+  }
 }
 
 async function rebuildDB() {
@@ -242,8 +343,10 @@ async function rebuildDB() {
     await dropTables();
     await createTables();
     await createInitialUsers();
+    // await editInitialUsers();
     await createInitialProducts();
     await createInitalOrderDetails();
+    await createInitialOrderLines();
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
