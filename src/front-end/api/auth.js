@@ -13,6 +13,7 @@ export const registerUser = async (username, password) => {
       }),
     });
     const result = await response.json();
+    console.log("THIS IS THE RESULT IN REGISTERUSER", result);
     return result;
   } catch (err) {
     console.error("There was a problem registering: ", err);
@@ -20,7 +21,7 @@ export const registerUser = async (username, password) => {
   }
 };
 
-export const logInUser = async (username, password) => {
+export const logInUser = async (email, username, password) => {
   try {
     const response = await fetch(`${API_URL}/users/login`, {
       method: "POST",
@@ -28,6 +29,7 @@ export const logInUser = async (username, password) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        email,
         username,
         password,
       }),

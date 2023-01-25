@@ -47,6 +47,26 @@ export const fetchCartBySession = async (sessionId) => {
   }
 };
 
+export const fetchDummyCartBySession = async (sessionId) => {
+  const createCart = () => {
+    let cart = [
+      {
+        id: 5,
+        order_items: {
+          id: 1,
+          quantity: 2,
+          product_details: {
+            name: "Goofy Glasses",
+            price: "$10.99",
+          },
+        },
+      },
+    ];
+    createCart();
+    return cart;
+  };
+};
+
 export const fetchSessionByUser = async (userId, token) => {
   try {
     const response = await fetch(`${API_URL}/sessions/${userId}`, {
