@@ -54,7 +54,7 @@ async function getProductsWithoutReviews() {
       SELECT * 
       FROM products;
     `);
-    
+
     return rows;
   } catch (error) {
     console.error("Error in getRewiewsWithoutReviews", error);
@@ -64,11 +64,12 @@ async function getProductsWithoutReviews() {
 
 async function getAllProducts() {
   try {
-    const { rows: products } = await client.query(`
+    const { rows } = await client.query(`
         SELECT *
         From products
         JOIN reviews ON products.id = reviews."productId";
         `);
+      return rows;
   } catch (error) {
     console.error("Error in getAllProducts", error);
     throw error

@@ -1,7 +1,7 @@
 const client = require("./client");
 const { createOrderLine } = require("./orderItems");
-const { createOrderDetails, getAllOrders } = require("./orders");
-const { createProducts } = require("./products");
+const { createOrderDetails, getAllOrders, getFullOrders } = require("./orders");
+const { createProducts, getProductsWithoutReviews } = require("./products");
 const { 
   createUser,
   getUser,
@@ -163,7 +163,7 @@ async function editInitialUsers() {
     const usersToEdit = [
       {
         id: 1,
-        username: "albert1",
+        username: "albert",
         password: "bertie99",
         firstName: "Alberto",
         lastName: "Bernie",
@@ -173,7 +173,7 @@ async function editInitialUsers() {
       },
       {
         id: 2,
-        username: "sandra2",
+        username: "sandra",
         password: "sandra123",
         firstName: "Sandran",
         lastName: "Parkery",
@@ -183,7 +183,7 @@ async function editInitialUsers() {
       },
       {
         id: 3,
-        username: "glamgal3",
+        username: "glamgal",
         password: "glamgal123",
         firstName: "Glamgal",
         lastName: "Glamerous",
@@ -282,55 +282,58 @@ async function createInitalOrderDetails() {
 
 async function createInitialOrderLines() {
   console.log("Starting to create order lines.");
-  const [order1, order2, order3, order4] = await getAllOrders();
-
+  
   try {
     const orderLinesToCreate = [
       {
-        orderId: order1.id,
+        orderId: 1,
         productId: 4,
         quantity: 3
       },
       {
-        orderId: order1.id,
+        orderId: 1,
         productId: 2,
         quantity: 1
       },
       {
-        orderId: order2.id,
+        orderId: 2,
         productId: 1,
         quantity: 2
       },
       {
-        orderId: order2.id,
+        orderId: 2,
         productId: 4,
         quantity: 3
       },
       {
-        orderId: order3.id,
+        orderId: 3,
         productId: 1,
         quantity: 3
       },
       {
-        orderId: order3.id,
+        orderId: 3,
         productId: 2,
         quantity: 3
       },
       {
-        orderId: order4.id,
+        orderId: 4,
         productId: 3,
         quantity: 1
       },
       {
-        orderId: order4.id,
+        orderId: 4,
         productId: 4,
         quantity: 2
       },
     ];
+    
     const productLines = await Promise.all(orderLinesToCreate.map(createOrderLine));
 
+    const fullOrders = await getFullOrders();
+    
     console.log("Orders with lines created:");
-    console.log(productLines);
+    console.log("Full order details:", fullOrders);
+    console.log("FullOrders[0].productDetails:", fullOrders[0].productDetails);
     console.log("Finished creating order lines!");
   } catch (error) {
     console.error("Error creating order lines!");

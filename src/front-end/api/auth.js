@@ -60,3 +60,36 @@ export const fetchMe = async (token) => {
     console.error("Cannot fetch that user. Invalid token", err);
   }
 };
+
+export const guestLogin = async () => {
+  try {
+    // const response = await fetch(`${API_URL}/users/login`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Conent-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     username: "Guest",
+    //     password: "password"
+    //   })
+    // }).then(response => response.json())
+    //   .then(result => {
+    //     console.log(result)
+    //   })
+    //   .catch(console.error);
+    // Above code to be implemented when Front/Backend hookup enabled
+
+    const guestObject = {
+      "user": {
+        "id": 1,
+        "username": "Guest"
+      },
+      "message": "You're logged in!",
+      "token": "6584erth6sret54g6hdr5ty4ghd6r36eaq5r4g"
+    }
+    console.log(guestObject);
+    return guestObject;
+  } catch (error) {
+    console.error("There was an error with logging in the guest. Now might be a good time to panic.")
+  }
+}

@@ -23,13 +23,28 @@ async function createOrderDetails({
   }
 }
 
-async function getAllOrders() {
+async function getFullOrders() {
     try {
-        const { rows } = await client.query(`
-          SELECT *
-          FROM order_details;
+        const { rows: orders } = await client.query(`
+          SELECT order_details.*, users.username AS "username"
+          FROM order_details
+          JOIN users ON order_details."userId" = users.id
         `);
-        return rows;
+        const { rows: orderLines } = await client.query(`
+          SELECT order_lines.*, products.id AS "productId", products.name, products.price, products.sku, products."photoURL"
+          FROM order_lines
+          JOIN products ON products.id = order_lines."productId";
+        `);
+
+        for (const order of orders) {
+          const orderLineToAdd = orderLines.filter(
+            (orderLine) => orderLine.orderId === order.id
+          );
+
+          order.productDetails = orderLineToAdd;
+        }
+
+        return orders;
     } catch (error) {
         console.error("Error in getAllOrders:", error);
         throw error;
@@ -66,7 +81,7 @@ async function getOrdersById(orderId) {
 
 module.exports = {
     createOrderDetails,
-    getAllOrders,
+    getFullOrders,
     getOrdersByUserId,
     getOrdersById
 }
