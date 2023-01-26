@@ -126,6 +126,23 @@ async function editUser({ id, ...fields }) {
 }
 
 // DELETE Functions
+async function deleteUser(id) {
+  try {
+    const {
+      rows: [deleted],
+    } = await client.query(
+      `DELETE FROM users
+    WHERE id= $1
+    RETURNING *;`,
+      [id]
+    );
+    return deleted;
+  } catch (error) {
+    console.error("Error in deleteUsers", error);
+    throw error
+  }
+}
+
 
 module.exports = {
   createUser,
@@ -134,4 +151,5 @@ module.exports = {
   getUserByUsername,
   getAllUsers,
   editUser,
+  deleteUser
 };

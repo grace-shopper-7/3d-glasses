@@ -14,6 +14,49 @@ usersRouter.use((req, res, next) => {
 });
 
 // POST /api/users/register
+usersRouter.post("/register", async (req, res, next) =>{
+  const {username, password} = req.body;
+
+  try {
+    const _user = await getUserByUsername(username);
+
+    if (_user) {
+      response.status (401);
+      next ({
+        name: "userExistError",
+        message: `User ${username} is already taken.`,
+      });   
+    }else if (password.length < 8) {
+      response.status (401);
+      next ({
+        name: "userExistError",
+        message: `Password is too short.`,
+      });   
+    }else {
+      const user = await createUser({username, password});
+
+      if (!user) {
+        next({name: "UserCreationError", message: "There is a problem with registration"})
+      } else{
+        const token = jwt.sign({
+          id: user.id,
+          username
+      }, process.env.JWT_SECRET, {
+          expiresIn: '1w'
+      });
+
+      res.send({
+          message: "Thank you for signing up!",
+          token,
+          user
+      });
+      }
+    }
+    
+  } catch ({name, message}) {
+    next({name, message})
+  }
+})
 
 // POST /api/users/login
 

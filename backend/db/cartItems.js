@@ -1,12 +1,12 @@
 const client = require("./client");
 
-async function createCartItems(sessionId, productId, quantity) {
+async function createCartItems({sessionId, productId, quantity}) {
   try {
     const {
       rows: [cartItems],
     } = await client.query(
       `
-        INSERT INTO cartitems ("sessionId", "productId", quantity)
+        INSERT INTO cart_items ("sessionId", "productId", quantity)
         VALUES ($1, $2, $3)
         RETURNING *;
         `,
@@ -63,7 +63,7 @@ async function deleteCartItem(id) {
     const {
       rows: [deleted],
     } = await client.query(
-      `DELETE FROM cartItems
+      `DELETE FROM cart_items
     WHERE id= $1
     RETURNING *;`,
       [id]
