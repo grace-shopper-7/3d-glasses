@@ -14,6 +14,34 @@ export const fetchProducts = async () => {
   }
 };
 
+export function fetchDummyProducts() {
+  let products = [
+    {
+      id: 1,
+      name: "glasses",
+      description: "desc1",
+      SKU: "001-001-001",
+      category: "glasses",
+      price: "4.99",
+      photoURL:
+        "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+    },
+
+    {
+      id: 2,
+      name: "glasses1",
+      description: "desc2",
+      SKU: "002-002-002",
+      category: "glasses",
+      price: "2.99",
+      photoURL:
+        "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+    },
+  ];
+  console.log("THESE ARE THE PRODUCTS", products);
+  return products;
+}
+
 export const fetchOrdersByUser = async (userId, token) => {
   try {
     const response = await fetch(`${API_URL}/orders/${userId}`, {
