@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useState } from "react";
+
 const API_URL = "http://localhost:3000/api";
 
 //GET
@@ -47,25 +50,49 @@ export const fetchCartBySession = async (sessionId) => {
   }
 };
 
-export const fetchDummyCartBySession = async (sessionId) => {
-  const createCart = () => {
-    let cart = [
+export function fetchDummyCartBySession() {
+  // const [total, setTotal] = useState(0.0);
+  // useEffect(() => {
+  //   const newTotal = cart.order_items.reduce((accumulator, object) => {
+  //     return accumulator + object.price;
+  //   }, 0);
+  //   setTotal(newTotal);
+  // }, cart.order_items);
+  let cart = {
+    id: 5,
+    order_items: [
       {
-        id: 5,
-        order_items: {
-          id: 1,
-          quantity: 2,
-          product_details: {
-            name: "Goofy Glasses",
-            price: "$10.99",
-          },
+        id: 1,
+        quantity: 2,
+        details: {
+          name: "Goofy Glasses",
+          price: 10.99,
+          description: "The goofiest damn glasses you've ever seen",
         },
       },
-    ];
-    createCart();
-    return cart;
+      {
+        id: 2,
+        quantity: 2,
+        details: {
+          name: "Glass Glasses",
+          price: 600,
+          description: "Glasses 3D printed out of glass",
+        },
+      },
+      {
+        id: 3,
+        quantity: 4,
+        details: {
+          name: "g g g g g glases",
+          price: 2,
+          description: "Trash glasses",
+        },
+      },
+    ],
   };
-};
+  console.log(cart);
+  return cart;
+}
 
 export const fetchSessionByUser = async (userId, token) => {
   try {
