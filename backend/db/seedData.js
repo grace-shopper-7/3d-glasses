@@ -11,6 +11,10 @@ const {
   editUser, 
 } = require("./users");
 
+const {createPaymentDetails} = require ('./paymentDetails');
+const {createSession, getFullCarts} = require ('./cart')
+const {createCartItems} = require ('./cartItems')
+
 async function dropTables() {
   try {
     console.log("Dropping all tables.....");
@@ -69,9 +73,11 @@ async function createTables() {
       CREATE TABLE payment_details (
           id SERIAL PRIMARY KEY,
           "orderId" INTEGER REFERENCES order_details(id),
-          amount INTEGER,
+          amount NUMERIC (6, 2),
           provider VARCHAR(255) NOT NULL,
-          status VARCHAR(255) NOT NULL
+          status VARCHAR(255) NOT NULL,
+          "userId" INTEGER REFERENCES users(id),
+          UNIQUE ("orderId", "userId")
       );
 
       CREATE TABLE order_lines (
@@ -85,7 +91,7 @@ async function createTables() {
       CREATE TABLE session (
           id SERIAL PRIMARY KEY,
           "userId" INTEGER REFERENCES users(id),
-          total NUMERIC (6, 2)
+          "totalPrice" NUMERIC (6, 2)
       );
 
       CREATE TABLE cart_items (
@@ -327,7 +333,7 @@ async function createInitialOrderLines() {
       },
     ];
     
-    const productLines = await Promise.all(orderLinesToCreate.map(createOrderLine));
+    const OrderLines = await Promise.all(orderLinesToCreate.map(createOrderLine));
 
     const fullOrders = await getFullOrders();
     
@@ -341,6 +347,129 @@ async function createInitialOrderLines() {
   }
 }
 
+async function createInitialPaymentDetails() {
+  console.log('starting to create payment details');
+
+  try {
+    const paymentDetailsToCreate = [
+      {
+        amount: 2.00,
+        orderId: 1,
+        provider: 'MasterCard',
+        status: 'pending',
+        userId: 1
+      },
+      
+      {
+        amount: 0.99,
+        orderId: 2,
+        provider: 'AmericanExpress',
+        status: 'canceled',
+        userId: 2
+      },
+      {
+        amount: 20.00,
+        orderId: 3,
+        provider: 'cash',
+        status: 'completed',
+        userId: 3
+      },
+
+    ]
+
+    const allPaymentDetails = await Promise.all(paymentDetailsToCreate.map(createPaymentDetails));
+    console.log('payment details created: ', allPaymentDetails);
+  } catch (error){
+    console.error ('error creating payment details');
+    throw error;
+  }
+}
+
+async function createInitalSessions() {
+  console.log("Starting to create session details");
+  const [albert, sandra, glamgal] = await getAllUsers();
+
+  try {
+    const sessionsToCreate = [
+      { userId: albert.id, totalPrice: "5.99"},
+      { userId: sandra.id, totalPrice: "20.99" },
+      { userId: sandra.id, totalPrice: "3.99" },
+      { userId: glamgal.id, totalPrice: "3.99" }
+    ];
+    // Revisit: add modifiedAt timestamps to above orderDetails
+    const sessions = await Promise.all(
+      sessionsToCreate.map(createSession)
+    );
+    console.log("Session details created", sessions);
+  } catch (error) {
+    console.log("Error creating session details");
+    throw error;
+  }
+}
+
+async function createInitialCartItems() {
+  console.log("Starting to create cart items.");
+  
+  try {
+    const cartItemsToCreate = [
+      {
+        sessionId: 1,
+        productId: 4,
+        quantity: 3
+      },
+      {
+        sessionId: 1,
+        productId: 2,
+        quantity: 1
+      },
+      {
+        sessionId: 2,
+        productId: 1,
+        quantity: 2
+      },
+      {
+        sessionId: 2,
+        productId: 4,
+        quantity: 3
+      },
+      {
+        sessionId: 3,
+        productId: 1,
+        quantity: 3
+      },
+      {
+        sessionId: 3,
+        productId: 2,
+        quantity: 3
+      },
+      {
+        sessionId: 4,
+        productId: 3,
+        quantity: 1
+      },
+      {
+        sessionId: 4,
+        productId: 4,
+        quantity: 2
+      },
+    ];
+    
+    const cartItems = await Promise.all(cartItemsToCreate.map(createCartItems));
+
+    const fullCarts = await getFullCarts();
+    
+    console.log('cartItems: ', cartItems)
+    console.log("carts with cartItems created:");
+    console.log( fullCarts);
+    console.log("FullCarts[0].productDetails:", fullCarts[0].productDetails);
+    console.log("Finished creating cart items!");
+  } catch (error) {
+    console.error("Error creating cart items!");
+    throw error;
+  }
+}
+
+
 async function rebuildDB() {
   try {
     await dropTables();
@@ -350,6 +479,9 @@ async function rebuildDB() {
     await createInitialProducts();
     await createInitalOrderDetails();
     await createInitialOrderLines();
+    await createInitialPaymentDetails();
+    await createInitalSessions();
+    await createInitialCartItems();
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;

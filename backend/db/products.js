@@ -76,6 +76,7 @@ async function getAllProducts() {
   }
 }
 
+// revisit to inquire on range of prices
 async function getProductsByPrice(price) {
   try {
     const { rows: products } = await client.query(`
@@ -100,6 +101,31 @@ async function getProductsByCategory(category) {
     return products
   } catch (error) {
     console.error("Error in getProductsByCategory", error);
+    throw error
+  }
+}
+
+async function updateProduct({ id, ...fields }) {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+
+  try {
+    if (setString.length > 0) {
+      const {
+        rows: [updatedProduct],
+      } = await client.query(
+        `UPDATE products
+      SET ${setString}
+      WHERE id= ${id}
+      RETURNING *;`,
+        Object.values(fields)
+      );
+
+      return updatedProduct;
+    }
+  } catch (error) {
+    console.error("Error in updateProduct", error);
     throw error
   }
 }
@@ -129,5 +155,6 @@ module.exports = {
   getAllProducts,
   getProductsByPrice,
   getProductsByCategory, 
+  updateProduct,
   deleteProduct,
 };
