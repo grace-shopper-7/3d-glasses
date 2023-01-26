@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 // import { useUser } from '../state/context'
 import Modal from 'react-modal'
 import Cart from './Cart'
+import {AiOutlineShoppingCart} from 'react-icons/ai'
 // import AuthForm from './AuthForm'
 
 
@@ -41,7 +42,7 @@ const Header = ({token, setToken, user, setUser}) => {
             </>
           : <>
             <p style={{height: '1rem'}}></p>
-              <button className='cart-button' onClick={openModal}>Cart</button>
+              <button className='cart-button' onClick={!modalIsOpen? openModal : closeModal}><AiOutlineShoppingCart /></button>
           </>
           }
         </div>
