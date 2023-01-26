@@ -28,7 +28,7 @@ async function getFullOrders() {
         const { rows: orders } = await client.query(`
           SELECT order_details.*, users.username AS "username"
           FROM order_details
-          JOIN users ON order_details."userId" = users.id
+          JOIN users ON order_details."userId" = users.id;
         `);
         const { rows: orderLines } = await client.query(`
           SELECT order_lines.*, products.id AS "productId", products.name, products.price, products.sku, products."photoURL"

@@ -70,6 +70,10 @@ router.use('/session', sessionRouter);
 const cartItemsRouter = require('./cartItems');
 router.use('/cartItems', cartItemsRouter);
 
+// ROUTER: /api/reviews
+const reviewsRouter = require('./reviews');
+router.use('/reviews', reviewsRouter);
+
 router.use((error, req, res, next) => {
     res.send({
         error: "ERROR",
