@@ -57,7 +57,7 @@ async function createTables() {
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) UNIQUE NOT NULL,
         description VARCHAR(255) NOT NULL,
-        SKU VARCHAR(255) NOT NULL,
+        sku VARCHAR(255) UNIQUE NOT NULL,
         category VARCHAR(255) NOT NULL,
         price NUMERIC (6, 2),
         "photoURL" VARCHAR(255) NOT NULL
