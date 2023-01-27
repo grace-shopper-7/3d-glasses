@@ -18,24 +18,36 @@ export function fetchDummyProducts() {
   let products = [
     {
       id: 1,
-      name: "glasses",
-      description: "desc1",
-      SKU: "001-001-001",
-      category: "glasses",
-      price: "4.99",
-      photoURL:
-        "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      quantity: 2,
+      details: {
+        name: "Goofy Glasses",
+        price: 10.99,
+        description: "The goofiest damn glasses you've ever seen",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
     },
-
     {
       id: 2,
-      name: "glasses1",
-      description: "desc2",
-      SKU: "002-002-002",
-      category: "glasses",
-      price: "2.99",
-      photoURL:
-        "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      quantity: 2,
+      details: {
+        name: "Glass Glasses",
+        price: 600,
+        description: "Glasses 3D printed out of glass",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
+    },
+    {
+      id: 3,
+      quantity: 4,
+      details: {
+        name: "g g g g g glases",
+        price: 2,
+        description: "Trash glasses",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
     },
   ];
   console.log("THESE ARE THE PRODUCTS", products);
@@ -88,35 +100,7 @@ export function fetchDummyCartBySession() {
   // }, cart.order_items);
   let cart = {
     id: 5,
-    order_items: [
-      {
-        id: 1,
-        quantity: 2,
-        details: {
-          name: "Goofy Glasses",
-          price: 10.99,
-          description: "The goofiest damn glasses you've ever seen",
-        },
-      },
-      {
-        id: 2,
-        quantity: 2,
-        details: {
-          name: "Glass Glasses",
-          price: 600,
-          description: "Glasses 3D printed out of glass",
-        },
-      },
-      {
-        id: 3,
-        quantity: 4,
-        details: {
-          name: "g g g g g glases",
-          price: 2,
-          description: "Trash glasses",
-        },
-      },
-    ],
+    order_items: [],
   };
   console.log(cart);
   return cart;
