@@ -22,7 +22,7 @@ const Cart = ({closeModal}) => {
                 </div>)
             })}
             <b>Total: ${total}</b>
-            <NavLink to={"/checkout"}><button className="checkout-button">Checkout</button></NavLink>
+            <NavLink to={"/revieworder"}><button className="checkout-button" onClick={closeModal}>Review Order</button></NavLink>
         </div>
     )}
     else{

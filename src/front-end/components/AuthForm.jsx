@@ -5,6 +5,7 @@ const AuthForm = ({ setToken, setUser }) => {
     const [ isLogIn, setIsLogIn ] = useState(0);
     let usernameRef = useRef()
     let passwordRef = useRef()
+    let emailRef = useRef()
     let confirmRef = useRef()
 
     const authPageData = {
@@ -44,6 +45,14 @@ return(
             console.error(error)
             throw error
         } }}> 
+         <div> 
+            { isLogIn === 1 && (
+                <>
+                <label htmlFor="email"> Email: </label>
+                <input type="text" minLength={5} required={true} placeholder="email" ref={emailRef} />
+                </>
+            )}
+        </div>
         <div> 
             <label htmlFor="username"> Username: </label>
             <input type="text" minLength={1} required={true} placeholder="username" ref={usernameRef} />
