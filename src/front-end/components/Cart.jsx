@@ -5,15 +5,14 @@ import CartItems from "./CartItems"
 //PRODUCT DETAILS FOR PRICE, ID, QTY
 const Cart = ({closeModal}) => {
     const cart = fetchDummyCartBySession()
-    let total = cart.order_items
-    .map((orderItem) => {
-        return orderItem.details.price;})
-    .reduce((a, b) => {
-        return a + b;
-      }, )
-    console.log(total)
+    if (cart.order_items.length > 0)  {
+         let total = cart.order_items
+         .map((orderItem) => {
+             return orderItem.details.price;})
+         .reduce((a, b) => {
+             return a + b;
+           }, )
     return (
-        cart.order_items.length ?
         <div className="shopping-cart">
             <p>Your Shopping Cart</p> 
             {cart.order_items.map((cartItem) => {
@@ -25,11 +24,14 @@ const Cart = ({closeModal}) => {
             <b>Total: ${total}</b>
             <NavLink to={"/checkout"}><button className="checkout-button">Checkout</button></NavLink>
         </div>
-        :
+    )}
+    else{
+    return (
         <div className="shopping-cart">
             <p>Your Shopping Cart Is Empty</p>
         </div>
     )
+    }
 }
 
 export default Cart

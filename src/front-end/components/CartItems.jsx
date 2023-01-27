@@ -21,13 +21,13 @@ const CartItems = ({cartItem, cart}) => {
         {isOpen ? 
          (
             <div>
-                {cartItem.details.description}
+                {cartItem.details?.description}
             </div>  
         )
         :
          null
         }
-        <p>${cartItem.details.price}</p>
+        <p>${cartItem.details?.price}</p>
         </div>
     )
 }
