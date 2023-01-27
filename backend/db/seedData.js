@@ -13,7 +13,7 @@ const {
 
 const {createPaymentDetails} = require ('./paymentDetails');
 const {createSession, getFullCarts} = require ('./cart')
-const {createCartItems} = require ('./cartItems')
+const {createCartItems, getCartItemsBySessionId} = require ('./cartItems')
 
 async function dropTables() {
   try {
@@ -216,7 +216,7 @@ async function createInitialProducts() {
       {
         name: "glasses",
         description: "desc1",
-        SKU: "001-001-001",
+        sku: "001-001-001",
         category: "glasses",
         price: "4.99",
         photoURL:
@@ -226,7 +226,7 @@ async function createInitialProducts() {
       {
         name: "glasses1",
         description: "desc2",
-        SKU: "002-002-002",
+        sku: "002-002-002",
         category: "glasses",
         price: "2.99",
         photoURL:
@@ -236,7 +236,7 @@ async function createInitialProducts() {
       {
         name: "glasses2",
         description: "desc3",
-        SKU: "003-003-003",
+        sku: "003-003-003",
         category: "accessories",
         price: "5.99",
         photoURL:
@@ -246,7 +246,7 @@ async function createInitialProducts() {
       {
         name: "glasses3",
         description: "desc4",
-        SKU: "004-004-004",
+        sku: "004-004-004",
         category: "glasses",
         price: "7.99",
         photoURL:
@@ -463,6 +463,9 @@ async function createInitialCartItems() {
     console.log( fullCarts);
     console.log("FullCarts[0].productDetails:", fullCarts[0].productDetails);
     console.log("Finished creating cart items!");
+
+    const something = await getCartItemsBySessionId(1);
+    console.log("CartItems for sessionId 1:", something);
   } catch (error) {
     console.error("Error creating cart items!");
     throw error;

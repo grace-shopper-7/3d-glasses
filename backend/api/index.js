@@ -64,7 +64,7 @@ router.use('/orderDetails', orderDetailsRouter);
 
 // ROUTER: /api/session
 const sessionRouter = require('./cart');
-router.use('/session', sessionRouter);
+router.use('/sessions', sessionRouter);
 
 // ROUTER: /api/cartItems
 const cartItemsRouter = require('./cartItems');
