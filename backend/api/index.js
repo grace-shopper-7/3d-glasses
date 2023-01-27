@@ -51,19 +51,19 @@ const productsRouter = require('./products');
 router.use('/products', productsRouter);
 
 // ROUTER: /api/orderDetails
-const orderDetailsRouter = require('./orderDetails');
+const orderDetailsRouter = require('./orders');
 router.use('/orderDetails', orderDetailsRouter);
 
 // ROUTER: /api/paymentDetails
-const paymentDetailsRouter = require('./paymentDetails');
-router.use('/paymentDetails', paymentDetailsRouter);
+// const paymentDetailsRouter = require('./paymentDetails');
+// router.use('/paymentDetails', paymentDetailsRouter);
 
 // ROUTER: /api/orderLines
-const orderLinesRouter = require('./orderLines');
-router.use('/orderLines', orderLinesRouter);
+// const orderLinesRouter = require('./orderLines');
+// router.use('/orderLines', orderLinesRouter);
 
 // ROUTER: /api/session
-const sessionRouter = require('./session');
+const sessionRouter = require('./cart');
 router.use('/session', sessionRouter);
 
 // ROUTER: /api/cartItems

@@ -3,7 +3,7 @@ const client = require("./client");
 async function createProducts({
   name,
   description,
-  SKU,
+  sku,
   category,
   price,
   photoURL,
@@ -13,12 +13,12 @@ async function createProducts({
       rows: [products],
     } = await client.query(
       `
-          INSERT INTO products( name, description, SKU, category, price, "photoURL" )
+          INSERT INTO products( name, description, sku, category, price, "photoURL" )
           VALUES ($1, $2, $3, $4, $5, $6 )
           ON CONFLICT (name) DO NOTHING
           RETURNING *;
           `,
-      [name, description, SKU, category, price, photoURL]
+      [name, description, sku, category, price, photoURL]
     );
 
     // console.log("This is a user ------------>", user);
@@ -29,6 +29,7 @@ async function createProducts({
   }
 }
 
+// Revisit: look into appending reviews once implemented
 async function getProductById(id) {
   try {
     const {
@@ -48,6 +49,7 @@ async function getProductById(id) {
   }
 }
 
+// Revisit: look into reducing sent information for bulk product listings
 async function getProductsWithoutReviews() {
   try {
     const { rows } = await client.query(`
@@ -62,6 +64,7 @@ async function getProductsWithoutReviews() {
   }
 }
 
+// Revisit: look into reducing sent information for bulk product listings
 async function getAllProducts() {
   try {
     const { rows } = await client.query(`
@@ -126,7 +129,7 @@ async function updateProduct({ id, ...fields }) {
     }
   } catch (error) {
     console.error("Error in updateProduct", error);
-    throw error
+    throw error;
   }
 }
 
@@ -135,7 +138,7 @@ async function deleteProduct(id) {
     const {
       rows: [deleted],
     } = await client.query(
-      `DELETE FROM product
+      `DELETE FROM products
     WHERE id= $1
     RETURNING *;`,
       [id]
