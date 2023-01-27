@@ -35,8 +35,22 @@ async function getFullCarts () {
     }
     return carts;
   } catch (error) {
-    console.error (error)
-    throw error
+    console.error (error);
+    throw error;
+  }
+}
+
+async function getCartByUserId(userId) {
+  try {
+    const { rows: [userSession] } = await client.query(`
+      SELECT *
+      FROM session
+      WHERE "userId"=$1
+    `, [userId]);
+    return userSession;
+  } catch (error) {
+    console.error("There was an error during getCartByUserId", error);
+    throw error;
   }
 }
 
@@ -85,5 +99,6 @@ module.exports = {
   createSession,
   getFullCarts,
   updateCart,
-  deleteCart
+  deleteCart,
+  getCartByUserId
 }

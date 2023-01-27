@@ -80,6 +80,8 @@ usersRouter.post("/register", async (req, res, next) =>{
 usersRouter.post('/login', async (req, res, next) => {
   const {username, password} = req.body;
 
+  console.log(username, password);
+
   // If no username or password provided, throw an error
   if (!username || !password) {
     next({
@@ -90,6 +92,7 @@ usersRouter.post('/login', async (req, res, next) => {
 
   try {
     const user = await getUserByUsername(username);
+    console.log(user);
     const hashedPassword = user.password;
     let passwordsMatch = await bcrypt.compare(password, hashedPassword);
 
