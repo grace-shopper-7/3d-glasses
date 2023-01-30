@@ -44,11 +44,11 @@ async function createTables() {
     `
       CREATE TABLE users (
           id SERIAL PRIMARY KEY,
-          username VARCHAR(255) UNIQUE NOT NULL,
-          password VARCHAR(255) NOT NULL,
-          "firstName" VARCHAR(255) NOT NULL,
-          "lastName" VARCHAR(255) NOT NULL,
-          address VARCHAR(255) NOT NULL,
+          username VARCHAR(255) UNIQUE,
+          password VARCHAR(255),
+          "firstName" VARCHAR(255),
+          "lastName" VARCHAR(255),
+          address VARCHAR(255),
           telephone TEXT,
           email VARCHAR(255) UNIQUE
       );
@@ -255,8 +255,10 @@ async function createInitialProducts() {
     ];
     const products = await Promise.all(productsToCreate.map(createProducts));
 
+    const newProducts = await getProductsWithoutReviews();
+
     console.log("Products Created");
-    console.log(products);
+    console.log(newProducts);
     console.log("Finished creating products");
   } catch (error) {
     console.log("Error Creating Products");

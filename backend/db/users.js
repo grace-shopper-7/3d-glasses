@@ -22,7 +22,7 @@ async function createUser({
         INSERT INTO users( username, password, "firstName", "lastName", address, telephone, email)
         VALUES ($1, $2, $3, $4, $5, $6, $7)
         ON CONFLICT (username) DO NOTHING
-        RETURNING id, username;
+        RETURNING *;
         `, [username, hashedPassword, firstName, lastName, address, telephone, email] );
 
     // console.log("This is a user ------------>", user);

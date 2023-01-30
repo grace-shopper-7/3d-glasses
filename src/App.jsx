@@ -69,18 +69,18 @@ function App() {
       <Navbar token={token} />
       <div className='mainBody'>
         <Routes>
-          <Route path='/' 
+          {/* <Route path='/' 
             element={<Home />}
-          />
-          {!token &&
+          /> */}
+          {/* {!token &&
           <Route path='/loginregister' element={<AuthForm setUser={setUser} setToken={setToken} />}/>
-          }
-          {token &&
+          } */}
+          {/* {token &&
           <Route path='/profile' element={<Profile />}/>
-          }
-          {token &&
+          } */}
+          {/* {token &&
           <Route path='/profile/myorders' element={<OrderHistory />}/>
-          }
+          } */}
           <Route path='/products' element={<Products />}/>
           <Route path='/revieworder' element={<ReviewOrder />}/>
           <Route path='/checkout' element={<Checkout />}/>
