@@ -5,8 +5,7 @@ const { requireUser } = require('./helpers');
 
 cartItemsRouter.use((req, res, next) => {
     console.log("A request is being made to /cartItems.");
-
-    next();
+  next();
 });
 
 // POST /api/cartItems
@@ -58,13 +57,11 @@ cartItemsRouter.get('/:sessionId', requireUser, async (req, res, next) => {
     }
 })
 
-
 // ROUTES GO HERE
 
 cartItemsRouter.use((req, res, next) => {
     console.log("Now leaving /cartItems.");
-
-    next();
+  next();
 });
 
 module.exports = cartItemsRouter;

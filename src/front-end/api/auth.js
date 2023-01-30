@@ -1,6 +1,6 @@
 const API_URL = "http://localhost:3000/api";
 
-export const registerUser = async (username, password) => {
+export const registerUser = async (email, username, password) => {
   try {
     const response = await fetch(`${API_URL}/users/register`, {
       method: "POST",
@@ -8,6 +8,7 @@ export const registerUser = async (username, password) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        email,
         username,
         password,
       }),
@@ -80,16 +81,18 @@ export const guestLogin = async () => {
     // Above code to be implemented when Front/Backend hookup enabled
 
     const guestObject = {
-      "user": {
-        "id": 1,
-        "username": "Guest"
+      user: {
+        id: 1,
+        username: "Guest",
       },
-      "message": "You're logged in!",
-      "token": "6584erth6sret54g6hdr5ty4ghd6r36eaq5r4g"
-    }
+      message: "You're logged in!",
+      token: "6584erth6sret54g6hdr5ty4ghd6r36eaq5r4g",
+    };
     console.log(guestObject);
     return guestObject;
   } catch (error) {
-    console.error("There was an error with logging in the guest. Now might be a good time to panic.")
+    console.error(
+      "There was an error with logging in the guest. Now might be a good time to panic."
+    );
   }
-}
+};

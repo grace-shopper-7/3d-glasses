@@ -1,19 +1,21 @@
 import { createContext, useContext } from "react";
 import { useImmerReducer } from "use-immer";
-import { userInitState, userReducer, productsInitState, productReducer, cartInitState, cartReducer, ordersInitState, orderReducer } from "./reducers";
+import { 
+    // userInitState, userReducer,
+     productsInitState, productReducer, cartInitState, cartReducer, ordersInitState, orderReducer } from "./reducers";
 
-const UserContext = createContext(userInitState)
+// const UserContext = createContext(userInitState)
 const ProductsContext = createContext(productsInitState)
 const CartContext = createContext(cartInitState)
 const OrderContext = createContext(ordersInitState)
 
-export const useUser = () => {
-    const context = useContext(UserContext)
-    if (context === undefined) {
-        throw new Error("useUser must be used within UserContext")
-    }
-    return context
-}
+// export const useUser = () => {
+//     const context = useContext(UserContext)
+//     if (context === undefined) {
+//         throw new Error("useUser must be used within UserContext")
+//     }
+//     return context
+// }
 
 export const useProducts = () => {
     const context = useContext(ProductsContext)
@@ -146,7 +148,7 @@ export const CartProvider = ({children}) => {
     }
 
     const value = {
-        cart: state.cart,
+        carts: state.carts,
         itemCount: state.itemCount,
         addItem,
         removeItem
@@ -155,7 +157,7 @@ export const CartProvider = ({children}) => {
 }
 
 export const OrderProvider = ({children}) => {
-    const [state, dispatch] = useImmerReducer(orderReducer, orderInitState)
+    const [state, dispatch] = useImmerReducer(orderReducer, ordersInitState)
 
     const populateOrders = (orders) => {
         dispatch({

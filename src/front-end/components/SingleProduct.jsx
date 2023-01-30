@@ -1,23 +1,29 @@
-import { fetchDummyCartBySession } from "../api/fetch"
+import { fetchCartBySession, fetchDummyCartBySession, postItemToCart } from "../api/fetch"
+import { useCart } from "../state/context"
 
-const SingleProduct = ({ product, products }) => {
+const SingleProduct = ({ product, products, }) => {
+    const addItem = useCart()
     console.log("this is a single product", product)
-    const cart = fetchDummyCartBySession()
-    console.log("cart", cart)
-    const addToCart = () => {
-        cart.order_items.push(product)
-        console.log("cart in func", cart)
-        return 
+    async function addToCart(e) {
+        e.preventDefault()   
+        const cart = await fetchCartBySession(1)
+        console.log(cart)
+        const addBody = {
+            productId: product.id,
+            quantity: product.quantity
+        }
+        const newItem = await postItemToCart(addBody, cart.id)
+        addItem(newItem)
     }
     return (
         <div>
-            <img src={product.details.photoURL} height="200px" alt="Photo of glasses" />
+            <img src={product.photoURL} height="200px" alt="Photo of glasses" />
             <br />
             <div>
-            <b>{product.details.name} | ${product.details.price}</b> 
+            <b>{product.name} | ${product.price}</b> 
             <button onClick={addToCart} className="add-to-cart">Add To Cart</button>
             </div>
-            <p>{product.details.description} </p>
+            <p>{product.description} </p>
         </div>
     )
 }

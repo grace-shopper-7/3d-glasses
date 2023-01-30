@@ -2,13 +2,13 @@ const client = require("./client");
 const { createOrderLine } = require("./orderItems");
 const { createOrderDetails, getAllOrders, getFullOrders } = require("./orders");
 const { createProducts, getProductsWithoutReviews } = require("./products");
-const { 
+const {
   createUser,
   getUser,
   getUserById,
   getUserByUsername,
   getAllUsers,
-  editUser, 
+  editUser,
 } = require("./users");
 
 const {createPaymentDetails} = require ('./paymentDetails');
@@ -41,16 +41,16 @@ async function createTables() {
     console.log("Starting to build tables...");
 
     await client.query(
-    `
+      `
       CREATE TABLE users (
           id SERIAL PRIMARY KEY,
           username VARCHAR(255) UNIQUE NOT NULL,
           password VARCHAR(255) NOT NULL,
-          "firstName" VARCHAR(255) NOT NULL,
-          "lastName" VARCHAR(255) NOT NULL,
-          address VARCHAR(255) NOT NULL,
+          "firstName" VARCHAR(255),
+          "lastName" VARCHAR(255),
+          address VARCHAR(255),
           telephone TEXT,
-          email VARCHAR(255) UNIQUE
+          email VARCHAR(255) UNIQUE NOT NULL
       );
 
       CREATE TABLE products (
@@ -270,10 +270,10 @@ async function createInitalOrderDetails() {
 
   try {
     const orderDetailsToCreate = [
-      { userId: albert.id, totalPrice: "5.99"},
+      { userId: albert.id, totalPrice: "5.99" },
       { userId: sandra.id, totalPrice: "20.99" },
       { userId: sandra.id, totalPrice: "3.99" },
-      { userId: glamgal.id, totalPrice: "3.99" }
+      { userId: glamgal.id, totalPrice: "3.99" },
     ];
     // Revisit: add modifiedAt timestamps to above orderDetails
     const orderDetails = await Promise.all(
@@ -288,55 +288,57 @@ async function createInitalOrderDetails() {
 
 async function createInitialOrderLines() {
   console.log("Starting to create order lines.");
-  
+
   try {
     const orderLinesToCreate = [
       {
         orderId: 1,
         productId: 4,
-        quantity: 3
+        quantity: 3,
       },
       {
         orderId: 1,
         productId: 2,
-        quantity: 1
+        quantity: 1,
       },
       {
         orderId: 2,
         productId: 1,
-        quantity: 2
+        quantity: 2,
       },
       {
         orderId: 2,
         productId: 4,
-        quantity: 3
+        quantity: 3,
       },
       {
         orderId: 3,
         productId: 1,
-        quantity: 3
+        quantity: 3,
       },
       {
         orderId: 3,
         productId: 2,
-        quantity: 3
+        quantity: 3,
       },
       {
         orderId: 4,
         productId: 3,
-        quantity: 1
+        quantity: 1,
       },
       {
         orderId: 4,
         productId: 4,
-        quantity: 2
+        quantity: 2,
       },
     ];
-    
-    const OrderLines = await Promise.all(orderLinesToCreate.map(createOrderLine));
+
+    const OrderLines = await Promise.all(
+      orderLinesToCreate.map(createOrderLine)
+    );
 
     const fullOrders = await getFullOrders();
-    
+
     console.log("Orders with lines created:");
     console.log("Full order details:", fullOrders);
     console.log("FullOrders[0].productDetails:", fullOrders[0].productDetails);
@@ -348,39 +350,40 @@ async function createInitialOrderLines() {
 }
 
 async function createInitialPaymentDetails() {
-  console.log('starting to create payment details');
+  console.log("starting to create payment details");
 
   try {
     const paymentDetailsToCreate = [
       {
-        amount: 2.00,
+        amount: 2.0,
         orderId: 1,
-        provider: 'MasterCard',
-        status: 'pending',
-        userId: 1
+        provider: "MasterCard",
+        status: "pending",
+        userId: 1,
       },
-      
+
       {
         amount: 0.99,
         orderId: 2,
-        provider: 'AmericanExpress',
-        status: 'canceled',
-        userId: 2
+        provider: "AmericanExpress",
+        status: "canceled",
+        userId: 2,
       },
       {
-        amount: 20.00,
+        amount: 20.0,
         orderId: 3,
-        provider: 'cash',
-        status: 'completed',
-        userId: 3
+        provider: "cash",
+        status: "completed",
+        userId: 3,
       },
+    ];
 
-    ]
-
-    const allPaymentDetails = await Promise.all(paymentDetailsToCreate.map(createPaymentDetails));
-    console.log('payment details created: ', allPaymentDetails);
-  } catch (error){
-    console.error ('error creating payment details');
+    const allPaymentDetails = await Promise.all(
+      paymentDetailsToCreate.map(createPaymentDetails)
+    );
+    console.log("payment details created: ", allPaymentDetails);
+  } catch (error) {
+    console.error("error creating payment details");
     throw error;
   }
 }
@@ -391,15 +394,13 @@ async function createInitalSessions() {
 
   try {
     const sessionsToCreate = [
-      { userId: albert.id, totalPrice: "5.99"},
+      { userId: albert.id, totalPrice: "5.99" },
       { userId: sandra.id, totalPrice: "20.99" },
       { userId: sandra.id, totalPrice: "3.99" },
-      { userId: glamgal.id, totalPrice: "3.99" }
+      { userId: glamgal.id, totalPrice: "3.99" },
     ];
     // Revisit: add modifiedAt timestamps to above orderDetails
-    const sessions = await Promise.all(
-      sessionsToCreate.map(createSession)
-    );
+    const sessions = await Promise.all(sessionsToCreate.map(createSession));
     console.log("Session details created", sessions);
   } catch (error) {
     console.log("Error creating session details");
@@ -409,58 +410,58 @@ async function createInitalSessions() {
 
 async function createInitialCartItems() {
   console.log("Starting to create cart items.");
-  
+
   try {
     const cartItemsToCreate = [
       {
         sessionId: 1,
         productId: 4,
-        quantity: 3
+        quantity: 3,
       },
       {
         sessionId: 1,
         productId: 2,
-        quantity: 1
+        quantity: 1,
       },
       {
         sessionId: 2,
         productId: 1,
-        quantity: 2
+        quantity: 2,
       },
       {
         sessionId: 2,
         productId: 4,
-        quantity: 3
+        quantity: 3,
       },
       {
         sessionId: 3,
         productId: 1,
-        quantity: 3
+        quantity: 3,
       },
       {
         sessionId: 3,
         productId: 2,
-        quantity: 3
+        quantity: 3,
       },
       {
         sessionId: 4,
         productId: 3,
-        quantity: 1
+        quantity: 1,
       },
       {
         sessionId: 4,
         productId: 4,
-        quantity: 2
+        quantity: 2,
       },
     ];
-    
+
     const cartItems = await Promise.all(cartItemsToCreate.map(createCartItems));
 
     const fullCarts = await getFullCarts();
-    
-    console.log('cartItems: ', cartItems)
+
+    console.log("cartItems: ", cartItems);
     console.log("carts with cartItems created:");
-    console.log( fullCarts);
+    console.log(fullCarts);
     console.log("FullCarts[0].productDetails:", fullCarts[0].productDetails);
     console.log("Finished creating cart items!");
 
@@ -471,7 +472,6 @@ async function createInitialCartItems() {
     throw error;
   }
 }
-
 
 async function rebuildDB() {
   try {

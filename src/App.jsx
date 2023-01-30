@@ -15,7 +15,6 @@ import AuthForm from './front-end/components/AuthForm';
 
 
 function App() {
-  
   const [token, setToken] = useState(null);
   const [user, setUser] = useState({});
 
@@ -25,7 +24,7 @@ function App() {
   useEffect(() => {
     if(!user) {
       const getMe = async () => {
-        const response = await fetchMe();
+        const response = await fetchMe(token);
         const user = await response;
         setUser(user)
         console.log("USER HERE: ", user)
@@ -65,7 +64,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header token={token} setToken={setToken} user={user} setUser={setUser}/>
+      <Header  token={token} setToken={setToken} user={user} setUser={setUser}/>
       <Navbar token={token} />
       <div className='mainBody'>
         <Routes>
@@ -81,7 +80,7 @@ function App() {
           {token &&
           <Route path='/profile/myorders' element={<OrderHistory />}/>
           }
-          <Route path='/products' element={<Products />}/>
+          <Route path='/products' element={<Products  />}/>
           <Route path='/revieworder' element={<ReviewOrder />}/>
           <Route path='/checkout' element={<Checkout />}/>
           <Route path='/ordercomplete' element={<OrderComplete />}/>

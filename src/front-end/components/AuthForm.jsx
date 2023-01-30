@@ -1,12 +1,21 @@
 import { useState, useRef } from "react";
 import { registerUser, logInUser } from "../api/auth"
+import {useNavigate} from 'react-router-dom'
 
 const AuthForm = ({ setToken, setUser }) => {
     const [ isLogIn, setIsLogIn ] = useState(0);
+    const [rememberMe, setRememberMe] = useState(false)
     let usernameRef = useRef()
     let passwordRef = useRef()
     let emailRef = useRef()
     let confirmRef = useRef()
+    // let firstNameRef = useRef()
+    // let lastNameRef = useRef()
+    // let addressRef = useRef()
+    // let telephoneRef = useRef()
+
+    const navigate = useNavigate()
+
 
     const authPageData = {
         headerString: ["No account? Click Register to create one.", "Already have an account? Click Login."],
@@ -34,10 +43,13 @@ return(
             e.preventDefault() 
         try {
             if ( !isLogIn || comparePasswords() ) {
-                const result = await authPageData.authFuncs[isLogIn](usernameRef.current.value, passwordRef.current.value)
+                const result = await authPageData.authFuncs[isLogIn](emailRef?.current?.value, usernameRef.current.value, passwordRef.current.value)
                 setToken(result.token)
                 setUser(result.user)
+                rememberMe ? localStorage.setItem('token', result.token) : null;
+                rememberMe ? localStorage.setItem('user', JSON.stringify(result.user)) : null;
                 console.log("THIS IS MY RESULT:", result)
+                navigate('/')
             } else {
                 alert("Password must match.")
             }
@@ -55,22 +67,31 @@ return(
         </div>
         <div> 
             <label htmlFor="username"> Username: </label>
-            <input type="text" minLength={1} required={true} placeholder="username" ref={usernameRef} />
+            <input type="text" minLength={1} required={true} placeholder="Username" ref={usernameRef} />
         </div>
         <div> 
             <label htmlFor="password"> Password: </label>
-            <input type="password" minLength={8} required={true} placeholder="password" ref={passwordRef} />
+            <input type="password" minLength={8} required={true} placeholder="Password" ref={passwordRef} />
         </div>
         <div> 
             { isLogIn === 1 && (
                 <>
                 <label htmlFor="password"> Confirm Password: </label>
-                <input type="password" minLength={8} required={true} placeholder="password" ref={confirmRef} />
+                <input type="password" minLength={8} required={true} placeholder="Password" ref={confirmRef} />
+                {/* <label htmlFor="firstname"> First Name: </label>
+                <input type="text" placeholder="First Name" ref={firstNameRef} />
+                <label htmlFor="lastname"> Last Name: </label>
+                <input type="text" placeholder="Last Name" ref={lastNameRef} />
+                <label htmlFor="address"> Address: </label>
+                <input type="text" placeholder="Address" ref={addressRef} />
+                <label htmlFor="telephone"> Phone Number: </label>
+                <input type="text" placeholder="Phone Number" ref={telephoneRef} /> */}
                 </>
             )}
         </div>
         <input type="submit" value={authPageData.submitButton[isLogIn]} />
-
+        <label htmlFor="remember">Remember Me</label>
+        <input type="checkbox" onChange={() => { setRememberMe(!rememberMe) }}/>
         </form>
     </div>
 )
