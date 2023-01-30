@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
-const PORT = 5173;
+const PORT = 3000;
 const API_URL = `http://localhost:${PORT}/api`;
 
 //GET
