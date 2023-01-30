@@ -1,8 +1,8 @@
-//userInitState
-export const userInitState = {
-  user: JSON.parse(window.localStorage.getItem("user")),
-  token: window.localStorage.getItem("token"),
-};
+// //userInitState
+// export const userInitState = {
+//   user: JSON.parse(window.localStorage.getItem("user")),
+//   token: window.localStorage.getItem("token"),
+// };
 //productsInitState
 export const productsInitState = {
   products: [],
@@ -11,8 +11,9 @@ export const productsInitState = {
 
 //cartInitState
 export const cartInitState = {
-  cart: [],
-  itemCount: 0
+  carts: [],
+  items: [],
+  itemCount: 0,
 };
 
 //ordersInitState
@@ -61,12 +62,17 @@ export const productReducer = (draft, action) => {
 export const cartReducer = (draft, action) => {
   const { type, payload } = action;
   switch (type) {
+    case "populate_carts":
+      draft.carts = payload;
+      break;
     case "add_item_to_cart":
-      draft.cart.push(payload);
+      draft.items.push(payload);
       draft.itemCount += payload.qty;
       break;
     case "remove_item_from_cart":
-      draft.cart = draft.cart.filter((cartItem) => cartItem.id !== payload.id);
+      draft.items = draft.items.filter(
+        (cartItem) => cartItem.id !== payload.id
+      );
       draft.itemCount -= payload.qty;
       break;
     default:

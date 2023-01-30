@@ -13,9 +13,9 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use("/api", router);
 app.use((req, res, next) => {
-  console.log("<____Body Logger START____>");
-  console.log(req.body);
-  console.log("<_____Body Logger END_____>");
+  // console.log("<____Body Logger START____>");
+  // console.log(req.body);
+  // console.log("<_____Body Logger END_____>");
 
   next();
 });

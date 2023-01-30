@@ -1,7 +1,7 @@
 const { Pool } = require("pg");
 
 const connectionString =
-  process.env.DATABASE_URL || "https://localhost:5432/threedglasses";
+  process.env.DATABASE_URL || "https://localhost:5173/threedglasses";
 
 const client = new Pool({
   connectionString,
@@ -48,7 +48,7 @@ module.exports = client;
 //   });
 // } else {
 //   // local / heroku client config
-  
+
 //   client = new Pool(DB_URL);
 // }
 
