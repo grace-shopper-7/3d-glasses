@@ -15,10 +15,6 @@ usersRouter.use((req, res, next) => {
   next();
 });
 
-usersRouter.get('/test', async (req, res, next) => {
-  res.send("<p>Hello world</p>");
-})
-
 // POST /api/users/register
 usersRouter.post("/register", async (req, res, next) => {
   const { email, username, password, firstName, lastName, address, telephone } =
@@ -83,7 +79,7 @@ usersRouter.post("/register", async (req, res, next) => {
 usersRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
 
-  console.log(username, password);
+  console.log("User:", username, "Password:", password);
 
   // If no username or password provided, throw an error
   if (!username || !password) {

@@ -43,7 +43,7 @@ return(
             e.preventDefault() 
         try {
             if ( !isLogIn || comparePasswords() ) {
-                const result = await authPageData.authFuncs[isLogIn](emailRef?.current?.value, usernameRef.current.value, passwordRef.current.value)
+                const result = await authPageData.authFuncs[isLogIn](usernameRef.current.value, passwordRef.current.value, emailRef?.current?.value)
                 setToken(result.token)
                 setUser(result.user)
                 rememberMe ? localStorage.setItem('token', result.token) : null;
