@@ -1,90 +1,89 @@
 /* eslint-disable no-useless-catch */
 const express = require("express");
 const usersRouter = express.Router();
-const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = process.env;
-const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
+// const { JWT_SECRET } = process.env;
+const bcrypt = require("bcrypt");
 const { getUserByUsername, createUser } = require("../db/users");
-const { requireUser } = require('./helpers');
+const { requireUser } = require("./helpers");
 
 // const { requireUser } = require('./utils');
 
 usersRouter.use((req, res, next) => {
-    console.log("A request is being made to /users.");
+  console.log("A request is being made to /users.");
 
-    next();
+  next();
 });
 
 // POST /api/users/register
-usersRouter.post("/register", async (req, res, next) =>{
-  const {
-    username, 
-    password,
-    firstName,
-    lastName,
-    address,
-    telephone,
-    email
-  } = req.body;
+usersRouter.post("/register", async (req, res, next) => {
+  const { email, username, password, firstName, lastName, address, telephone } =
+    req.body;
 
   try {
     const _user = await getUserByUsername(username);
 
     if (_user) {
-      res.status (401);
-      next ({
+      res.status(401);
+      next({
         name: "userExistError",
         message: `User ${username} is already taken.`,
-      });   
-    }else if (password.length < 8) {
-      res.status (401);
-      next ({
+      });
+    } else if (password.length < 8) {
+      res.status(401);
+      next({
         name: "passwordLengthError",
         message: `Password is too short.`,
-      });   
-    }else {
+      });
+    } else {
       const user = await createUser({
-        username, 
+        email,
+        username,
         password,
         firstName,
         lastName,
         address,
         telephone,
-        email
       });
 
       if (!user) {
-        next({name: "UserCreationError", message: "There was a problem with registration"})
-      } else{
-        const token = jwt.sign({
-          id: user.id,
-          username
-      }, process.env.JWT_SECRET, {
-          expiresIn: '1w'
-      });
+        next({
+          name: "UserCreationError",
+          message: "There was a problem with registration",
+        });
+      } else {
+        const token = jwt.sign(
+          {
+            id: user.id,
+            username: user.username,
+          },
+          `${process.env.JWT_SECRET}`,
+          {
+            expiresIn: "1w",
+          }
+        );
 
-      res.send({
+        res.send({
           message: "Thank you for signing up!",
           token,
-          user
-      });
+          user: user,
+        });
       }
     }
-    
-  } catch ({name, message}) {
-    next({name, message})
+  } catch ({ name, message }) {
+    next({ name, message });
   }
-})
+});
 
 // POST /api/users/login
-usersRouter.post('/login', async (req, res, next) => {
-  const {username, password} = req.body;
+usersRouter.post("/login", async (req, res, next) => {
+  const { username, password } = req.body;
 
   // If no username or password provided, throw an error
   if (!username || !password) {
     next({
       name: "MissingCredentialsError",
-      message: "Please supply both a username and password"
+      message: "Please supply both a username and password",
     });
   }
 
@@ -95,30 +94,34 @@ usersRouter.post('/login', async (req, res, next) => {
 
     if (user && passwordsMatch) {
       // create a token & return to user
-      const token = jwt.sign({id: user.id, username}, process.env.JWT_SECRET, {expiresIn: '1w'});
-      res.send({ message: "You are now logged in!", token, user});
+      const token = jwt.sign(
+        { id: user.id, username: user.username },
+        `${process.env.JWT_SECRET}`,
+        { expiresIn: "1w" }
+      );
+      res.send({ message: "You are now logged in!", token, user });
     } else {
       next({
         name: "IncorrectCredentialsError",
-        message: "Username or password is incorrect."
+        message: "Username or password is incorrect.",
       });
     }
-  } catch ({name, message}) {
-    next({name, message});
+  } catch ({ name, message }) {
+    next({ name, message });
   }
-})
+});
 
 // GET  /api/users/me * REQUIRES LOGIN
-usersRouter.get('/me', requireUser, async (req, res, next) => {
-  const {username} = req.body;
+usersRouter.get("/me", requireUser, async (req, res, next) => {
+  const { username } = req.body;
 
   try {
     const user = await getUserByUsername(username);
     res.send(req.user);
-  } catch ({name, message}) {
-    next({name, message});
+  } catch ({ name, message }) {
+    next({ name, message });
   }
-})
+});
 
 // GET  /api/users/:username/orderhistory * REQUIRES LOGIN
 
@@ -129,9 +132,9 @@ usersRouter.get('/me', requireUser, async (req, res, next) => {
 // Further Routes go here!
 
 usersRouter.use((req, res, next) => {
-    console.log("Now leaving /users.");
+  console.log("Now leaving /users.");
 
-    next();
+  next();
 });
 
 module.exports = usersRouter;

@@ -1,23 +1,46 @@
-const client = require ("./client");
+const client = require("./client");
 
-
-async function createSession ({userId, totalPrice}) {
+async function createSession({ userId, totalPrice }) {
   try {
-    const {rows: [session]} = await client.query (`
+    const {
+      rows: [session],
+    } = await client.query(
+      `
     INSERT INTO session ("userId", "totalPrice")
     VALUES ($1, $2)
     RETURNING *;
-    `, [userId, totalPrice])
+    `,
+      [userId, totalPrice]
+    );
     return session;
   } catch (error) {
-    console.error ("error in create session", error)
+    console.error("error in create session", error);
     throw error;
   }
 }
 
-async function getFullCarts () {
+async function getCartBySessionId(id) {
   try {
-    const {rows: carts} = await client.query (`
+    const {
+      rows: [cart],
+    } = await client.query(
+      `
+      SELECT * FROM sessions
+      WHERE id= $1
+      `,
+      [id]
+    );
+    if (!cart) {
+      return null;
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getFullCarts() {
+  try {
+    const { rows: carts } = await client.query(`
     SELECT session.*, users.username as "username"
     FROM session
     JOIN users on session."userId" = users.id;
@@ -35,33 +58,29 @@ async function getFullCarts () {
     }
     return carts;
   } catch (error) {
-    console.error (error)
-    throw error
+    console.error(error);
+    throw error;
   }
 }
 
-async function updateCart({totalPrice, id}) {
-  
+async function updateCart({ totalPrice, id }) {
   try {
-    
-      const {
-        rows: [updatedCart],
-      } = await client.query(
-        `UPDATE session
+    const {
+      rows: [updatedCart],
+    } = await client.query(
+      `UPDATE session
       SET "totalPrice" = ($1)
       WHERE id= ${id}
       RETURNING *;`,
-        [totalPrice]
-      );
+      [totalPrice]
+    );
 
-      return updatedCart;
-    
+    return updatedCart;
   } catch (error) {
     console.error("Error in updateCart", error);
-    throw error
+    throw error;
   }
 }
-
 
 async function deleteCart(id) {
   try {
@@ -76,14 +95,14 @@ async function deleteCart(id) {
     return deleted;
   } catch (error) {
     console.error("Error in deleteCart", error);
-    throw error
+    throw error;
   }
 }
 
-
 module.exports = {
   createSession,
+  getCartBySessionId,
   getFullCarts,
   updateCart,
-  deleteCart
-}
+  deleteCart,
+};

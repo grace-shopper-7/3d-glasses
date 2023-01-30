@@ -4,11 +4,13 @@ import { NavLink } from 'react-router-dom'
 import Modal from 'react-modal'
 import Cart from './Cart'
 import {AiOutlineShoppingCart} from 'react-icons/ai'
+import { useLocation } from 'react-router-dom'
 // import AuthForm from './AuthForm'
 
 
-const Header = ({token, setToken, user, setUser}) => {
+const Header = ({token, setToken, user, setUser, cart, setCart}) => {
   const [modalIsOpen, setIsOpen] = useState(false)
+  const location = useLocation()
 
   //modal funcs
   function openModal() {
@@ -40,11 +42,17 @@ const Header = ({token, setToken, user, setUser}) => {
               <button className='sign-in-out-button' onClick={signOut}>Sign Out!</button>
               </NavLink>
             </>
-          : <>
+          : null 
+          } 
+          {location.pathname.includes("revieworder") ? 
+          null
+          :
+          <>
             <p style={{height: '1rem'}}></p>
               <button className='cart-button' onClick={!modalIsOpen? openModal : closeModal}><AiOutlineShoppingCart /></button>
           </>
           }
+          
         </div>
       </div>
       <Modal 
@@ -56,7 +64,7 @@ const Header = ({token, setToken, user, setUser}) => {
       portalClassName="ModalPortal"
       contentLabel="Login Modal"
       >
-        <Cart closeModal={closeModal}/>
+        <Cart cart={cart} setCart={setCart} closeModal={closeModal}/>
       </Modal>
     </>
   )

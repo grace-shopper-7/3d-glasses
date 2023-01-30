@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
-const API_URL = "http://localhost:3000/api";
+const PORT = 5173;
+const API_URL = `http://localhost:${PORT}/api`;
 
 //GET
 export const fetchProducts = async () => {
   try {
-    const response = await fetch(`${API_URL}/products}`);
+    const response = await fetch(`${API_URL}/products/`);
     const products = await response.json();
+    console.log(products);
     return products;
   } catch (error) {
     throw error;
@@ -176,7 +178,7 @@ export const postReviewToProduct = async (body, productId, token) => {
 
 export const postItemToCart = async (body, sessionId) => {
   try {
-    const response = await fetch(`${API_URL}/cartitems/${sessionId}`, {
+    const response = await fetch(`${API_URL}/cartItems/${sessionId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -207,7 +209,7 @@ export const postOrder = async () => {
 
 export const postSession = async () => {
   try {
-    const response = await fetch(`${API_URL / sessions}`, {
+    const response = await fetch(`${API_URL}/sessions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
