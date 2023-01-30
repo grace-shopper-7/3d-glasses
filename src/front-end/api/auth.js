@@ -22,7 +22,7 @@ export const registerUser = async (email, username, password) => {
   }
 };
 
-export const logInUser = async (email, username, password) => {
+export const logInUser = async (username, password) => {
   try {
     const response = await fetch(`${API_URL}/users/login`, {
       method: "POST",
@@ -30,7 +30,6 @@ export const logInUser = async (email, username, password) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email,
         username,
         password,
       }),

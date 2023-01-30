@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { useEffect } from "react"
-import { fetchProducts } from "../api/fetch"
+
+import React, { useEffect, useState } from "react";
+import { fetchDummyProducts, fetchProducts, fetchDummyCartBySession } from "../api/fetch"
 import SingleProduct from "./SingleProduct"
 
 
@@ -24,6 +24,7 @@ const Products = () => {
                 <SingleProduct product={product} products={productList} />
                 </div>)
             })}
+            <p>Helloworld</p>
         </div>
         )
 }
