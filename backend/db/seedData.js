@@ -11,9 +11,9 @@ const {
   editUser,
 } = require("./users");
 
-const { createPaymentDetails } = require("./paymentDetails");
-const { createSession, getFullCarts } = require("./cart");
-const { createCartItems } = require("./cartItems");
+const {createPaymentDetails} = require ('./paymentDetails');
+const {createSession, getFullCarts} = require ('./cart')
+const {createCartItems, getCartItemsBySessionId} = require ('./cartItems')
 
 async function dropTables() {
   try {
@@ -464,6 +464,9 @@ async function createInitialCartItems() {
     console.log(fullCarts);
     console.log("FullCarts[0].productDetails:", fullCarts[0].productDetails);
     console.log("Finished creating cart items!");
+
+    const something = await getCartItemsBySessionId(1);
+    console.log("CartItems for sessionId 1:", something);
   } catch (error) {
     console.error("Error creating cart items!");
     throw error;

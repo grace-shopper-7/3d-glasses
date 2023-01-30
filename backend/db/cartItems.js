@@ -33,6 +33,21 @@ async function getAllCartItems() {
   }
 }
 
+async function getCartItemsBySessionId(sessionId) {
+  try {
+    const { rows: cartItems } = await client.query(`
+      SELECT *
+      FROM cart_items
+      WHERE "sessionId"=$1
+    `, [sessionId]);
+
+    return cartItems;
+  } catch (error) {
+    console.error("Error in getCartItemsBySessionId", error);
+    throw error;
+  }
+}
+
 async function updateCartItemsQuantity({ id, ...fields }) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -41,16 +56,15 @@ async function updateCartItemsQuantity({ id, ...fields }) {
   try {
     if (setString.length > 0) {
       const {
-        rows: [updatedCartItemsQuantity],
-      } = await client.query(
-        `UPDATE cartItems
-      SET ${setString}
-      WHERE id= ${id}
-      RETURNING *;`,
-        Object.values(fields)
-      );
+        rows: [updatedCartItems],
+      } = await client.query(`
+        UPDATE cart_items
+        SET ${setString}
+        WHERE id= ${id}
+        RETURNING *;
+      `, Object.values(fields));
 
-      return updatedCartItemsQuantity;
+      return updatedCartItems;
     }
   } catch (error) {
     console.error("Error in updateCartItemsQuantity", error);
@@ -80,4 +94,5 @@ module.exports = {
   getAllCartItems,
   updateCartItemsQuantity,
   deleteCartItem,
+  getCartItemsBySessionId
 };
