@@ -5,15 +5,14 @@ import {useNavigate} from 'react-router-dom'
 const AuthForm = ({ setToken, setUser }) => {
     const [ isLogIn, setIsLogIn ] = useState(0);
     const [rememberMe, setRememberMe] = useState(false)
-    let usernameRef = useRef()
-    let passwordRef = useRef()
-    let emailRef = useRef()
-    let confirmRef = useRef()
+    let usernameRef = useRef("")
+    let passwordRef = useRef("")
+    let emailRef = useRef("")
+    let confirmRef = useRef("")
     // let firstNameRef = useRef()
     // let lastNameRef = useRef()
     // let addressRef = useRef()
     // let telephoneRef = useRef()
-
     const navigate = useNavigate()
 
 
@@ -43,12 +42,12 @@ return(
             e.preventDefault() 
         try {
             if ( !isLogIn || comparePasswords() ) {
-                const result = await authPageData.authFuncs[isLogIn](usernameRef.current.value, passwordRef.current.value, emailRef?.current?.value)
+                const result = await authPageData.authFuncs[isLogIn](usernameRef.current.value, passwordRef.current.value, emailRef?.current?.value) 
+                console.log("THIS IS MY RESULTHEHERHEHRHE:", result)
                 setToken(result.token)
                 setUser(result.user)
                 rememberMe ? localStorage.setItem('token', result.token) : null;
                 rememberMe ? localStorage.setItem('user', JSON.stringify(result.user)) : null;
-                console.log("THIS IS MY RESULT:", result)
                 navigate('/')
             } else {
                 alert("Password must match.")

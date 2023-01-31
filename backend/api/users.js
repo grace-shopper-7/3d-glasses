@@ -2,7 +2,7 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
-// const { JWT_SECRET } = process.env;
+const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
 const { getUserByUsername, createUser } = require("../db/users");
 const { requireUser } = require("./helpers");
@@ -13,6 +13,10 @@ usersRouter.use((req, res, next) => {
   console.log("A request is being made to /users.");
 
   next();
+});
+
+usersRouter.get("/test", async (req, res, next) => {
+  res.send("<p>Hello world</p>");
 });
 
 // POST /api/users/register
@@ -79,7 +83,7 @@ usersRouter.post("/register", async (req, res, next) => {
 usersRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
 
-  console.log("User:", username, "Password:", password);
+  console.log(username, password);
 
   // If no username or password provided, throw an error
   if (!username || !password) {

@@ -11,9 +11,9 @@ const {
   editUser,
 } = require("./users");
 
-const {createPaymentDetails} = require ('./paymentDetails');
-const {createSession, getFullCarts} = require ('./cart')
-const {createCartItems, getCartItemsBySessionId} = require ('./cartItems')
+const { createPaymentDetails } = require("./paymentDetails");
+const { createSession, getFullCarts } = require("./cart");
+const { createCartItems, getCartItemsBySessionId } = require("./cartItems");
 
 async function dropTables() {
   try {
@@ -49,8 +49,8 @@ async function createTables() {
           "firstName" VARCHAR(255),
           "lastName" VARCHAR(255),
           address VARCHAR(255),
-          telephone TEXT,
-          email VARCHAR(255) UNIQUE NOT NULL
+          telephone VARCHAR(25),
+          email VARCHAR(255) NOT NULL
       );
 
       CREATE TABLE products (
