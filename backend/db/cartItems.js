@@ -36,9 +36,10 @@ async function getAllCartItems() {
 async function getCartItemsBySessionId(sessionId) {
   try {
     const { rows: cartItems } = await client.query(`
-      SELECT *
+      SELECT *, products.id AS "productId", products.name, products.price, products.sku, products."photoURL"
       FROM cart_items
-      WHERE "sessionId"=$1
+      JOIN products ON products.id = cart_items."productId"
+      WHERE "sessionId" = $1;
     `, [sessionId]);
 
     return cartItems;

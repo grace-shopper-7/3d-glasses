@@ -35,4 +35,4 @@ orderLinesRouter.get('/:orderId', requireUser, async (req, res, next) => {
   }
 })
 
-module.exports = orderLinesRouter
+module.exports = orderLinesRouter;

@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom'
 // import AuthForm from './AuthForm'
 
 
-const Header = ({token, setToken, user, setUser, cart, setCart}) => {
+const Header = ({token, setToken, user, setUser, cart, setCart, sessionId}) => {
   const [modalIsOpen, setIsOpen] = useState(false)
   const location = useLocation()
 
@@ -64,7 +64,13 @@ const Header = ({token, setToken, user, setUser, cart, setCart}) => {
       portalClassName="ModalPortal"
       contentLabel="Login Modal"
       >
-        <Cart cart={cart} setCart={setCart} closeModal={closeModal}/>
+        <Cart 
+          cart={cart} 
+          setCart={setCart} 
+          closeModal={closeModal} 
+          sessionId={sessionId} 
+          token={token} 
+        />
       </Modal>
     </>
   )

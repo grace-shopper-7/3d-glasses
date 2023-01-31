@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
 import { registerUser, logInUser } from "../api/auth"
 import {useNavigate} from 'react-router-dom'
+import { fetchSessionByUser, postSession } from "../api/fetch";
 
-const AuthForm = ({ setToken, setUser }) => {
+const AuthForm = ({ setToken, setUser, setSessionId }) => {
     const [ isLogIn, setIsLogIn ] = useState(0);
     const [rememberMe, setRememberMe] = useState(false)
     let usernameRef = useRef("")
@@ -48,6 +49,17 @@ return(
                 setUser(result.user)
                 rememberMe ? localStorage.setItem('token', result.token) : null;
                 rememberMe ? localStorage.setItem('user', JSON.stringify(result.user)) : null;
+                const response1 = await fetchSessionByUser(result.user.id, result.token);
+                if (response1) {
+                    console.log("fetchSessionByUser:", response1);
+                    setSessionId(response1.id);
+                    rememberMe ? localStorage.setItem('sessionId', response1.id) : null;
+                } else {
+                    const response2 = await postSession(result.token);
+                    console.log("postSession:", response2);
+                    setSessionId(response2.id);
+                    rememberMe ? localStorage.setItem('sessionId', response2.id) : null;
+                }
                 navigate('/')
             } else {
                 alert("Password must match.")
