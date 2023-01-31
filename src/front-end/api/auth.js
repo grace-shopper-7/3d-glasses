@@ -1,14 +1,7 @@
 const API_URL = "http://localhost:3000/api";
 
-export const registerUser = async ({
-  username,
-  password,
-  firstName,
-  lastName,
-  address,
-  telephone,
-  email,
-}) => {
+export const registerUser = async (username, password, email) => {
+  console.log("THESE ARE THEM:", username, password, email);
   try {
     const response = await fetch(`${API_URL}/users/register`, {
       method: "POST",
@@ -16,13 +9,9 @@ export const registerUser = async ({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: `${username}`,
-        password: `${password}`,
-        firstName: `${firstName}`,
-        lastName: `${lastName}`,
-        address: `${address}`,
-        telephone: `${telephone}`,
-        email: `${email}`
+        username,
+        password,
+        email,
       }),
     });
     const result = await response.json();
@@ -43,7 +32,7 @@ export const logInUser = async (username, password) => {
       },
       body: JSON.stringify({
         username: `${username}`,
-        password: `${password}`
+        password: `${password}`,
       }),
     });
     const result = await response.json();
