@@ -17,13 +17,17 @@ async function createUser({
   // console.log("this is my hashed password--------->", hashedPassword);
 
   try {
-    const { rows: [ user ] } = await client.query(
+    const {
+      rows: [user],
+    } = await client.query(
       `
         INSERT INTO users( username, password, "firstName", "lastName", address, telephone, email)
         VALUES ($1, $2, $3, $4, $5, $6, $7)
         ON CONFLICT (username) DO NOTHING
         RETURNING *;
-        `, [username, hashedPassword, firstName, lastName, address, telephone, email] );
+        `,
+      [username, hashedPassword, firstName, lastName, address, telephone, email]
+    );
 
     // console.log("This is a user ------------>", user);
     return user;
@@ -100,18 +104,23 @@ async function getAllUsers() {
 async function editUser({ id, ...fields }) {
   const keys = Object.keys(fields);
 
-  const setString = keys.map(
-    (key, index) => `"${key}"=$${index + 1}`
-  ).join(', ');
+  const setString = keys
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
 
   try {
     if (setString.length > 0) {
-      const { rows: [ updatedUser ] } = await client.query(`
+      const {
+        rows: [updatedUser],
+      } = await client.query(
+        `
         UPDATE users
         SET ${setString}
         WHERE id=${id}
         RETURNING *;
-      `, Object.values(fields));
+      `,
+        Object.values(fields)
+      );
 
       delete updatedUser.password;
 
@@ -139,10 +148,9 @@ async function deleteUser(id) {
     return deleted;
   } catch (error) {
     console.error("Error in deleteUsers", error);
-    throw error
+    throw error;
   }
 }
-
 
 module.exports = {
   createUser,
@@ -151,5 +159,5 @@ module.exports = {
   getUserByUsername,
   getAllUsers,
   editUser,
-  deleteUser
+  deleteUser,
 };
