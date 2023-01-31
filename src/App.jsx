@@ -25,17 +25,17 @@ function App() {
   // REVISIT: you're calling fetchMe() without a token and then
   // saying fetchMe() needs a token on auth.js
 
-  useEffect(() => {
-    if(!user) {
-      const getMe = async () => {
-        const response = await fetchMe(token);
-        const user = await response;
-        setUser(user)
-        console.log("USER HERE: ", user)
-      }
-      getMe()
-    }
-  }, [user])
+  // useEffect(() => {
+  //   if(!user) {
+  //     const getMe = async () => {
+  //       const response = await fetchMe(token);
+  //       const user = await response;
+  //       setUser(user)
+  //       console.log("USER HERE: ", user)
+  //     }
+  //     getMe()
+  //   }
+  // }, [user])
 
   // Unsure of how to console.log the token/user data, so if this code looks wrong feel free to delete as I can't
   // tell if lines 37-62 are working as intended.
@@ -88,7 +88,13 @@ function App() {
             element={<Home />}
           />
           {!token &&
-          <Route path='/loginregister' element={<AuthForm setUser={setUser} setToken={setToken} setSessionId={setSessionId} />}/>
+          <Route path='/loginregister' element={<AuthForm 
+                                                  setUser={setUser} 
+                                                  setToken={setToken} 
+                                                  setSessionId={setSessionId} 
+                                                  user={user} 
+                                                  token={token} 
+                                                />}/>
           }
           {token &&
           <Route path='/profile' element={<Profile />}/>

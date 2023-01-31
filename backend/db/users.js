@@ -6,10 +6,6 @@ const saltRounds = 10;
 async function createUser({
   username,
   password,
-  firstName,
-  lastName,
-  address,
-  telephone,
   email,
 }) {
   const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -21,12 +17,12 @@ async function createUser({
       rows: [user],
     } = await client.query(
       `
-        INSERT INTO users( username, password, "firstName", "lastName", address, telephone, email)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        INSERT INTO users( username, password, email )
+        VALUES ($1, $2, $3)
         ON CONFLICT (username) DO NOTHING
-        RETURNING *;
+        RETURNING id, username;
         `,
-      [username, hashedPassword, firstName, lastName, address, telephone, email]
+      [username, hashedPassword, email]
     );
 
     // console.log("This is a user ------------>", user);

@@ -213,15 +213,14 @@ export const postOrder = async () => {
   }
 };
 
-export const postSession = async ({token}) => {
+export const postSession = async (token) => {
   try {
     const response = await fetch(`${API_URL}/sessions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify(body),
+      }
     });
     const result = await response.json();
     return result;
