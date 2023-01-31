@@ -3,7 +3,7 @@ const API_URL = "http://localhost:3000/api";
 export const registerUser = async (username, password, email) => {
   console.log("THESE ARE THEM:", username, password, email);
   try {
-    const response = await fetch(`${API_URL}/users/register`, {
+    const response1 = await fetch(`${API_URL}/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -14,9 +14,21 @@ export const registerUser = async (username, password, email) => {
         email,
       }),
     });
-    const result = await response.json();
-    console.log("THIS IS THE RESULT IN REGISTERUSER", result);
-    return result;
+    const result1 = await response1.json();
+    console.log("THIS IS THE RESULT IN REGISTERUSER(user)", result1);
+
+    const response2 = await fetch(`${API_URL}/sessions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${result1.token}`
+      },
+    });
+    const result2 = await response2.json();
+    console.log("THIS IS THE RESULT IN REGISTERUSER(session)", result2);
+
+    const toReturn = {userdata: result1, session: result2};
+    return toReturn;
   } catch (err) {
     console.error("There was a problem registering: ", err);
     alert("Registration Error!");

@@ -3,7 +3,7 @@ import { registerUser, logInUser } from "../api/auth"
 import {useNavigate} from 'react-router-dom'
 import { fetchSessionByUser, postSession } from "../api/fetch";
 
-const AuthForm = ({ setToken, setUser, setSessionId }) => {
+const AuthForm = ({ setToken, setUser, setSessionId, token, user }) => {
     const [ isLogIn, setIsLogIn ] = useState(0);
     const [rememberMe, setRememberMe] = useState(false)
     let usernameRef = useRef("")
@@ -45,20 +45,23 @@ return(
             if ( !isLogIn || comparePasswords() ) {
                 const result = await authPageData.authFuncs[isLogIn](usernameRef.current.value, passwordRef.current.value, emailRef?.current?.value) 
                 console.log("THIS IS MY RESULTHEHERHEHRHE:", result)
-                setToken(result.token)
-                setUser(result.user)
-                rememberMe ? localStorage.setItem('token', result.token) : null;
-                rememberMe ? localStorage.setItem('user', JSON.stringify(result.user)) : null;
-                const response1 = await fetchSessionByUser(result.user.id, result.token);
-                if (response1) {
-                    console.log("fetchSessionByUser:", response1);
-                    setSessionId(response1.id);
-                    rememberMe ? localStorage.setItem('sessionId', response1.id) : null;
+                if (!result.session) {
+                    setToken(result.token)
+                    rememberMe ? localStorage.setItem('token', result.token) : null;
+                    setUser(result.user)
+                    rememberMe ? localStorage.setItem('user', JSON.stringify(result.user)) : null;
+                    const response = await fetchSessionByUser(result.user.id, result.token);
+                    console.log(response);
+                    console.log("fetchSessionByUser:", response);
+                    setSessionId(response.id);
+                    rememberMe ? localStorage.setItem('sessionId', response.id) : null;
                 } else {
-                    const response2 = await postSession(result.token);
-                    console.log("postSession:", response2);
-                    setSessionId(response2.id);
-                    rememberMe ? localStorage.setItem('sessionId', response2.id) : null;
+                    setToken(result.userdata.token)
+                    rememberMe ? localStorage.setItem('token', result.userdata.token) : null;
+                    setUser(result.userdata.user)
+                    rememberMe ? localStorage.setItem('user', JSON.stringify(result.userdata.user)) : null;
+                    setSessionId(result.session.id);
+                    rememberMe ? localStorage.setItem('sessionId', result.session.id) : null;
                 }
                 navigate('/')
             } else {

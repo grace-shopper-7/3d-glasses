@@ -21,7 +21,7 @@ usersRouter.get("/test", async (req, res, next) => {
 
 // POST /api/users/register
 usersRouter.post("/register", async (req, res, next) => {
-  const { email, username, password, firstName, lastName, address, telephone } =
+  const { username, password, email } =
     req.body;
 
   try {
@@ -41,13 +41,9 @@ usersRouter.post("/register", async (req, res, next) => {
       });
     } else {
       const user = await createUser({
-        email,
         username,
         password,
-        firstName,
-        lastName,
-        address,
-        telephone,
+        email,
       });
 
       if (!user) {
