@@ -18,6 +18,7 @@ const Cart = ({closeModal, sessionId, token, cart, setCart}) => {
         console.log(cart);
     }, [])
 
+
     if (cart?.length > 0)  {
          let total = cart
          .map((orderItem) => {
