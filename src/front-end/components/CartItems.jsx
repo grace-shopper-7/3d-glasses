@@ -21,7 +21,7 @@ const CartItems = ({cartItem, cart, setCart}) => {
     }
     return(
         <div className="cart-item">       
-        <b>{cartItem.details.name}</b>
+        <b>{cartItem.name}</b>
         <button onClick={handleDelete}><IoTrashOutline /></button>
         <div className="quantity"><p>qty: {cartItem.quantity}</p>
         <button onClick={incrementCounter}>+</button> <button onClick={decrementCounter}>-</button>
@@ -30,13 +30,13 @@ const CartItems = ({cartItem, cart, setCart}) => {
         {isOpen ? 
          (
             <div>
-                {cartItem.details?.description}
+                {cartItem.description}
             </div>  
         )
         :
          null
         }
-        <p>${cartItem.details?.price}</p>
+        <p>${cartItem.price}</p>
         </div>
     )
 }

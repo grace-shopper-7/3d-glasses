@@ -82,9 +82,15 @@ export const fetchReviewsByProduct = async (productId) => {
   }
 };
 
-export const fetchCartBySession = async (sessionId) => {
+export const fetchCartBySession = async (sessionId, token) => {
   try {
-    const response = await fetch(`${API_URL}/cartitems/${sessionId}`);
+    const response = await fetch(`${API_URL}/cartItems/${sessionId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const cart = await response.json();
     return cart;
   } catch (error) {
@@ -207,12 +213,13 @@ export const postOrder = async () => {
   }
 };
 
-export const postSession = async () => {
+export const postSession = async ({token}) => {
   try {
     const response = await fetch(`${API_URL}/sessions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(body),
     });

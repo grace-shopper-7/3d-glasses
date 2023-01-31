@@ -19,10 +19,11 @@ async function createOrderLine({orderId, productId, quantity}) {
 async function getOrderLinesByOrderId(orderId){
   try {
     const {rows: orderLines} = await client.query(`
-      SELECT order_lines.*, products.id as "productId", products.name, products.price, products.sku, products."photoURL"
+      SELECT order_lines.*, products.id AS "productId", products.name, products.price, products.sku, products."photoURL"
       FROM order_lines
-      WHERE "orderId" = $1
-      JOIN products on products.id = order_lines."productId";`, [orderId])
+      JOIN products ON products.id = order_lines."productId"
+      WHERE "orderId" = $1;
+    `, [orderId])
     return orderLines;
   } catch (error) {
     console.error('There was an error in getOrderLinesByOrderId', error);

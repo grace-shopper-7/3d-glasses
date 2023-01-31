@@ -17,6 +17,10 @@ import AuthForm from './front-end/components/AuthForm';
 function App() {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState({});
+  const [sessionId, setSessionId] = useState(0);
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  
 
   // REVISIT: you're calling fetchMe() without a token and then
   // saying fetchMe() needs a token on auth.js
@@ -35,13 +39,17 @@ function App() {
 
   // Unsure of how to console.log the token/user data, so if this code looks wrong feel free to delete as I can't
   // tell if lines 37-62 are working as intended.
-  // if (localStorage.token && !token) {
-  //   setToken(localStorage.token);
-  // };
+  if (localStorage.token && !token) {
+    setToken(localStorage.token);
+  };
 
-  // if (localStorage.user && !user) {
-  //   setUser(localStorage.user);
-  // };
+  if (localStorage.user && !user) {
+    setUser(localStorage.user);
+  };
+
+  if (localStorage.sessionId && !sessionId) {
+    setSessionId(localStorage.sessionId);
+  };
 
   // useEffect(()=>{
   //   if (!token && !user) {
@@ -64,7 +72,15 @@ function App() {
 
   return (
     <div className="App">
-      <Header  token={token} setToken={setToken} user={user} setUser={setUser}/>
+      <Header 
+        token={token} 
+        setToken={setToken} 
+        user={user} 
+        setUser={setUser} 
+        sessionId={sessionId}
+        cart={cart}
+        setCart={setCart} 
+      />
       <Navbar token={token} />
       <div className='mainBody'>
         <Routes>
@@ -72,7 +88,7 @@ function App() {
             element={<Home />}
           />
           {!token &&
-          <Route path='/loginregister' element={<AuthForm setUser={setUser} setToken={setToken} />}/>
+          <Route path='/loginregister' element={<AuthForm setUser={setUser} setToken={setToken} setSessionId={setSessionId} />}/>
           }
           {token &&
           <Route path='/profile' element={<Profile />}/>

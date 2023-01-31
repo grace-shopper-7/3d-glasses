@@ -1,13 +1,23 @@
 import { NavLink } from "react-router-dom"
-import { fetchCartBySession, fetchDummyCartBySession } from "../api/fetch"
+import { fetchCartBySession, fetchDummyCartBySession, fetchSessionByUser } from "../api/fetch"
 import CartItems from "./CartItems"
 import { useState } from "react"
 import { useCart } from "../state/context"
+import { useEffect } from "react"
 
 //PRODUCT DETAILS FOR PRICE, ID, QTY
-const Cart = ({closeModal}) => {
+const Cart = ({closeModal, sessionId, token, cart, setCart}) => {
 
-    const cart = fetchCartBySession(1)
+    useEffect(() => {
+        const getCartItems = async () => {
+            const cartItems = await fetchCartBySession(sessionId, token)
+            console.log(cartItems)
+            setCart(cartItems)
+        }
+        getCartItems();
+        console.log(cart);
+    }, [])
+
     if (cart?.length > 0)  {
          let total = cart
          .map((orderItem) => {
