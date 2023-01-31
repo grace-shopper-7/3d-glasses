@@ -59,8 +59,8 @@ router.use('/orderDetails', orderDetailsRouter);
 // router.use('/paymentDetails', paymentDetailsRouter);
 
 // ROUTER: /api/orderLines
-// const orderLinesRouter = require('./orderLines');
-// router.use('/orderLines', orderLinesRouter);
+const orderLinesRouter = require('./orderLines');
+router.use('/orderLines', orderLinesRouter);
 
 // ROUTER: /api/session
 const sessionRouter = require('./cart');
