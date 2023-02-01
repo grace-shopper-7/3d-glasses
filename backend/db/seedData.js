@@ -72,10 +72,13 @@ async function createTables() {
 
       CREATE TABLE payment_details (
           id SERIAL PRIMARY KEY,
-          "orderId" INTEGER REFERENCES order_details(id),
           amount NUMERIC (6, 2),
-          provider VARCHAR(255) NOT NULL,
-          status VARCHAR(255) NOT NULL,
+          "orderId" INTEGER REFERENCES order_details(id),
+          ccn VARCHAR(20) NOT NULL,
+          cvc VARCHAR(3) NOT NULL,
+          exp DATE NOT NULL,
+          billing VARCHAR(255),
+          name VARCHAR(255) NOT NULL,
           "userId" INTEGER REFERENCES users(id),
           UNIQUE ("orderId", "userId")
       );
@@ -378,23 +381,32 @@ async function createInitialPaymentDetails() {
       {
         amount: 2.0,
         orderId: 1,
-        provider: "MasterCard",
-        status: "pending",
+        ccn: 133433453453453,
+        cvc: 454,
+        exp: 09 / 34 / 3455,
+        billing: "123 E st",
+        name: "Joe Shmoe",
         userId: 1,
       },
 
       {
         amount: 0.99,
         orderId: 2,
-        provider: "AmericanExpress",
-        status: "canceled",
+        ccn: 456786546786875,
+        cvc: 454,
+        exp: 09 / 34 / 3455,
+        billing: "123 E st",
+        name: "Joe Shmoe",
         userId: 2,
       },
       {
         amount: 20.0,
         orderId: 3,
-        provider: "cash",
-        status: "completed",
+        ccn: 867543567867544,
+        cvc: 454,
+        exp: 09 / 34 / 3455,
+        billing: "123 E st",
+        name: "Joe Shmoe",
         userId: 3,
       },
     ];
