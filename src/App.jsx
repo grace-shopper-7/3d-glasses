@@ -15,7 +15,7 @@ import AuthForm from './front-end/components/AuthForm';
 
 
 function App() {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState("");
   const [user, setUser] = useState({});
   const [sessionId, setSessionId] = useState(0);
   const [cart, setCart] = useState([]);
@@ -39,17 +39,20 @@ function App() {
 
   // Unsure of how to console.log the token/user data, so if this code looks wrong feel free to delete as I can't
   // tell if lines 37-62 are working as intended.
-  if (localStorage.token && !token) {
-    setToken(localStorage.token);
-  };
-
-  if (localStorage.user && !user) {
-    setUser(localStorage.user);
-  };
-
-  if (localStorage.sessionId && !sessionId) {
-    setSessionId(localStorage.sessionId);
-  };
+  useEffect(()=>{
+    if (localStorage.token && !token) {
+      setToken(localStorage.token);
+    };
+  
+    if (localStorage.user && !user) {
+      setUser(localStorage.user);
+    };
+  
+    if (localStorage.sessionId && !sessionId) {
+      setSessionId(localStorage.sessionId);
+    };
+  }, []);
+  
 
   // useEffect(()=>{
   //   if (!token && !user) {
@@ -80,6 +83,8 @@ function App() {
         sessionId={sessionId}
         cart={cart}
         setCart={setCart} 
+        totalPrice={totalPrice}
+        setTotalPrice={setTotalPrice}
       />
       <Navbar token={token} />
       <div className='mainBody'>

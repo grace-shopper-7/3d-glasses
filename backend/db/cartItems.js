@@ -36,7 +36,7 @@ async function getAllCartItems() {
 async function getCartItemsBySessionId(sessionId) {
   try {
     const { rows: cartItems } = await client.query(`
-      SELECT *, products.id AS "productId", products.name, products.price, products.sku, products."photoURL"
+      SELECT cart_items.*, products.name, products.price, products.sku, products."photoURL"
       FROM cart_items
       JOIN products ON products.id = cart_items."productId"
       WHERE "sessionId" = $1;
@@ -64,6 +64,8 @@ async function updateCartItemsQuantity({ id, ...fields }) {
         WHERE id= ${id}
         RETURNING *;
       `, Object.values(fields));
+
+      console.log("updateCartItemsQuantity db function:", updatedCartItems);
 
       return updatedCartItems;
     }

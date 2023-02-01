@@ -283,6 +283,25 @@ export const patchSession = async (sessionId, token) => {
   }
 };
 
+export const patchCartItem = async (newQty, cartItemId, token) => {
+  try {
+    const response = await fetch(`${API_URL}/cartItems/${cartItemId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        quantity: `${newQty}`
+      })
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const patchUser = async (userId, token) => {
   try {
     const response = await fetch(`${API_URL}/users/${userId}`, {
