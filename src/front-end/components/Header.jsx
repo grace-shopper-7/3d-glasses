@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom'
 // import AuthForm from './AuthForm'
 
 
-const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, totalPrice, setTotalPrice}) => {
+const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
   const [modalIsOpen, setIsOpen] = useState(false)
   const location = useLocation()
 
@@ -29,6 +29,7 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, total
     localStorage.removeItem('user')
     setSessionId(0); 
     localStorage.removeItem('user') 
+    setIsOpen(false)
   }
   return (
     <>
@@ -41,7 +42,7 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, total
           ? <>
               <p className='greeting'>Hey, {user.username}!</p>
               <NavLink to='/'>
-              <button className='sign-in-out-button' onClick={signOut}>Sign Out!</button>
+              <button className='sign-in-out-button' onClick="signOut(); closeModal();">Sign Out!</button>
               </NavLink>
             </>
           : null 
@@ -75,6 +76,8 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, total
           token={token} 
           totalPrice={totalPrice}
           setTotalPrice={setTotalPrice}
+          editTrigger={editTrigger}
+          setEditTrigger={setEditTrigger}
         />
       </Modal>
     </>

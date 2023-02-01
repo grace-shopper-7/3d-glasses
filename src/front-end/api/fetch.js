@@ -182,14 +182,19 @@ export const postReviewToProduct = async (body, productId, token) => {
   }
 };
 
-export const postItemToCart = async (body, sessionId) => {
+export const postItemToCart = async (token, sessionId, productId, quantity) => {
   try {
-    const response = await fetch(`${API_URL}/cartItems/${sessionId}`, {
+    const response = await fetch(`${API_URL}/cartItems`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        sessionId: sessionId,
+        productId: productId,
+        quantity: quantity,
+      }),
     });
     const result = await response.json();
     return result;
@@ -219,8 +224,8 @@ export const postSession = async (token) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     const result = await response.json();
     return result;
@@ -289,18 +294,18 @@ export const patchCartItem = async (newQty, cartItemId, token) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        quantity: `${newQty}`
-      })
+        quantity: `${newQty}`,
+      }),
     });
     const result = await response.json();
     return result;
   } catch (error) {
     throw error;
   }
-}
+};
 
 export const patchUser = async (userId, token) => {
   try {
