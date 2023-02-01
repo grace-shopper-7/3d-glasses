@@ -20,6 +20,7 @@ function App() {
   const [sessionId, setSessionId] = useState(0);
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [editTrigger, setEditTrigger] = useState(false);
   
 
   // REVISIT: you're calling fetchMe() without a token and then
@@ -85,6 +86,8 @@ function App() {
         setCart={setCart} 
         totalPrice={totalPrice}
         setTotalPrice={setTotalPrice}
+        editTrigger={editTrigger}
+        setEditTrigger={setEditTrigger}
       />
       <Navbar token={token} />
       <div className='mainBody'>
@@ -107,7 +110,7 @@ function App() {
           {token &&
           <Route path='/profile/myorders' element={<OrderHistory />}/>
           }
-          <Route path='/products' element={<Products  />}/>
+          <Route path='/products' element={<Products  token={token} sessionId={sessionId} editTrigger={editTrigger} setEditTrigger={setEditTrigger} />}/>
           <Route path='/revieworder' element={<ReviewOrder cart={cart} />}/>
           <Route path='/checkout' element={<Checkout />}/>
           <Route path='/ordercomplete' element={<OrderComplete />}/>

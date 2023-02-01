@@ -6,8 +6,8 @@ import { useCart } from "../state/context"
 import { useEffect } from "react"
 
 //PRODUCT DETAILS FOR PRICE, ID, QTY
-const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPrice, setTotalPrice}) => {
-    const [editTrigger, setEditTrigger] = useState(false);
+const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
+    
 
     useEffect(() => {
         const getCartItems = async () => {
