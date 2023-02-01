@@ -69,6 +69,7 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, total
         <Cart 
           cart={cart} 
           setCart={setCart} 
+          openModal={openModal}
           closeModal={closeModal} 
           sessionId={sessionId} 
           token={token} 

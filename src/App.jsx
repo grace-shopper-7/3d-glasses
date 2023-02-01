@@ -108,7 +108,7 @@ function App() {
           <Route path='/profile/myorders' element={<OrderHistory />}/>
           }
           <Route path='/products' element={<Products  />}/>
-          <Route path='/revieworder' element={<ReviewOrder />}/>
+          <Route path='/revieworder' element={<ReviewOrder cart={cart} />}/>
           <Route path='/checkout' element={<Checkout />}/>
           <Route path='/ordercomplete' element={<OrderComplete />}/>
         </Routes>

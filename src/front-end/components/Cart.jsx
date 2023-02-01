@@ -6,7 +6,8 @@ import { useCart } from "../state/context"
 import { useEffect } from "react"
 
 //PRODUCT DETAILS FOR PRICE, ID, QTY
-const Cart = ({closeModal, sessionId, token, cart, setCart, totalPrice, setTotalPrice}) => {
+const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPrice, setTotalPrice}) => {
+    const [editTrigger, setEditTrigger] = useState(false);
 
     useEffect(() => {
         const getCartItems = async () => {
@@ -17,7 +18,7 @@ const Cart = ({closeModal, sessionId, token, cart, setCart, totalPrice, setTotal
         }
         getCartItems();
         console.log(cart);
-    }, [])
+    }, [editTrigger])
 
     let interimPrice = (+totalPrice);
 
@@ -33,10 +34,19 @@ const Cart = ({closeModal, sessionId, token, cart, setCart, totalPrice, setTotal
                 {cart?.map((cartItem) => {
                     return (
                     <div className="cart-items" key={cartItem.id}>
-                        <CartItems cartItem={cartItem} cart={cart} setCart={setCart} token={token}/>
+                        <CartItems 
+                            cartItem={cartItem} 
+                            cart={cart} 
+                            setCart={setCart} 
+                            token={token}
+                            openModal={openModal}
+                            closeModal={closeModal}
+                            editTrigger={editTrigger}
+                            setEditTrigger={setEditTrigger}
+                        />
                     </div>)
                 })}
-                <b>Total: ${interimPrice}</b>
+                <b>Total: ${interimPrice.toFixed(2)}</b>
                 <NavLink to={"/revieworder"}><button className="checkout-button" onClick={closeModal}>Review Order</button></NavLink>
             </div>
         )

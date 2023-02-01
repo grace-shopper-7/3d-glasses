@@ -5,27 +5,32 @@ import { IoTrashOutline } from 'react-icons/io5';
 import { patchCartItem } from "../api/fetch";
 
 
-const CartItems = ({cartItem, cart, setCart, token}) => {
+const CartItems = ({cartItem, cart, setCart, token, openModal, closeModal, editTrigger, setEditTrigger}) => {
     const [editId, setEditId] = useState(0);
     const [newQty, setNewQty] = useState(0);
-    const [editTrigger, setEditTrigger] = useState(false);
 
-    useEffect(() => {
-        if (editId && newQty) {
-            async function newFunc() {
-                console.log("firing patchCartItem")
-                const response = await patchCartItem(newQty, editId, token);
-                console.log("response:", response);
-            }
-            console.log("newQty, editId", newQty, editId);
-            newFunc();
-            setEditId(0);
-            setNewQty(0);
-            console.log("editId after firing:", editId);
-        }
-    }, [editTrigger]);
+    // useEffect(() => {
+    //     if (editId && newQty) {
+    //         async function newFunc() {
+    //             console.log("firing patchCartItem")
+    //             const response = await patchCartItem(newQty, editId, token);
+    //             console.log("response:", response);
+    //         }
+    //         newFunc();
+    //         setEditId(0);
+    //         setNewQty(0);
+    //         // closeModal();
+    //     }
+    // }, []);
 
-// -------------------------------------------------------------------
+    const handleSubmit = async () => {
+        console.log("firing patchCartItem")
+        const response = await patchCartItem(newQty, editId, token);
+        console.log("response:", response);
+        setEditId(0);
+        setNewQty(0);
+    }
+
     const [isOpen, setIsOpen] = useState(false);
     const handleClick = () => {
         setIsOpen(!isOpen)
@@ -41,7 +46,6 @@ const CartItems = ({cartItem, cart, setCart, token}) => {
          current.filter((product) => product.id !== e.id)
          )
     }
-// -------------------------------------------------------------------
 
     return(
         <div className="cart-item">       
@@ -55,12 +59,8 @@ const CartItems = ({cartItem, cart, setCart, token}) => {
                     <p>qty: {cartItem.quantity}</p>
                     <form className="edit-quantity-button" onSubmit={async (e) => {
                         e.preventDefault();
-                        if (editTrigger) {
-                            setEditTrigger(false);
-                        } else {
-                            setEditTrigger(true);
-                        };
                         setEditId(cartItem.id);
+                        setNewQty(cartItem.quantity);
                     }}>
                         <button type="submit">Edit Quantity</button>
                     </form>
@@ -71,6 +71,7 @@ const CartItems = ({cartItem, cart, setCart, token}) => {
                     <input className="quantity-field" type='number' name='newQuantity' value={newQty} onChange={(event) => setNewQty(event.target.value)} />
                     <form className="edit-quantity-button" onSubmit={async (e) => {
                         e.preventDefault();
+                        await handleSubmit();
                         if (editTrigger) {
                             setEditTrigger(false);
                         } else {

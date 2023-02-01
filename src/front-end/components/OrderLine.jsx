@@ -14,21 +14,21 @@ const OrderLine = ({cartItem, cart}) => {
     // let itemID = cartItem.id
     return(
         <div className="cart-item">  
-        <img src={cartItem.details.photoURL} height="100px" alt="Photo of glasses" />     
-        <b>{cartItem.details.name}</b>
+        <img src={cartItem.photoURL} height="100px" alt="Photo of glasses" />     
+        <b>{cartItem.name}</b>
         {/* <button onClick={handleDelete}>Delete</button> */}
         <p>qty: {cartItem.quantity}</p>
         <button onClick={handleClick}><IoIosArrowDown /></button>
         {isOpen ? 
          (
             <div>
-                {cartItem.details?.description}
+                {cartItem.description}
             </div>  
         )
         :
          null
         }
-        <p>${cartItem.details?.price}</p>
+        <p>${cartItem.price}</p>
         </div>
     )
 }
