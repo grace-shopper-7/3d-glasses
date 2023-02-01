@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { fetchProducts, postItemToCart } from "../api/fetch"
+import { fetchProducts, patchCartItem, postItemToCart } from "../api/fetch"
 import SingleProduct from "./SingleProduct"
 
 
-const Products = ({ token, sessionId, editTrigger, setEditTrigger }) => {
-    const [ productList, setProductList ] = useState([])
-    // const [ productId, setProductId ] = useState(0)
-    const [ errorMessage, setErrorMessage ] = useState("")
+const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart }) => {
+    const [ productList, setProductList ] = useState([]);
+    const [ newQuantity, setNewQuantity ] = useState(0);
+    const [ productId, setProductId ] = useState(0);
+    const [ errorMessage, setErrorMessage ] = useState("");
     useEffect(() => {
         const getProducts = async () => {
         const products = await fetchProducts()
@@ -20,9 +21,22 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger }) => {
     const handleSubmit = async (productId) => {
         if (token) {
             console.log("Firing postitemtocart!");
-            let quantity = 1
-            await postItemToCart( token, sessionId, productId, quantity)
-            // setProductId(0)
+            let quantity = 1;
+            let newItem = await postItemToCart( token, sessionId, productId, quantity)
+            console.log(newItem);
+            if (newItem.error) {
+                let searchItems = cart.filter((cartItem) => cartItem.productId === productId);
+                console.log("SUCCESS", searchItems[0].id);
+                let updatedItem = await patchCartItem((searchItems[0].quantity+1), searchItems[0].id, token);
+                console.log("EVEN MORE SUCCESS", updatedItem);
+                if (editTrigger) {
+                    setEditTrigger(false);
+                } else {
+                    setEditTrigger(true);
+                }
+            } else {
+                console.log("FAILURE");
+            }
         } else {
             setErrorMessage("You must be logged in to add product to cart.")
         }
@@ -40,10 +54,8 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger }) => {
                         <b>{product.name} | ${product.price}</b> 
                         <form value={product.id} className="add-to-cart" onSubmit={ async (e) => {
                             e.preventDefault();
-                            // REVISIT: need two clicks to add to cart
                             await handleSubmit(product.id);
-                            // setProductId(product.id);
-                            // console.log("e", e);
+                            setProductId(product.id);
                             if (!editTrigger) {
                                 setEditTrigger(true)
                             } else {
