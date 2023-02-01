@@ -3,12 +3,12 @@ import { NavLink } from 'react-router-dom'
 // import { useUser } from '../state/context'
 import Modal from 'react-modal'
 import Cart from './Cart'
-import {AiOutlineShoppingCart} from 'react-icons/ai'
+import {AiFillCloseSquare, AiOutlineShoppingCart} from 'react-icons/ai'
 import { useLocation } from 'react-router-dom'
 // import AuthForm from './AuthForm'
 
 
-const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
+const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSessionId, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
   const [modalIsOpen, setIsOpen] = useState(false)
   const location = useLocation()
 
@@ -42,7 +42,10 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, total
           ? <>
               <p className='greeting'>Hey, {user.username}!</p>
               <NavLink to='/'>
-              <button className='sign-in-out-button' onClick="signOut(); closeModal();">Sign Out!</button>
+              <button className='sign-in-out-button' onClick={() => {
+                closeModal();
+                signOut();
+              }}>Sign Out!</button>
               </NavLink>
             </>
           : null 
