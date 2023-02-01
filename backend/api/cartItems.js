@@ -27,6 +27,7 @@ cartItemsRouter.patch('/:cartItemId', requireUser, async (req, res, next) => {
 
     try {
         const updatedCartItem = await updateCartItemsQuantity(updateFields);
+        console.log(updatedCartItem);
         res.send(updatedCartItem);
     } catch ({name, message}) {
         next({name, message});

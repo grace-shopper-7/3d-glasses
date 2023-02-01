@@ -1,15 +1,15 @@
 // orderSummary
 import { NavLink } from "react-router-dom"
-import { fetchDummyCartBySession } from "../api/fetch"
+import { fetchCartBySession } from "../api/fetch"
 import CartItems from "./CartItems"
 import OrderLine from "./OrderLine"
 
-const ReviewOrder = () => {
-    const cart = fetchDummyCartBySession()
-    if (cart.order_items.length > 0)  {
-         let total = cart.order_items
+const ReviewOrder = ({cart}) => {
+
+    if (cart.length > 0)  {
+         let total = cart
          .map((orderItem) => {
-             return orderItem.details.price;})
+             return ((+orderItem.price)*(orderItem.quantity))})
          .reduce((a, b) => {
              return a + b;
            }, )
@@ -17,7 +17,7 @@ const ReviewOrder = () => {
         <div className="shopping-cart">
             <div>
             <p>Your Shopping Cart</p> 
-            {cart.order_items.map((cartItem) => {
+            {cart.map((cartItem) => {
                 return (
                 <div className="cart-items" key={cartItem.id}>
                     <OrderLine cartItem={cartItem} cart={cart}/>
@@ -25,14 +25,14 @@ const ReviewOrder = () => {
             })}
             </div>
             <aside>
-            <b>Subtotal | ${total}</b>
+            <b>Subtotal | ${total.toFixed(2)}</b>
             <hr />
             <b>Shipping | Free</b>
             <hr />
             <b>Tax | Calculated at checkout</b>
             <hr />
-            <b>Total ${total}</b>
-            <NavLink to={"/checkout"}><button className="checkout-button">Confirm &#38; Checkout</button></NavLink>
+            <b>Total ${total.toFixed(2)}</b>
+            <NavLink to={"/checkout"}><button className="checkout-button">Place Order</button></NavLink>
             </aside>
         </div>
     )}

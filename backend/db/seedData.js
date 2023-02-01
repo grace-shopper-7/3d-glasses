@@ -151,6 +151,15 @@ async function createInitialUsers() {
         telephone: "",
         email: "Glamgal@123.com",
       },
+      {
+        username: "faker",
+        password: "fakerboi",
+        firstName: "Faker",
+        lastName: "Gamer",
+        address: "1111 Gamer Street",
+        telephone: "",
+        email: "faker@lol.dota",
+      },
     ];
     const users = await Promise.all(usersToCreate.map(createUser));
 
@@ -196,6 +205,16 @@ async function editInitialUsers() {
         address: "123 Elmer Lane",
         telephone: "867-5309",
         email: "Glamgal@123.com",
+      },
+      {
+        id: 4,
+        username: "faker",
+        password: "fakerboi",
+        firstName: "Faker",
+        lastName: "Gamer",
+        address: "1111 Gamer Street",
+        telephone: "867-530-9999",
+        email: "faker@lol.dota",
       },
     ];
     const users = await Promise.all(usersToEdit.map(editUser));
@@ -268,13 +287,13 @@ async function createInitialProducts() {
 
 async function createInitalOrderDetails() {
   console.log("Starting to create order details");
-  const [albert, sandra, glamgal] = await getAllUsers();
+  const [albert, sandra, glamgal, faker] = await getAllUsers();
 
   try {
     const orderDetailsToCreate = [
       { userId: albert.id, totalPrice: "5.99" },
       { userId: sandra.id, totalPrice: "20.99" },
-      { userId: sandra.id, totalPrice: "3.99" },
+      { userId: faker.id, totalPrice: "3.99" },
       { userId: glamgal.id, totalPrice: "3.99" },
     ];
     // Revisit: add modifiedAt timestamps to above orderDetails
@@ -392,13 +411,13 @@ async function createInitialPaymentDetails() {
 
 async function createInitalSessions() {
   console.log("Starting to create session details");
-  const [albert, sandra, glamgal] = await getAllUsers();
+  const [albert, sandra, glamgal, faker] = await getAllUsers();
 
   try {
     const sessionsToCreate = [
       { userId: albert.id, totalPrice: "5.99" },
       { userId: sandra.id, totalPrice: "20.99" },
-      { userId: sandra.id, totalPrice: "3.99" },
+      { userId: faker.id, totalPrice: "3.99" },
       { userId: glamgal.id, totalPrice: "3.99" },
     ];
     // Revisit: add modifiedAt timestamps to above orderDetails
