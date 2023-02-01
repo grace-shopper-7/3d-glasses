@@ -11,13 +11,13 @@ const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPric
 
     useEffect(() => {
         const getCartItems = async () => {
-            console.log(sessionId);
+            console.log("Cart.jsx/UseEffect/SessionId:", sessionId);
             const cartItems = await fetchCartBySession(sessionId, token);
-            console.log(cartItems);
+            console.log("Cart.jsx/UseEffect/CartItems:", cartItems);
             setCart(cartItems);
         }
         getCartItems();
-        console.log(cart);
+        console.log("Cart.jsx/UseEffect/Cart:", cart);
     }, [editTrigger])
 
     let interimPrice = (+totalPrice);

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoTrashOutline } from 'react-icons/io5';
-import { patchCartItem } from "../api/fetch";
+import { deleteCartItem, patchCartItem } from "../api/fetch";
 
 
 const CartItems = ({cartItem, cart, setCart, token, openModal, closeModal, editTrigger, setEditTrigger}) => {
@@ -41,10 +41,15 @@ const CartItems = ({cartItem, cart, setCart, token, openModal, closeModal, editT
     if(counter<=1) {
         decrementCounter=()=>setCounter(1)
     }
-    const handleDelete = (e) => {
-         setCart((current) => 
-         current.filter((product) => product.id !== e.id)
-         )
+    const handleDelete = async () => {
+        // console.log(cartItem.id);
+        const deletedCartItem = await deleteCartItem(token, cartItem.id);
+        console.log(deletedCartItem);
+        if (editTrigger) {
+            setEditTrigger(false);
+        } else {
+            setEditTrigger(true);
+        }
     }
 
     return(
