@@ -5,24 +5,24 @@ import SingleProduct from "./SingleProduct"
 
 const Products = ({ token, sessionId, editTrigger, setEditTrigger }) => {
     const [ productList, setProductList ] = useState([])
-    const [ productId, setProductId ] = useState(0)
+    // const [ productId, setProductId ] = useState(0)
     const [ errorMessage, setErrorMessage ] = useState("")
     useEffect(() => {
         const getProducts = async () => {
         const products = await fetchProducts()
-        console.log(products)
+        // console.log("UseEffect/FetchProducts:", products)
         setProductList(products)
         }
         getProducts()
-        console.log(productList)
+        // console.log("UseEffect/ProductList:", productList)
     }, [])
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (productId) => {
         if (token) {
+            console.log("Firing postitemtocart!");
             let quantity = 1
             await postItemToCart( token, sessionId, productId, quantity)
-            setProductId(0)
-            
+            // setProductId(0)
         } else {
             setErrorMessage("You must be logged in to add product to cart.")
         }
@@ -38,17 +38,19 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger }) => {
                         <br />
                         <div>
                         <b>{product.name} | ${product.price}</b> 
-                        <form className="add-to-cart" onSubmit={ async (e) => {
+                        <form value={product.id} className="add-to-cart" onSubmit={ async (e) => {
                             e.preventDefault();
-                            await handleSubmit(e);
-                            setProductId(product.id)
-                            if (editTrigger) {
-                                setEditTrigger(false)
-                            } else {
+                            // REVISIT: need two clicks to add to cart
+                            await handleSubmit(product.id);
+                            // setProductId(product.id);
+                            // console.log("e", e);
+                            if (!editTrigger) {
                                 setEditTrigger(true)
-                                }
-                            }}>
-                        <button className="add-to-cart" type="submit">Add To Cart</button>
+                            } else {
+                                setEditTrigger(false)
+                            }
+                        }}>
+                        <button value={product.id} className="add-to-cart" type="submit">Add To Cart</button>
                         </form>
                         { (errorMessage && (productId === product.id)) &&     
                         <p>{errorMessage}</p>

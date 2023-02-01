@@ -9,7 +9,6 @@ export const fetchProducts = async () => {
   try {
     const response = await fetch(`${API_URL}/products/`);
     const products = await response.json();
-    console.log(products);
     return products;
   } catch (error) {
     throw error;
@@ -363,16 +362,16 @@ export const deleteReview = async (body, productId, reviewId, token) => {
   }
 };
 
-export const deleteCartItem = async (body, sessionId, productId) => {
+export const deleteCartItem = async (token, cartItemId) => {
   try {
     const response = await fetch(
-      `${API_URL}/cartitems/${sessionId}/${productId}`,
+      `${API_URL}/cartitems/${cartItemId}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
+          Authorization: `Bearer ${token}`
+        }
       }
     );
     const result = await response.json();
