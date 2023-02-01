@@ -3,9 +3,14 @@ import { NavLink } from "react-router-dom"
 import { fetchCartBySession } from "../api/fetch"
 import CartItems from "./CartItems"
 import OrderLine from "./OrderLine"
+import "./styles/ReviewOrder.css"
+import { useState } from "react"
+import { IoIosArrowDown } from 'react-icons/io'
 
 const ReviewOrder = ({cart}) => {
-
+  const [PaymentIsOpen, setPaymentIsOpen] = useState(false);
+  const [shippingIsOpen, setShippingIsOpen] = useState(false);
+ 
     if (cart.length > 0)  {
          let total = cart
          .map((orderItem) => {
@@ -14,7 +19,7 @@ const ReviewOrder = ({cart}) => {
              return a + b;
            }, )
     return (
-        <div className="shopping-cart">
+        <div className="orderPreview">
             <div>
             <p>Your Shopping Cart</p> 
             {cart.map((cartItem) => {
@@ -23,7 +28,6 @@ const ReviewOrder = ({cart}) => {
                     <OrderLine cartItem={cartItem} cart={cart}/>
                 </div>)
             })}
-            </div>
             <aside>
             <b>Subtotal | ${total.toFixed(2)}</b>
             <hr />
@@ -33,6 +37,40 @@ const ReviewOrder = ({cart}) => {
             <hr />
             <b>Total ${total.toFixed(2)}</b>
             <NavLink to={"/checkout"}><button className="checkout-button">Place Order</button></NavLink>
+            </aside>
+            </div>
+            <aside className="checkout-details">
+                <b>Shipping Address: </b>
+                <hr />
+              <form>
+                <input type= "text" placeholder= "First Name "></input>
+                <input type= "text" placeholder= "Last Name "></input>
+                <input type= "text" placeholder= "Address line 1"></input>
+                <input type= "text" placeholder= "Address line 2"></input>
+                <input type= "text" placeholder= "City"></input>
+                <input type= "text" placeholder= "State"></input>
+                <input type= "number" placeholder= "Zip"></input>
+                <input type= "tel" placeholder= "Phone number"></input>
+              </form>
+              <form>
+                <b>Payment Details: </b>
+                <hr />
+                <input type= "tel" placeholder= "Card number"></input>
+                <input type= "tel" placeholder= "CVC "></input>
+                <input type= "date" placeholder= "Expiration "></input>
+                <input type= "text" placeholder= "Name on card "></input>
+                <b>Billing Address: </b>
+                <label> Different from shipping<input type= "checkbox" ></input>
+                  </label>
+                  <input type= "text" placeholder= "First Name "></input>
+                <input type= "text" placeholder= "Last Name "></input>
+                <input type= "text" placeholder= "Address line 1"></input>
+                <input type= "text" placeholder= "Address line 2"></input>
+                <input type= "text" placeholder= "City"></input>
+                <input type= "text" placeholder= "State"></input>
+                <input type= "number" placeholder= "Zip"></input>
+                <input type= "tel" placeholder= "Phone number"></input>
+              </form>
             </aside>
         </div>
     )}

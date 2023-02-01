@@ -1,0 +1,9 @@
+.orderPreview {
+  display: flex;
+}
+
+.checkout-details {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+}
