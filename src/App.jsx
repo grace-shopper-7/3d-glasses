@@ -82,6 +82,7 @@ function App() {
         user={user} 
         setUser={setUser} 
         sessionId={sessionId}
+        setSessionId={setSessionId}
         cart={cart}
         setCart={setCart} 
         totalPrice={totalPrice}

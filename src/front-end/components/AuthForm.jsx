@@ -50,7 +50,7 @@ return(
                     rememberMe ? localStorage.setItem('token', result.token) : null;
                     setUser(result.user)
                     rememberMe ? localStorage.setItem('user', JSON.stringify(result.user)) : null;
-                    const response = await fetchSessionByUser(result.user.id, result.token);
+                    const response = await fetchSessionByUser(result?.user.id, result?.token);
                     console.log(response);
                     console.log("fetchSessionByUser:", response);
                     setSessionId(response.id);
