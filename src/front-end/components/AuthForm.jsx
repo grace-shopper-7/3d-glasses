@@ -55,6 +55,7 @@ return(
                     console.log("fetchSessionByUser:", response);
                     setSessionId(response.id);
                     localStorage.setItem('sessionId', response.id);
+                    localStorage.setItem('username', result.user.username);
                 } else {
                     setToken(result.userdata.token)
                     localStorage.setItem('token', result.userdata.token);
@@ -62,6 +63,7 @@ return(
                     localStorage.setItem('user', result.userdata.user);
                     setSessionId(result.session.id);
                     localStorage.setItem('sessionId', result.session.id);
+                    localStorage.setItem('username', result.user.username);
                 }
                 navigate('/')
             } else {
