@@ -15,10 +15,6 @@ usersRouter.use((req, res, next) => {
   next();
 });
 
-usersRouter.get("/test", async (req, res, next) => {
-  res.send("<p>Hello world</p>");
-});
-
 // POST /api/users/register
 usersRouter.post("/register", async (req, res, next) => {
   const { username, password, email } = req.body;

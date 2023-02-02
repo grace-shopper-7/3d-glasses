@@ -61,9 +61,10 @@ export const logInUser = async (username, password) => {
 export const fetchMe = async (token) => {
   try {
     const response = await fetch(`${API_URL}/users/me`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       },
     });
 
