@@ -54,8 +54,9 @@ async function getProductsWithoutReviews() {
   try {
     const { rows } = await client.query(`
       SELECT * 
-      FROM products;
-    `);
+      FROM products
+      WHERE "category"=$1;
+    `, ["glasses"]);
 
     return rows;
   } catch (error) {

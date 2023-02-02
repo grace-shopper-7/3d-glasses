@@ -53,10 +53,14 @@ function App() {
       setSessionId(localStorage.sessionId);
     };
 
+
     if(!localStorage.user || !localStorage.token) {
       localStorage.removeItem("sessionId")
     }
   }, []);
+
+  }, [editTrigger]);
+
   
 
   // useEffect(()=>{
@@ -101,13 +105,15 @@ function App() {
             element={<Home />}
           />
           {!token &&
-          <Route path='/loginregister' element={<AuthForm 
-                                                  setUser={setUser} 
-                                                  setToken={setToken} 
-                                                  setSessionId={setSessionId} 
-                                                  user={user} 
-                                                  token={token} 
-                                                />}/>
+          <Route 
+            path='/loginregister' 
+            element={<AuthForm 
+                      setUser={setUser} 
+                      setToken={setToken} 
+                      setSessionId={setSessionId} 
+                      user={user} 
+                      token={token} 
+                    />}/>
           }
           {token &&
           <Route path='/profile' element={<Profile />}/>
@@ -115,8 +121,19 @@ function App() {
           {token &&
           <Route path='/profile/myorders' element={<OrderHistory />}/>
           }
-          <Route path='/products' element={<Products  token={token} sessionId={sessionId} editTrigger={editTrigger} setEditTrigger={setEditTrigger} />}/>
           <Route path='/revieworder' element={<ReviewOrder token={token} cart={cart} />}/>
+
+          <Route 
+            path='/products' 
+            element={<Products 
+                      token={token} 
+                      sessionId={sessionId} 
+                      editTrigger={editTrigger} 
+                      setEditTrigger={setEditTrigger}
+                      cart={cart} 
+                      user={user}
+                    />}/>
+         
           <Route path='/checkout' element={<Checkout />}/>
           <Route path='/ordercomplete' element={<OrderComplete />}/>
         </Routes>

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoTrashOutline } from 'react-icons/io5';
-import { patchCartItem } from "../api/fetch";
+import { deleteCartItem, patchCartItem } from "../api/fetch";
 
 
 const CartItems = ({cartItem, cart, setCart, token, openModal, closeModal, editTrigger, setEditTrigger}) => {
@@ -32,19 +32,21 @@ const CartItems = ({cartItem, cart, setCart, token, openModal, closeModal, editT
     }
 
     const [isOpen, setIsOpen] = useState(false);
-    const handleClick = () => {
-        setIsOpen(!isOpen)
-    }
     const [counter, setCounter] = useState(1);
     const incrementCounter = () => setCounter(counter + 1)
     let decrementCounter = () => setCounter(counter - 1)
     if(counter<=1) {
         decrementCounter=()=>setCounter(1)
     }
-    const handleDelete = (e) => {
-         setCart((current) => 
-         current.filter((product) => product.id !== e.id)
-         )
+    const handleDelete = async () => {
+        // console.log(cartItem.id);
+        const deletedCartItem = await deleteCartItem(token, cartItem.id);
+        console.log(deletedCartItem);
+        if (editTrigger) {
+            setEditTrigger(false);
+        } else {
+            setEditTrigger(true);
+        }
     }
 
     return(
@@ -82,17 +84,6 @@ const CartItems = ({cartItem, cart, setCart, token, openModal, closeModal, editT
                     </form>
                 </div>
                 }
-            
-            <button onClick={handleClick}><IoIosArrowDown /></button>
-            {isOpen ? 
-            (
-                <div>
-                    {cartItem.description}
-                </div>  
-            )
-            :
-            null
-            }
             <p>${cartItem.price}</p>
         </div>
     )

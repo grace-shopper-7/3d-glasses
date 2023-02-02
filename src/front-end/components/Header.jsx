@@ -9,8 +9,9 @@ import { useLocation } from 'react-router-dom'
 
 
 const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSessionId, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
-  const [modalIsOpen, setIsOpen] = useState(false)
-  const location = useLocation()
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const localUser = localStorage.getItem("username");
 
   //modal funcs
   function openModal() {
@@ -18,18 +19,20 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSe
   }
   
   function closeModal() {
+    // console.log("localStorage:", localStorage)
     setIsOpen(false);
   }
-
+  
   //auth funcs
   function signOut() {
     setToken("");
-    localStorage.removeItem('token') 
+    localStorage.removeItem('token');
     setUser({}); 
-    localStorage.removeItem('user')
+    localStorage.removeItem('user');
     setSessionId(0); 
-    localStorage.removeItem('user') 
+    localStorage.removeItem('sessionId');
     setIsOpen(false)
+    localStorage.removeItem('username');
   }
   return (
     <>
@@ -38,27 +41,26 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSe
        <h1>3D GLASSES</h1>
         </NavLink>
         <div className="nav-sign-in"> 
-          {token 
+          {(token && localStorage)
           ? <>
-              <p className='greeting'>Hey, {user.username}!</p>
+              <p className='greeting'>Hey, {localUser}!</p>
               <NavLink to='/'>
               <button className='sign-in-out-button' onClick={() => {
                 closeModal();
                 signOut();
               }}>Sign Out!</button>
               </NavLink>
+              {location.pathname.includes("revieworder") ? 
+              null
+              :
+              <>
+                <p style={{height: '1rem'}}></p>
+                  <button className='cart-button' onClick={!modalIsOpen? openModal : closeModal}><AiOutlineShoppingCart /></button>
+              </>
+              }
             </>
           : null 
           } 
-          {location.pathname.includes("revieworder") ? 
-          null
-          :
-          <>
-            <p style={{height: '1rem'}}></p>
-              <button className='cart-button' onClick={!modalIsOpen? openModal : closeModal}><AiOutlineShoppingCart /></button>
-          </>
-          }
-          
         </div>
       </div>
       <Modal 

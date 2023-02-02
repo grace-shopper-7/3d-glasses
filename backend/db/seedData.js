@@ -44,13 +44,13 @@ async function createTables() {
       `
       CREATE TABLE users (
           id SERIAL PRIMARY KEY,
-          username VARCHAR(255) UNIQUE,
-          password VARCHAR(255),
+          username VARCHAR(255) UNIQUE NOT NULL,
+          password VARCHAR(255) NOT NULL,
           "firstName" VARCHAR(255),
           "lastName" VARCHAR(255),
           address VARCHAR(255),
           telephone VARCHAR(25),
-          email VARCHAR(255) NOT NULL
+          email VARCHAR(255) UNIQUE NOT NULL
       );
 
       CREATE TABLE products (
@@ -259,7 +259,7 @@ async function createInitialProducts() {
         name: "glasses2",
         description: "desc3",
         sku: "003-003-003",
-        category: "accessories",
+        category: "glasses",
         price: "5.99",
         photoURL:
           "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
