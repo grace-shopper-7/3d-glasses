@@ -27,7 +27,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-modal": "^3.16.1",
-    "react-router-dom": "^6.7.0",
+    "react-router-dom": "^6.8.0",
     "semantic-ui-react": "^2.1.4",
     "use-immer": "^0.8.1"
   },

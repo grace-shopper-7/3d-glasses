@@ -183,7 +183,7 @@ export const postReviewToProduct = async (body, productId, token) => {
 
 export const postItemToCart = async (token, sessionId, productId, quantity) => {
   try {
-    const response = await fetch(`${API_URL}/cartItems`, {
+    const response = await fetch(`${API_URL}/cartitems`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -202,16 +202,78 @@ export const postItemToCart = async (token, sessionId, productId, quantity) => {
   }
 };
 
-export const postOrder = async () => {
+export const postPaymentDetails = async (
+  token,
+  amount,
+  orderId,
+  ccn,
+  cvc,
+  exp,
+  billing,
+  name,
+  userId
+) => {
   try {
-    const response = await fetch(`${API_URL}/orders`, {
+    const response = await fetch(`${API_URL}/paymentdetails`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({
+        amount: amount,
+        orderId: orderId,
+        ccn: ccn,
+        cvc: cvc,
+        exp: exp,
+        billing: billing,
+        name: name,
+        userId: userId,
+      }),
+    });
+    const paymentDeets = await response.json();
+    return paymentDeets;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const postOrder = async (token, userId, amount) => {
+  try {
+    const response = await fetch(`${API_URL}/orderdetails`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userId: userId,
+        amount: amount,
+      }),
     });
     const order = await response.json();
     return order;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const postOrderLine = async (token, orderId, productId, quantity) => {
+  try {
+    const response = await fetch(`${API_URL}/orderlines`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        orderId,
+        productId,
+        quantity,
+      }),
+    });
+    const orderLine = await response.json();
+    return orderLine;
   } catch (error) {
     throw error;
   }
@@ -318,7 +380,7 @@ export const patchCartItem = async (newQty, cartItemId, token) => {
   }
 };
 
-export const patchUser = async (userId, token) => {
+export const patchUser = async (body, userId, token) => {
   try {
     const response = await fetch(`${API_URL}/users/${userId}`, {
       method: "PATCH",

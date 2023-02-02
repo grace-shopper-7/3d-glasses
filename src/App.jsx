@@ -52,7 +52,15 @@ function App() {
     if (localStorage.sessionId && !sessionId) {
       setSessionId(localStorage.sessionId);
     };
+
+
+    if(!localStorage.user || !localStorage.token) {
+      localStorage.removeItem("sessionId")
+    }
+  }, []);
+
   }, [editTrigger]);
+
   
 
   // useEffect(()=>{
@@ -113,6 +121,8 @@ function App() {
           {token &&
           <Route path='/profile/myorders' element={<OrderHistory />}/>
           }
+          <Route path='/revieworder' element={<ReviewOrder token={token} cart={cart} />}/>
+
           <Route 
             path='/products' 
             element={<Products 
@@ -123,7 +133,7 @@ function App() {
                       cart={cart} 
                       user={user}
                     />}/>
-          <Route path='/revieworder' element={<ReviewOrder cart={cart} />}/>
+         
           <Route path='/checkout' element={<Checkout />}/>
           <Route path='/ordercomplete' element={<OrderComplete />}/>
         </Routes>

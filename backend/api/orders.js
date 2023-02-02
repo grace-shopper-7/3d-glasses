@@ -1,45 +1,45 @@
-const express = require('express');
+const express = require("express");
 const orderDetailsRouter = express.Router();
-const {createOrderDetails, getOrdersByUserId} = require ('../db/orders')
-const { requireUser } = require('./helpers');
+const { createOrderDetails, getOrdersByUserId } = require("../db/orders");
+const { requireUser } = require("./helpers");
 
 orderDetailsRouter.use((req, res, next) => {
-    console.log("A request is being made to /orders.");
+  console.log("A request is being made to /orders.");
 
-    next();
+  next();
 });
 
-// POST /api/sessions
-orderDetailsRouter.post('/', requireUser, async (req, res, next) => {
+// POST /api/orderdetails
+orderDetailsRouter.post("/", requireUser, async (req, res, next) => {
   const userId = req.user.id;
-  const totalPrice = req.body.totalPrice;
-  console.log('userId', 'totalPrice', userId, totalPrice)
+  const amount = req.body.amount;
+  console.log("userId", "amount", userId, amount);
 
   try {
-      const newOrder = await createOrderDetails({userId, totalPrice});
-      res.send(newOrder);
-  } catch ({name, message}) {
-      next({name, message});
+    const newOrder = await createOrderDetails({ userId, amount });
+    res.send(newOrder);
+  } catch ({ name, message }) {
+    next({ name, message });
   }
-})
+});
 
-// GET /api/sessions/:userId * REQUIRES LOGIN
-orderDetailsRouter.get('/:userId', requireUser, async (req, res, next) => {
+// GET /api/orderdetails/:userId * REQUIRES LOGIN
+orderDetailsRouter.get("/:userId", requireUser, async (req, res, next) => {
   const userId = req.params.userId;
 
   try {
-      const userOrders = await getOrdersByUserId(userId);
-      res.send(userOrders);
-  } catch ({name, message}) {
-      next({name, message});
+    const userOrders = await getOrdersByUserId(userId);
+    res.send(userOrders);
+  } catch ({ name, message }) {
+    next({ name, message });
   }
-})
+});
 
 // // PATCH /api/sessions/:sessionId
 // orderDetailsRouter.patch('/:sessionId', requireUser, async (req, res, next) => {
 //   const sessionId = req.params.sessionId;
-//   const newOrder = req.body.totalPrice;
-//   const fields = {totalPrice: newOrder, id: sessionId};
+//   const newOrder = req.body.amount;
+//   const fields = {amount: newOrder, id: sessionId};
 
 //   try {
 //       const updatedOrder = await updatedOrder(fields);
@@ -52,11 +52,9 @@ orderDetailsRouter.get('/:userId', requireUser, async (req, res, next) => {
 // ROUTES GO HERE
 
 orderDetailsRouter.use((req, res, next) => {
-    console.log("Now leaving /orders.");
+  console.log("Now leaving /orders.");
 
-    next();
+  next();
 });
-
-
 
 module.exports = orderDetailsRouter;
