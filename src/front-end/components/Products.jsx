@@ -74,7 +74,8 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                             } else {
                                 setEditTrigger(false)
                             }
-                        }}>
+                        }}
+                        >
                         <button value={product.id} className="add-to-cart" type="submit">Add To Cart</button>
                         </form>
                         { (errorMessage && (productId === product.id)) &&     
@@ -164,7 +165,6 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                         }
                     </div>)
                 })}
-            <p>Helloworld</p>
         </div>
         )
 }

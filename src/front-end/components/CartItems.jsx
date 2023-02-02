@@ -32,9 +32,6 @@ const CartItems = ({cartItem, cart, setCart, token, openModal, closeModal, editT
     }
 
     const [isOpen, setIsOpen] = useState(false);
-    const handleClick = () => {
-        setIsOpen(!isOpen)
-    }
     const [counter, setCounter] = useState(1);
     const incrementCounter = () => setCounter(counter + 1)
     let decrementCounter = () => setCounter(counter - 1)
@@ -87,17 +84,6 @@ const CartItems = ({cartItem, cart, setCart, token, openModal, closeModal, editT
                     </form>
                 </div>
                 }
-            
-            <button onClick={handleClick}><IoIosArrowDown /></button>
-            {isOpen ? 
-            (
-                <div>
-                    {cartItem.description}
-                </div>  
-            )
-            :
-            null
-            }
             <p>${cartItem.price}</p>
         </div>
     )

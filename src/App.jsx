@@ -52,7 +52,7 @@ function App() {
     if (localStorage.sessionId && !sessionId) {
       setSessionId(localStorage.sessionId);
     };
-  }, []);
+  }, [editTrigger]);
   
 
   // useEffect(()=>{

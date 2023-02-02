@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom'
 const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSessionId, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
   const [modalIsOpen, setIsOpen] = useState(false)
   const location = useLocation()
+  const localUser = localStorage.getItem("user")
 
   //modal funcs
   function openModal() {
@@ -18,9 +19,10 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSe
   }
   
   function closeModal() {
+    console.log("localStorage:", localStorage.getItem("user"))
     setIsOpen(false);
   }
-
+  
   //auth funcs
   function signOut() {
     setToken("");
@@ -38,7 +40,7 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSe
        <h1>3D GLASSES</h1>
         </NavLink>
         <div className="nav-sign-in"> 
-          {token 
+          {(token && localStorage)
           ? <>
               <p className='greeting'>Hey, {user.username}!</p>
               <NavLink to='/'>
@@ -47,18 +49,17 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSe
                 signOut();
               }}>Sign Out!</button>
               </NavLink>
+              {location.pathname.includes("revieworder") ? 
+              null
+              :
+              <>
+                <p style={{height: '1rem'}}></p>
+                  <button className='cart-button' onClick={!modalIsOpen? openModal : closeModal}><AiOutlineShoppingCart /></button>
+              </>
+              }
             </>
           : null 
           } 
-          {location.pathname.includes("revieworder") ? 
-          null
-          :
-          <>
-            <p style={{height: '1rem'}}></p>
-              <button className='cart-button' onClick={!modalIsOpen? openModal : closeModal}><AiOutlineShoppingCart /></button>
-          </>
-          }
-          
         </div>
       </div>
       <Modal 

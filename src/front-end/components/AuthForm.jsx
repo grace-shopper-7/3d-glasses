@@ -5,7 +5,7 @@ import { fetchSessionByUser, postSession } from "../api/fetch";
 
 const AuthForm = ({ setToken, setUser, setSessionId, token, user }) => {
     const [ isLogIn, setIsLogIn ] = useState(0);
-    const [rememberMe, setRememberMe] = useState(false)
+    const [ username, setUsername ] = useState("")
     let usernameRef = useRef("")
     let passwordRef = useRef("")
     let emailRef = useRef("")
@@ -47,21 +47,21 @@ return(
                 console.log("THIS IS MY RESULTHEHERHEHRHE:", result)
                 if (!result.session) {
                     setToken(result.token)
-                    rememberMe ? localStorage.setItem('token', result.token) : null;
+                    localStorage.setItem('token', result.token);
                     setUser(result.user)
-                    rememberMe ? localStorage.setItem('user', JSON.stringify(result.user)) : null;
+                    localStorage.setItem('user', JSON.stringify(result.user));
                     const response = await fetchSessionByUser(result?.user.id, result?.token);
                     console.log(response);
                     console.log("fetchSessionByUser:", response);
                     setSessionId(response.id);
-                    rememberMe ? localStorage.setItem('sessionId', response.id) : null;
+                    localStorage.setItem('sessionId', response.id);
                 } else {
                     setToken(result.userdata.token)
-                    rememberMe ? localStorage.setItem('token', result.userdata.token) : null;
+                    localStorage.setItem('token', result.userdata.token);
                     setUser(result.userdata.user)
-                    rememberMe ? localStorage.setItem('user', JSON.stringify(result.userdata.user)) : null;
+                    localStorage.setItem('user', result.userdata.user);
                     setSessionId(result.session.id);
-                    rememberMe ? localStorage.setItem('sessionId', result.session.id) : null;
+                    localStorage.setItem('sessionId', result.session.id);
                 }
                 navigate('/')
             } else {
@@ -104,8 +104,6 @@ return(
             )}
         </div>
         <input type="submit" value={authPageData.submitButton[isLogIn]} />
-        <label htmlFor="remember">Remember Me</label>
-        <input type="checkbox" onChange={() => { setRememberMe(!rememberMe) }}/>
         </form>
     </div>
 )
