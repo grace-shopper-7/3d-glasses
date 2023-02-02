@@ -41,19 +41,26 @@ function App() {
   // Unsure of how to console.log the token/user data, so if this code looks wrong feel free to delete as I can't
   // tell if lines 37-62 are working as intended.
   useEffect(()=>{
-    if (localStorage.token && !token) {
-      setToken(localStorage.token);
-    };
+    const getPreviousData = async () => {
+      if (localStorage.token && !token) {
+        setToken(localStorage.token);
+      };
+      if (localStorage.sessionId && !sessionId) {
+        setSessionId(localStorage.sessionId);
+      };
+    }
+    getPreviousData();
+  }, []);
+
+  useEffect(()=>{
+    const getUserData = async () => {
+      const userData = await fetchMe(token);
+      setUser(userData);
+    }
+    getUserData();
+  }, [token]);
   
-    if (localStorage.user && !user) {
-      setUser(localStorage.user);
-    };
-  
-    if (localStorage.sessionId && !sessionId) {
-      setSessionId(localStorage.sessionId);
-    };
-  }, [editTrigger]);
-  
+  console.log("Token, sessionId, user:", token, sessionId, user);
 
   // useEffect(()=>{
   //   if (!token && !user) {
@@ -126,6 +133,7 @@ function App() {
           <Route path='/revieworder' element={<ReviewOrder cart={cart} />}/>
           <Route path='/checkout' element={<Checkout />}/>
           <Route path='/ordercomplete' element={<OrderComplete />}/>
+          {/* <Route path='/userlist' element={<UserList />} */}
         </Routes>
       </div>
     </div>

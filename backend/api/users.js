@@ -15,10 +15,6 @@ usersRouter.use((req, res, next) => {
   next();
 });
 
-usersRouter.get("/test", async (req, res, next) => {
-  res.send("<p>Hello world</p>");
-});
-
 // POST /api/users/register
 usersRouter.post("/register", async (req, res, next) => {
   const { username, password, email } =
@@ -116,10 +112,10 @@ usersRouter.post("/login", async (req, res, next) => {
 
 // GET  /api/users/me * REQUIRES LOGIN
 usersRouter.get("/me", requireUser, async (req, res, next) => {
-  const { username } = req.body;
+  // const { username } = req.body;
 
   try {
-    const user = await getUserByUsername(username);
+    // const user = await getUserByUsername(username);
     res.send(req.user);
   } catch ({ name, message }) {
     next({ name, message });
