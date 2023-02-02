@@ -234,7 +234,7 @@ export const postSession = async (token) => {
 };
 
 //Admin only
-export const postProduct = async (body, token) => {
+export const postProduct = async (name, desc, sku, price, photoURL, token) => {
   try {
     const response = await fetch(`${API_URL}/products`, {
       method: "POST",
@@ -242,7 +242,14 @@ export const postProduct = async (body, token) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        "name": `${name}`,
+        "description": `${desc}`,
+        "sku": `${sku}`,
+        "category": 'glasses',
+        "price": `${price}`,
+        "photoURL": `${photoURL}`
+      }),
     });
     const result = await response.json();
     return result;
@@ -253,7 +260,7 @@ export const postProduct = async (body, token) => {
 //PATCH
 
 //admin only
-export const patchProduct = async (body, productId, token) => {
+export const patchProduct = async (productId, name, desc, price, photoURL, token) => {
   try {
     const response = await fetch(`${API_URL}/products/${productId}`, {
       method: "PATCH",
@@ -261,7 +268,12 @@ export const patchProduct = async (body, productId, token) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        "name": `${name}`,
+        "description": `${desc}`,
+        "price": `${price}`,
+        "photoURL": `${photoURL}`
+      }),
     });
     const result = await response.json();
     return result;
@@ -329,11 +341,14 @@ export const patchUser = async (userId, token) => {
 export const deleteProduct = async (productId, token) => {
   try {
     const response = await fetch(`${API_URL}/products/${productId}`, {
-      method: "DELETE",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({
+        "category": "deleted"
+      }),
     });
     const result = await response.json();
     return result;

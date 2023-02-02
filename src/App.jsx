@@ -121,6 +121,7 @@ function App() {
                       editTrigger={editTrigger} 
                       setEditTrigger={setEditTrigger}
                       cart={cart} 
+                      user={user}
                     />}/>
           <Route path='/revieworder' element={<ReviewOrder cart={cart} />}/>
           <Route path='/checkout' element={<Checkout />}/>

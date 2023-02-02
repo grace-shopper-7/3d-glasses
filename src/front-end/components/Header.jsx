@@ -28,7 +28,7 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSe
     setUser({}); 
     localStorage.removeItem('user')
     setSessionId(0); 
-    localStorage.removeItem('user') 
+    localStorage.removeItem('sessionId') 
     setIsOpen(false)
   }
   return (
