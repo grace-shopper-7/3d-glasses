@@ -39,8 +39,8 @@ async function getCartItemsBySessionId(sessionId) {
       SELECT cart_items.*, products.name, products.price, products.sku, products."photoURL"
       FROM cart_items
       JOIN products ON products.id = cart_items."productId"
-      WHERE "sessionId" = $1;
-    `, [sessionId]);
+      WHERE "sessionId" = $1 AND products."category" = $2;
+    `, [sessionId, "glasses"]);
 
     return cartItems;
   } catch (error) {
