@@ -6,7 +6,7 @@ const AddProduct = ({ token, editTrigger, setEditTrigger, user }) => {
     const [ productName, setProductName ] = useState("");
     const [ productDesc, setProductDesc ] = useState("");
     const [ productSKU, setProductSKU ] = useState("");
-    const [ productPrice, setProductPrice ] = useState(0);
+    const [ productPrice, setProductPrice ] = useState("");
     const [ productPhoto, setProductPhoto ] = useState("");
     
     return(
@@ -34,25 +34,25 @@ const AddProduct = ({ token, editTrigger, setEditTrigger, user }) => {
                     setProductName("")
                     setProductDesc("");
                     setProductSKU("");
-                    setProductPrice(0);
+                    setProductPrice("");
                     setProductPhoto("");
                 }}>
                     <label className="postLabel" htmlFor='productName'>Product Name:</label>
-                    <input className="input" type='text' name='productName' value={productName} onChange={(event) => setProductName(event.target.value)} />
+                    <input className="input" type='text' name='productName' value={productName} placeholder="Goofy Name" onChange={(event) => setProductName(event.target.value)} />
                     <label className="postLabel" htmlFor='productDesc'>Product Description:</label>
-                    <input className="input" type='text' name='productDesc' value={productDesc} onChange={(event) => setProductDesc(event.target.value)} />
+                    <input className="input" type='text' name='productDesc' value={productDesc} placeholder="Goofy Description" onChange={(event) => setProductDesc(event.target.value)} />
                     <label className="postLabel" htmlFor='productSKU'>Product SKU:</label>
-                    <input className="input" type='text' name='productSKU' value={productSKU} onChange={(event) => setProductSKU(event.target.value)} />
+                    <input className="input" type='text' name='productSKU' value={productSKU} placeholder="001-001-001"onChange={(event) => setProductSKU(event.target.value)} />
                     <label className="postLabel" htmlFor='productPrice'>Product Price:</label>
-                    <input className="input" type='text' name='productPrice' value={productPrice} onChange={(event) => setProductPrice(event.target.value)} />
+                    <input className="input" type='text' name='productPrice' value={productPrice} placeholder="0.00"onChange={(event) => setProductPrice(event.target.value)} />
                     <label className="postLabel" htmlFor='productPhoto'>Product PhotoURL:</label>
-                    <input className="input" type='text' name='productPhoto' value={productPhoto} onChange={(event) => setProductPhoto(event.target.value)} />
+                    <input className="input" type='text' name='productPhoto' value={productPhoto} placeholder="Goofy URL"onChange={(event) => setProductPhoto(event.target.value)} />
                     <p></p>
                     <button type="submit">Submit New Product</button>
                 </form>
                 <form onSubmit={async (e) => {
                     e.preventDefault();
-                    setAddProduct(0);
+                    setAddProduct("");
                 }}>
                     <button type="submit">Cancel</button>
                 </form>

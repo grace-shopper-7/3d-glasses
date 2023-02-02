@@ -94,14 +94,6 @@ return(
                 <>
                 <label htmlFor="password"> Confirm Password: </label>
                 <input type="password" minLength={8} required={true} placeholder="Password" ref={confirmRef} />
-                {/* <label htmlFor="firstname"> First Name: </label>
-                <input type="text" placeholder="First Name" ref={firstNameRef} />
-                <label htmlFor="lastname"> Last Name: </label>
-                <input type="text" placeholder="Last Name" ref={lastNameRef} />
-                <label htmlFor="address"> Address: </label>
-                <input type="text" placeholder="Address" ref={addressRef} />
-                <label htmlFor="telephone"> Phone Number: </label>
-                <input type="text" placeholder="Phone Number" ref={telephoneRef} /> */}
                 </>
             )}
         </div>

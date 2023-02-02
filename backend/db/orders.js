@@ -1,87 +1,94 @@
 const client = require("./client");
 
-async function createOrderDetails({
-  userId,
-  totalPrice
-}) {
+async function createOrderDetails({ userId, amount }) {
   try {
     const {
       rows: [orderDetails],
     } = await client.query(
       `
-          INSERT INTO order_details( "userId", "totalPrice" )
+          INSERT INTO order_details( "userId", amount )
           VALUES ($1, $2)
           RETURNING *;
           `,
-      [userId, totalPrice]
+      [userId, amount]
     );
 
     return orderDetails;
   } catch (error) {
     console.error("Error in createOrderDetails", error);
-    throw error
+    throw error;
   }
 }
 
 async function getFullOrders() {
-    try {
-        const { rows: orders } = await client.query(`
+  try {
+    const { rows: orders } = await client.query(`
           SELECT order_details.*, users.username AS "username"
           FROM order_details
           JOIN users ON order_details."userId" = users.id;
         `);
-        const { rows: orderLines } = await client.query(`
+    const { rows: orderLines } = await client.query(`
           SELECT order_lines.*, products.id AS "productId", products.name, products.price, products.sku, products."photoURL"
           FROM order_lines
           JOIN products ON products.id = order_lines."productId";
         `);
 
-        for (const order of orders) {
-          const orderLineToAdd = orderLines.filter(
-            (orderLine) => orderLine.orderId === order.id
-          );
+    for (const order of orders) {
+      const orderLineToAdd = orderLines.filter(
+        (orderLine) => orderLine.orderId === order.id
+      );
 
-          order.productDetails = orderLineToAdd;
-        }
-
-        return orders;
-    } catch (error) {
-        console.error("Error in getAllOrders:", error);
-        throw error;
+      order.productDetails = orderLineToAdd;
     }
+
+    return orders;
+  } catch (error) {
+    console.error("Error in getAllOrders:", error);
+    throw error;
+  }
 }
 
 async function getOrdersByUserId(userId) {
   try {
-      const { rows: [ orders ] } = await client.query(`
+    const {
+      rows: [orders],
+    } = await client.query(
+      `
         SELECT *
         FROM order_details
         WHERE "userId" = $1;
-      `, [userId]);
-      return orders;
+      `,
+      [userId]
+    );
+    return orders;
   } catch (error) {
-      console.error("Error in getOrdersByUserId:", error);
-      throw error;
+    console.error("Error in getOrdersByUserId:", error);
+    throw error;
   }
 }
 
 async function getOrdersById(orderId) {
   try {
-      const { rows: [ orders ] } = await client.query(`
+    const {
+      rows: [orders],
+    } = await client.query(
+      `
         SELECT *
         FROM order_details
         WHERE id = $1;
-      `, [orderId]);
-      return orders;
+      `,
+      [orderId]
+    );
+    return orders;
   } catch (error) {
-      console.error("Error in getOrdersByUserId:", error);
-      throw error;
+    console.error("Error in getOrdersByUserId:", error);
+    throw error;
   }
 }
 
 module.exports = {
-    createOrderDetails,
-    getFullOrders,
-    getOrdersByUserId,
-    getOrdersById
-}
+  createOrderDetails,
+  getFullOrders,
+  getOrdersByUserId,
+  getOrdersById,
+};

@@ -120,6 +120,8 @@ function App() {
           {token &&
           <Route path='/profile/myorders' element={<OrderHistory />}/>
           }
+          <Route path='/revieworder' element={<ReviewOrder token={token} cart={cart} />}/>
+
           <Route 
             path='/products' 
             element={<Products 
@@ -130,7 +132,7 @@ function App() {
                       cart={cart} 
                       user={user}
                     />}/>
-          <Route path='/revieworder' element={<ReviewOrder cart={cart} />}/>
+         
           <Route path='/checkout' element={<Checkout />}/>
           <Route path='/ordercomplete' element={<OrderComplete />}/>
           {/* <Route path='/userlist' element={<UserList />} */}
