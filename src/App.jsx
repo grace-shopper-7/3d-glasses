@@ -52,6 +52,10 @@ function App() {
     if (localStorage.sessionId && !sessionId) {
       setSessionId(localStorage.sessionId);
     };
+
+    if(!localStorage.user || !localStorage.token) {
+      localStorage.removeItem("sessionId")
+    }
   }, []);
   
 
@@ -112,7 +116,7 @@ function App() {
           <Route path='/profile/myorders' element={<OrderHistory />}/>
           }
           <Route path='/products' element={<Products  token={token} sessionId={sessionId} editTrigger={editTrigger} setEditTrigger={setEditTrigger} />}/>
-          <Route path='/revieworder' element={<ReviewOrder cart={cart} />}/>
+          <Route path='/revieworder' element={<ReviewOrder token={token} cart={cart} />}/>
           <Route path='/checkout' element={<Checkout />}/>
           <Route path='/ordercomplete' element={<OrderComplete />}/>
         </Routes>

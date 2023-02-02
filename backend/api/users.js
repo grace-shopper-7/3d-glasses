@@ -4,7 +4,7 @@ const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
-const { getUserByUsername, createUser } = require("../db/users");
+const { getUserByUsername, createUser, editUser } = require("../db/users");
 const { requireUser } = require("./helpers");
 
 // const { requireUser } = require('./utils');
@@ -21,8 +21,7 @@ usersRouter.get("/test", async (req, res, next) => {
 
 // POST /api/users/register
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, email } =
-    req.body;
+  const { username, password, email } = req.body;
 
   try {
     const _user = await getUserByUsername(username);
@@ -120,7 +119,7 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
 
   try {
     const user = await getUserByUsername(username);
-    res.send(req.user);
+    res.send(user);
   } catch ({ name, message }) {
     next({ name, message });
   }
@@ -129,6 +128,26 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
 // GET  /api/users/:username/orderhistory * REQUIRES LOGIN
 
 // PATCH /api/users/:userId * REQUIRES LOGIN
+usersRouter.patch("/:userId", async (req, res, next) => {
+  const userId = req.params.userId;
+  // const updateFields = { id: req.params.userId, ...req.body };
+  const userObj = {
+    // id: userId,
+    // username: req.body.username,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    address: req.body.address,
+    telephone: req.body.telephone,
+    // email: req.body.email,
+  };
+  try {
+    const updatedUser = await editUser(userId, userObj);
+    res.send(updatedUser);
+    console.log(updatedUser);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
 // DELETE /api/users/:userId * REQUIRES LOGIN
 

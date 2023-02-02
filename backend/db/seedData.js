@@ -66,7 +66,7 @@ async function createTables() {
       CREATE TABLE order_details (
         id SERIAL PRIMARY KEY,
         "userId" INTEGER REFERENCES users(id),
-        "totalPrice" NUMERIC (6, 2),
+        amount NUMERIC (6, 2),
         "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
@@ -421,7 +421,7 @@ async function createInitialPaymentDetails() {
   }
 }
 
-async function createInitalSessions() {
+async function createInitialSessions() {
   console.log("Starting to create session details");
   const [albert, sandra, glamgal, faker] = await getAllUsers();
 
@@ -516,7 +516,7 @@ async function rebuildDB() {
     await createInitalOrderDetails();
     await createInitialOrderLines();
     await createInitialPaymentDetails();
-    await createInitalSessions();
+    await createInitialSessions();
     await createInitialCartItems();
   } catch (error) {
     console.log("Error during rebuildDB");

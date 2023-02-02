@@ -3,11 +3,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 // POST Functions
-async function createUser({
-  username,
-  password,
-  email,
-}) {
+async function createUser({ username, password, email }) {
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   // console.log("THIS IS A USER PASSWORD------------>", password);
   // console.log("this is my hashed password--------->", hashedPassword);
@@ -118,7 +114,7 @@ async function editUser({ id, ...fields }) {
         Object.values(fields)
       );
 
-      delete updatedUser.password;
+      // delete updatedUser.password;
 
       return updatedUser;
     } else {
