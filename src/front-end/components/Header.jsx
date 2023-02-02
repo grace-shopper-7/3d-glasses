@@ -9,9 +9,9 @@ import { useLocation } from 'react-router-dom'
 
 
 const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSessionId, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
-  const [modalIsOpen, setIsOpen] = useState(false)
-  const location = useLocation()
-  const localUser = localStorage.getItem("user")
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const localUser = localStorage.getItem("username");
 
   //modal funcs
   function openModal() {
@@ -19,19 +19,20 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSe
   }
   
   function closeModal() {
-    console.log("localStorage:", localStorage.getItem("user"))
+    // console.log("localStorage:", localStorage)
     setIsOpen(false);
   }
   
   //auth funcs
   function signOut() {
     setToken("");
-    localStorage.removeItem('token') 
+    localStorage.removeItem('token');
     setUser({}); 
-    localStorage.removeItem('user')
+    localStorage.removeItem('user');
     setSessionId(0); 
-    localStorage.removeItem('sessionId') 
+    localStorage.removeItem('sessionId');
     setIsOpen(false)
+    localStorage.removeItem('username');
   }
   return (
     <>
@@ -42,7 +43,7 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSe
         <div className="nav-sign-in"> 
           {(token && localStorage)
           ? <>
-              <p className='greeting'>Hey, {user.username}!</p>
+              <p className='greeting'>Hey, {localUser}!</p>
               <NavLink to='/'>
               <button className='sign-in-out-button' onClick={() => {
                 closeModal();
