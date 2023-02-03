@@ -111,11 +111,8 @@ usersRouter.post("/login", async (req, res, next) => {
 
 // GET  /api/users/me * REQUIRES LOGIN
 usersRouter.get("/me", requireUser, async (req, res, next) => {
-  const { username } = req.body;
-
   try {
-    const user = await getUserByUsername(username);
-    res.send(user);
+    res.send(req.user);
   } catch ({ name, message }) {
     next({ name, message });
   }
