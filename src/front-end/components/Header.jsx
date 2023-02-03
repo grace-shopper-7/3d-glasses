@@ -5,6 +5,7 @@ import Modal from 'react-modal'
 import Cart from './Cart'
 import {AiFillCloseSquare, AiOutlineShoppingCart} from 'react-icons/ai'
 import { useLocation } from 'react-router-dom'
+import './styles/NavBar.css'
 // import AuthForm from './AuthForm'
 
 
