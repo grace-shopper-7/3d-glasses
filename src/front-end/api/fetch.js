@@ -57,7 +57,7 @@ export function fetchDummyProducts() {
 
 export const fetchOrdersByUser = async (userId, token) => {
   try {
-    const response = await fetch(`${API_URL}/orders/${userId}`, {
+    const response = await fetch(`${API_URL}/orderdetails/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -67,6 +67,23 @@ export const fetchOrdersByUser = async (userId, token) => {
     const orders = await response.json();
     return orders;
   } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchOrderLinesByOrderId = async (orderId, token) => {
+  try {
+    const response = await fetch(`${API_URL}/orderlines/${orderId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const orderLines = await response.json();
+    return orderLines;
+  } catch (error) {
+    console.log("Error fetching order lines:", error);
     throw error;
   }
 };
@@ -174,11 +191,11 @@ export const fetchUsers = async (token) => {
     });
 
     const result = await response.json();
-    
+
     for (const user of result) {
       delete user.password;
-    };
-    
+    }
+
     return result;
   } catch (error) {
     throw error;

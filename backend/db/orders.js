@@ -50,13 +50,11 @@ async function getFullOrders() {
 
 async function getOrdersByUserId(userId) {
   try {
-    const {
-      rows: [orders],
-    } = await client.query(
+    const { rows: orders } = await client.query(
       `
         SELECT *
         FROM order_details
-        WHERE "userId" = $1;
+        WHERE "userId" = ($1);
       `,
       [userId]
     );
@@ -69,14 +67,12 @@ async function getOrdersByUserId(userId) {
 
 async function getOrdersById(orderId) {
   try {
-    const {
-      rows: [orders],
-    } = await client.query(
+    const { rows: orders } = await client.query(
       `
         SELECT *
         FROM order_details
         WHERE id = $1;
-      `,
+        `,
       [orderId]
     );
     return orders;

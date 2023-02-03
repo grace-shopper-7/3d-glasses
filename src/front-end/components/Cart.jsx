@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom"
 import { fetchCartBySession, fetchDummyCartBySession, fetchSessionByUser } from "../api/fetch"
 import CartItems from "./CartItems"
 import { useState } from "react"
+import { deleteCartItem } from "../api/fetch"
 import { useCart } from "../state/context"
 import { useEffect } from "react"
 
@@ -22,6 +23,17 @@ const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPric
 
     let interimPrice = (+totalPrice);
 
+    const handleCartClear = async () => {
+        for (let i=0; i<cart.length; i++) {
+            deleteCartItem(token, cart[i].id)
+        }
+        setTotalPrice(0)
+        if (editTrigger) {
+            setEditTrigger(false);
+        } else {
+            setEditTrigger(true);
+        }
+    }
     if (cart?.length > 0)  {
         for (let i = 0; i < cart.length; i++) {
             let itemPrice = (+cart[i].price * cart[i].quantity);
@@ -31,6 +43,7 @@ const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPric
         return (
             <div className="shopping-cart">
                 <p>Your Shopping Cart</p> 
+                <button onClick={handleCartClear}>Clear Cart</button>
                 {cart?.map((cartItem) => {
                     return (
                     <div className="cart-items" key={cartItem.id}>

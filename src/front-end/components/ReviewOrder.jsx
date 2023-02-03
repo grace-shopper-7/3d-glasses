@@ -54,7 +54,9 @@ const ReviewOrder = ({persInfo, setPersInfo, shippingAddress, setShippingAddress
 
             const newOrderLines = await Promise.all(
               cart.map(item => 
-                postOrderLine(token, freshOrder.id, item.id, item.quantity))
+                {console.log("token:", token, "freshOrder.id", freshOrder.id,"item.id", item.productId, "item.quantity", item.quantity)
+                console.log("item:", item)
+                postOrderLine(token, freshOrder.id, item.productId, item.quantity)})
             )
               console.log("order lines: ", newOrderLines)
 
