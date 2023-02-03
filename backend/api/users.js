@@ -4,7 +4,13 @@ const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
-const { getUserByUsername, createUser, editUser, getAllUsers } = require("../db/users");
+const {
+  getUserByUsername,
+  createUser,
+  editUser,
+  getAllUsers,
+  getUserById,
+} = require("../db/users");
 const { requireUser } = require("./helpers");
 
 // const { requireUser } = require("./utils");
@@ -110,11 +116,32 @@ usersRouter.post("/login", async (req, res, next) => {
 });
 
 // GET  /api/users/me * REQUIRES LOGIN
-usersRouter.get("/me", requireUser, async (req, res, next) => {
-  try {
-    res.send(req.user);
-  } catch ({ name, message }) {
-    next({ name, message });
+usersRouter.get("/me", async (req, res, next) => {
+  const prefix = "Bearer ";
+  const auth = req.header("Authorization");
+  if (!auth) {
+    res.status(401);
+    next({
+      error: "AuthorizationHeaderError",
+      message: UnauthorizedError(),
+      name: "AuthorizationHeaderError",
+    });
+  } else if (auth.startsWith(prefix)) {
+    const token = auth.slice(prefix.length);
+    try {
+      const { id } = jwt.verify(token, JWT_SECRET);
+      if (id) {
+        const user = await getUserById(id);
+        res.send(user);
+      }
+    } catch ({ name, message }) {
+      next({ name, message });
+    }
+  } else {
+    next({
+      name: "AuthorizationHeaderError",
+      message: `Authorization token must start with '${prefix}' ya dingus!`,
+    });
   }
 });
 

@@ -18,7 +18,7 @@ orderLinesRouter.post("/", requireUser, async (req, res, next) => {
 
   try {
     const newOrderLine = await createOrderLine(requestBody);
-    console.log(newOrderLine);
+    console.log("order line in api:", newOrderLine);
     res.send(newOrderLine);
   } catch ({ name, message }) {
     next({ name, message });

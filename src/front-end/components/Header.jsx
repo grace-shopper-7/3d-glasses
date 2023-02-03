@@ -1,19 +1,30 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 // import { useUser } from '../state/context'
+import { deleteCartItem } from '../api/fetch'
 import Modal from 'react-modal'
 import Cart from './Cart'
 import {AiFillCloseSquare, AiOutlineShoppingCart} from 'react-icons/ai'
-import { useLocation } from 'react-router-dom'
+
+import { useLocation, useNavigate } from 'react-router-dom'
 import './styles/NavBar.css'
+
 // import AuthForm from './AuthForm'
 
 
 const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSessionId, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate= useNavigate();
   const localUser = localStorage.getItem("username");
-
+  
+  const handleLeave = async() => {
+    setCart([])
+    for (let i=0; i<cart.length; i++) {
+        deleteCartItem(token, cart[i].id)
+    }
+    navigate('/')
+}
   //modal funcs
   function openModal() {
     setIsOpen(true);
@@ -37,10 +48,15 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSe
   }
   return (
     <>
-      <div className='header'>
-        <NavLink to='/' className='site-logo'>
+      <div className='header'>{
+        location.pathname.includes('ordercomplete')?
+        <NavLink onClick={handleLeave} to='/' className='site-logo'>
        <h1>3D GLASSES</h1>
         </NavLink>
+        :
+        <NavLink to='/' className='site-logo'>
+       <h1>3D GLASSES</h1>
+        </NavLink>}
         <div className="nav-sign-in"> 
           {(token && localStorage)
           ? <>

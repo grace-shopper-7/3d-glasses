@@ -18,20 +18,14 @@ const OrderLine = ({cartItem, cart}) => {
         <img src={cartItem.photoURL} height="100px" alt="Photo of glasses" />     
         <b>{cartItem.name}</b>
         {/* <button onClick={handleDelete}>Delete</button> */}
-        {location.pathname.includes("ordercomplete")
-        ? null
-        :
-            <div>
-                <p>qty: {cartItem.quantity}</p>
-                <button onClick={handleClick}><IoIosArrowDown /></button>
-                {isOpen ? 
-                    <div>
-                        {cartItem.description}
-                    </div>
-                :
-                null}
-            </div>
-        }
+        <p>qty: {cartItem.quantity}</p>
+        <button onClick={handleClick}><IoIosArrowDown /></button>
+            {isOpen 
+            ? 
+                <div>
+                    {cartItem.description}
+                </div>
+            :null}
         <p>${cartItem.price}</p>
         </div>
     )

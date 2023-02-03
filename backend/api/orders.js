@@ -26,7 +26,6 @@ orderDetailsRouter.post("/", requireUser, async (req, res, next) => {
 // GET /api/orderdetails/:userId * REQUIRES LOGIN
 orderDetailsRouter.get("/:userId", requireUser, async (req, res, next) => {
   const userId = req.params.userId;
-
   try {
     const userOrders = await getOrdersByUserId(userId);
     res.send(userOrders);

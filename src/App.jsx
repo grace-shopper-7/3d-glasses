@@ -122,7 +122,7 @@ function App() {
           <Route path='/profile' element={<Profile />}/>
           }
           {token &&
-          <Route path='/profile/myorders' element={<OrderHistory />}/>
+          <Route path='/profile/myorders' element={<OrderHistory user={user} token={token}/>}/>
           }
           <Route path='/revieworder' element={<ReviewOrder persInfo={persInfo} setPersInfo={setPersInfo} shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} token={token} cart={cart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
 
@@ -138,7 +138,7 @@ function App() {
                     />}/>
          
           <Route path='/checkout' element={<Checkout />}/>
-          <Route path='/ordercomplete' element={<OrderComplete shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} cart={cart} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
+          <Route path='/ordercomplete' element={<OrderComplete token={token} sessionId={sessionId} editTrigger={editTrigger} setEditTrigger={setEditTrigger} shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} cart={cart} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
           { (token && user.id === 1) &&
           <Route path='/admin' element={<AdminPage token={token} />} />
           }
