@@ -305,12 +305,12 @@ export const postProduct = async (name, desc, sku, price, photoURL, token) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        "name": `${name}`,
-        "description": `${desc}`,
-        "sku": `${sku}`,
-        "category": 'glasses',
-        "price": `${price}`,
-        "photoURL": `${photoURL}`
+        name: `${name}`,
+        description: `${desc}`,
+        sku: `${sku}`,
+        category: "glasses",
+        price: `${price}`,
+        photoURL: `${photoURL}`,
       }),
     });
     const result = await response.json();
@@ -322,7 +322,14 @@ export const postProduct = async (name, desc, sku, price, photoURL, token) => {
 //PATCH
 
 //admin only
-export const patchProduct = async (productId, name, desc, price, photoURL, token) => {
+export const patchProduct = async (
+  productId,
+  name,
+  desc,
+  price,
+  photoURL,
+  token
+) => {
   try {
     const response = await fetch(`${API_URL}/products/${productId}`, {
       method: "PATCH",
@@ -331,10 +338,10 @@ export const patchProduct = async (productId, name, desc, price, photoURL, token
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        "name": `${name}`,
-        "description": `${desc}`,
-        "price": `${price}`,
-        "photoURL": `${photoURL}`
+        name: `${name}`,
+        description: `${desc}`,
+        price: `${price}`,
+        photoURL: `${photoURL}`,
       }),
     });
     const result = await response.json();
@@ -380,7 +387,14 @@ export const patchCartItem = async (newQty, cartItemId, token) => {
   }
 };
 
-export const patchUser = async (body, userId, token) => {
+export const patchUser = async (
+  firstName,
+  lastName,
+  address,
+  telephone,
+  userId,
+  token
+) => {
   try {
     const response = await fetch(`${API_URL}/users/${userId}`, {
       method: "PATCH",
@@ -388,11 +402,17 @@ export const patchUser = async (body, userId, token) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        address,
+        telephone,
+      }),
     });
     const result = await response.json();
     return result;
   } catch (error) {
+    console.log("Error in patchUser: ", error);
     throw error;
   }
 };
@@ -409,7 +429,7 @@ export const deleteProduct = async (productId, token) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        "category": "deleted"
+        category: "deleted",
       }),
     });
     const result = await response.json();
@@ -441,16 +461,13 @@ export const deleteReview = async (body, productId, reviewId, token) => {
 
 export const deleteCartItem = async (token, cartItemId) => {
   try {
-    const response = await fetch(
-      `${API_URL}/cartitems/${cartItemId}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
+    const response = await fetch(`${API_URL}/cartitems/${cartItemId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const result = await response.json();
     return result;
   } catch (error) {
