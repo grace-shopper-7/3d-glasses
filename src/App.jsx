@@ -12,7 +12,7 @@ import Checkout from './front-end/components/Checkout';
 import OrderComplete from './front-end/components/OrderComplete';
 import Navbar from './front-end/components/Navbar';
 import AuthForm from './front-end/components/AuthForm';
-
+import AdminPage from './front-end/components/AdminPage';
 
 function App() {
   const [token, setToken] = useState("");
@@ -101,7 +101,7 @@ function App() {
         editTrigger={editTrigger}
         setEditTrigger={setEditTrigger}
       />
-      <Navbar token={token} />
+      <Navbar token={token} user={user} />
       <div className='mainBody'>
         <Routes>
           <Route path='/' 
@@ -139,7 +139,9 @@ function App() {
          
           <Route path='/checkout' element={<Checkout />}/>
           <Route path='/ordercomplete' element={<OrderComplete shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} cart={cart} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
-          {/* <Route path='/userlist' element={<UserList />} */}
+          { (token && user.id === 1) &&
+          <Route path='/admin' element={<AdminPage token={token} />} />
+          }
         </Routes>
       </div>
     </div>
