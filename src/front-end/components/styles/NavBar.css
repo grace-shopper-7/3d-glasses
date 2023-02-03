@@ -1,0 +1,12 @@
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    font-size: 10px;
+    color: rgba(65,75,86,1)
+}
+
+.header {
+    font-size: 16px;
+    color: rgba(65,75,86,1)
+}

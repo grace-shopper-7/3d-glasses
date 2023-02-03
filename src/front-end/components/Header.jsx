@@ -5,7 +5,10 @@ import { deleteCartItem } from '../api/fetch'
 import Modal from 'react-modal'
 import Cart from './Cart'
 import {AiFillCloseSquare, AiOutlineShoppingCart} from 'react-icons/ai'
+
 import { useLocation, useNavigate } from 'react-router-dom'
+import './styles/NavBar.css'
+
 // import AuthForm from './AuthForm'
 
 

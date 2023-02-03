@@ -20,7 +20,7 @@ const AdminPage = ({token}) => {
             <p>Currently the only functionality here is seeing a list of User Details! Creeper.</p>
             {userList.map((user) => {
                 return (
-                    <div className="single-user-listing">
+                    <div className="single-user-listing" key={user.id}>
                         <b>{user.username} | {user.id}</b>
                         <p>   First Name: {user.firstName}</p>
                         <p>   Last Name: {user.lastName}</p>

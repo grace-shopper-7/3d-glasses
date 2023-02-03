@@ -56,7 +56,7 @@ function App() {
 
   useEffect(()=>{
     const getUserData = async () => {
-      if (token && !user) {
+      if (token) {
         const userData = await fetchMe(token);
         setUser(userData);
         console.log("Token, sessionId, user:", token, sessionId, user);
@@ -142,6 +142,7 @@ function App() {
           { (token && user.id === 1) &&
           <Route path='/admin' element={<AdminPage token={token} />} />
           }
+          <Route path='*' element={<Navigate replace to='/' />} />
         </Routes>
       </div>
     </div>
