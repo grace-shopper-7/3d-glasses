@@ -4,7 +4,7 @@ const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
-const { getUserByUsername, createUser, editUser } = require("../db/users");
+const { getUserByUsername, createUser, editUser, getAllUsers } = require("../db/users");
 const { requireUser } = require("./helpers");
 
 // const { requireUser } = require("./utils");
@@ -111,11 +111,18 @@ usersRouter.post("/login", async (req, res, next) => {
 
 // GET  /api/users/me * REQUIRES LOGIN
 usersRouter.get("/me", requireUser, async (req, res, next) => {
-  const { username } = req.body;
-
   try {
-    const user = await getUserByUsername(username);
-    res.send(user);
+    res.send(req.user);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+// GET  /api/users/ * REQUIRES LOGIN
+usersRouter.get("/", requireUser, async (req, res, next) => {
+  try {
+    const users = await getAllUsers();
+    res.send(users);
   } catch ({ name, message }) {
     next({ name, message });
   }

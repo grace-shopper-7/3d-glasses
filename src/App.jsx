@@ -12,17 +12,19 @@ import Checkout from './front-end/components/Checkout';
 import OrderComplete from './front-end/components/OrderComplete';
 import Navbar from './front-end/components/Navbar';
 import AuthForm from './front-end/components/AuthForm';
-
+import AdminPage from './front-end/components/AdminPage';
 
 function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
+  const [persInfo, setPersInfo] = useState({})
   const [sessionId, setSessionId] = useState(0);
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [newOrder, setNewOrder] = useState({})
   const [editTrigger, setEditTrigger] = useState(false);
-  
-
+  const [orderPayment, setOrderPayment] = useState({})
+  const [shippingAddress, setShippingAddress] = useState("")
   // REVISIT: you're calling fetchMe() without a token and then
   // saying fetchMe() needs a token on auth.js
 
@@ -54,7 +56,7 @@ function App() {
 
   useEffect(()=>{
     const getUserData = async () => {
-      if (token && !user) {
+      if (token) {
         const userData = await fetchMe(token);
         setUser(userData);
         console.log("Token, sessionId, user:", token, sessionId, user);
@@ -99,7 +101,7 @@ function App() {
         editTrigger={editTrigger}
         setEditTrigger={setEditTrigger}
       />
-      <Navbar token={token} />
+      <Navbar token={token} user={user} />
       <div className='mainBody'>
         <Routes>
           <Route path='/' 
@@ -122,7 +124,7 @@ function App() {
           {token &&
           <Route path='/profile/myorders' element={<OrderHistory />}/>
           }
-          <Route path='/revieworder' element={<ReviewOrder token={token} cart={cart} />}/>
+          <Route path='/revieworder' element={<ReviewOrder persInfo={persInfo} setPersInfo={setPersInfo} shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} token={token} cart={cart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
 
           <Route 
             path='/products' 
@@ -136,8 +138,11 @@ function App() {
                     />}/>
          
           <Route path='/checkout' element={<Checkout />}/>
-          <Route path='/ordercomplete' element={<OrderComplete />}/>
-          {/* <Route path='/userlist' element={<UserList />} */}
+          <Route path='/ordercomplete' element={<OrderComplete shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} cart={cart} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
+          { (token && user.id === 1) &&
+          <Route path='/admin' element={<AdminPage token={token} />} />
+          }
+          <Route path='*' element={<Navigate replace to='/' />} />
         </Routes>
       </div>
     </div>

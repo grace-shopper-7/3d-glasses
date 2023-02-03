@@ -11,6 +11,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
     const [ newQuantity, setNewQuantity ] = useState(0);
     const [ productId, setProductId ] = useState(0);
     const [ errorMessage, setErrorMessage ] = useState("");
+    const [ searchTerm, setSearchTerm ] = useState('');
 
     const [ editId, setEditId ] = useState(0);
     const [ deleteId, setDeleteId ] = useState(0);
@@ -18,7 +19,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
     const [ newDesc, setNewDesc ] = useState("");
     const [ newPrice, setNewPrice ] = useState(null);
     const [ newPhoto, setNewPhoto ] = useState("");
-    const adminUser = JSON.parse(localStorage.getItem("user"))
+    // const user = JSON.parse(localStorage.getItem("user"))
 
     useEffect(() => {
         const getProducts = async () => {
@@ -53,14 +54,26 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
             setErrorMessage("You must be logged in to add product to cart.")
         }
     }
+
+    const filteredProducts = productList?.filter(product => product.name.toLowerCase()
+    .includes(searchTerm.toLowerCase()));
+
     return(
         <div>
             <p>Products</p>
-            { (adminUser.id === 1) &&
+            <input
+                className="search"
+                placeholder="Search for posts by Title"
+                value={searchTerm}
+                type="text"
+                onChange={(e) => setSearchTerm(e.target.value)}
+            ></input>
+            { (user.id === 1) &&
             <AddProduct token={token} editTrigger={editTrigger} setEditTrigger={setEditTrigger} user={user} />
             }
             <div className="allProducts">
-            {productList.map((product) => {
+            {filteredProducts.map((product) => {
+
                 return (
                     <div className="products" key={product.id}>
                         <img src={product.photoURL} width="100%" alt="Photo of glasses" />
@@ -86,7 +99,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                         </div>
                         <p>{product.description} </p>
                         {/* - - - - - - - - - - - - - - EDIT PRODUCT BUTTON HERE - - - - - - - - - - - - - - */}
-                        { ((product.id != editId) && (adminUser.id === 1)) &&
+                        { ((product.id != editId) && (user.id === 1)) &&
                             <form className="edit-product-form" onSubmit={async (e) => {
                                 e.preventDefault();
                                 console.log("Editing Product", product.id, ":", product.name);
@@ -100,7 +113,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                                 <button type="submit" className="productButton">Edit Product</button>
                             </form>
                         }
-                        { ((product.id === editId) && (adminUser.id === 1)) &&
+                        { ((product.id === editId) && (user.id === 1)) &&
                             <form className="edit-product-form" onSubmit={async (e) => {
                                 e.preventDefault();
                                 const editedProduct = await patchProduct(product.id, newName, newDesc, newPrice, newPhoto, token);
@@ -124,7 +137,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                             </form>
                         }
                         {/* - - - - - - - - - - - - - - DELETE PRODUCT BUTTON HERE - - - - - - - - - - - - - - */}
-                        { ((product.id != deleteId) && (adminUser.id === 1)) &&
+                        { ((product.id != deleteId) && (user.id === 1)) &&
                             <form onSubmit={async (e) => {
                                 e.preventDefault();
                                 console.log("Deleting Product:", product.id, ":", product.name);
@@ -134,7 +147,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                                 <button type="submit" className="productButton">Delete Product</button>
                             </form>
                         }
-                        { ((product.id === deleteId) && (adminUser.id === 1)) &&
+                        { ((product.id === deleteId) && (user.id === 1)) &&
                             <div className="delete_checker">
                                 <p>Are you sure you would like to delete {product.name}?</p>
                                 <p>This will remove said product from everyone's shopping carts and cannot (easily) be undone!</p>

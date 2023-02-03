@@ -1,8 +1,11 @@
 const express = require("express");
 const orderLinesRouter = express.Router();
 const { requireUser } = require("./helpers");
-const { createOrderLine, updateOrderLineQuantity, getOrderLinesByOrderId } =
-  "../db/orderItems";
+const {
+  createOrderLine,
+  updateOrderLineQuantity,
+  getOrderLinesByOrderId,
+} = require("../db/orderItems");
 
 orderLinesRouter.use((req, res, next) => {
   console.log("A request is being made to /orderLines.");
