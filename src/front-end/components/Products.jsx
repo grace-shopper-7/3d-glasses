@@ -3,7 +3,7 @@ import { deleteProduct, fetchProducts, patchCartItem, patchProduct, postItemToCa
 import { userReducer } from "../state/reducers";
 import AddProduct from "./AddProduct";
 import SingleProduct from "./SingleProduct"
-import "./styles/products.css"
+import "./styles/products.css";
 
 
 const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user }) => {
@@ -62,9 +62,8 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
             <div className="allProducts">
             {productList.map((product) => {
                 return (
-                    
                     <div className="products" key={product.id}>
-                        <img src={product.photoURL} height="200px" alt="Photo of glasses" />
+                        <img src={product.photoURL} width="100%" alt="Photo of glasses" />
                         <br />
                         <div>
                         <b>{product.name} | ${product.price}</b> 
@@ -79,7 +78,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                             }
                         }}
                         >
-                        <button value={product.id} className="add-to-cart" type="submit">Add To Cart</button>
+                        <button value={product.id} className="productButton" type="submit">Add To Cart</button>
                         </form>
                         { (errorMessage && (productId === product.id)) &&     
                         <p>{errorMessage}</p>
@@ -98,7 +97,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                                 setNewPhoto(product.photoURL);
                                 setDeleteId(0);
                             }}>
-                                <button type="submit">Edit Product</button>
+                                <button type="submit" className="productButton">Edit Product</button>
                             </form>
                         }
                         { ((product.id === editId) && (adminUser.id === 1)) &&
@@ -132,7 +131,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                                 setDeleteId(product.id);
                                 setEditId(0);
                             }}>
-                                <button type="submit">Delete Product</button>
+                                <button type="submit" className="productButton">Delete Product</button>
                             </form>
                         }
                         { ((product.id === deleteId) && (adminUser.id === 1)) &&
