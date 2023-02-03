@@ -63,7 +63,7 @@ return(
                     localStorage.setItem('user', result.userdata.user);
                     setSessionId(result.session.id);
                     localStorage.setItem('sessionId', result.session.id);
-                    localStorage.setItem('username', result.user.username);
+                    localStorage.setItem('username', result.userdata.user.username);
                 }
                 navigate('/')
             } else {

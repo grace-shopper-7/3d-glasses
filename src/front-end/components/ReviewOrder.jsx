@@ -7,11 +7,13 @@ import "./styles/ReviewOrder.css"
 import { useState, useRef } from "react"
 import { IoIosArrowDown } from 'react-icons/io'
 import { patchUser } from "../api/fetch"
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
+import OrderComplete from "./OrderComplete"
 
 
-const ReviewOrder = ({cart, token}) => {
+const ReviewOrder = ({persInfo, setPersInfo, shippingAddress, setShippingAddress, orderPayment, setOrderPayment, totalPrice, setTotalPrice, cart, token, newOrder, setNewOrder}) => {
   const navigate = useNavigate()
+  const location = useLocation()
   const [paymentIsOpen, setPaymentIsOpen] = useState(false);
   const [shippingIsOpen, setShippingIsOpen] = useState(false);
   const [differentAdd, setDifferentAdd] = useState(false)
@@ -29,50 +31,56 @@ const ReviewOrder = ({cart, token}) => {
   const billingRef = useRef()
   const nameRef = useRef()
   
-  // if (!token) {
-  // navigate('/')
-  // }
+  if (!cart.length) {
+    navigate('/')
+  }
+  // {location.pathname.includes("ordercomplete") ? <OrderComplete cart={cart} fullAdd={fullAdd} total={total}/> : null}
+
   let total = cart
-      .map((orderItem) => {
+      ?.map((orderItem) => {
         return ((+orderItem.price)*(orderItem.quantity))})
-        .reduce((a, b) => {
+        ?.reduce((a, b) => {
           return a + b;
-        }, ) 
+        }, 0) 
   const currentUser = JSON.parse(localStorage.getItem("user"))
   console.log ("currentUser init log: ", currentUser)
   const handleSubmit = async (e) => {
   e.preventDefault()
           try {
-            
-            const newOrder = await postOrder(token, currentUser.id, total.toFixed(2))
-            console.log("the order: ", newOrder)
+            setTotalPrice(total)
+            const freshOrder = await postOrder(token, currentUser.id, total.toFixed(2))
+            console.log("the order: ", freshOrder)
+            setNewOrder(freshOrder)
 
             const newOrderLines = await Promise.all(
               cart.map(item => 
-                postOrderLine(token, item.id, item.quantity))
+                postOrderLine(token, freshOrder.id, item.id, item.quantity))
             )
               console.log("order lines: ", newOrderLines)
+
               const fullAdd = `${add1Ref.current.value} ${add2Ref?.current.value}, ${cityRef.current.value}, ${stateRef.current.value} ${zipRef.current.value}`
+              setShippingAddress(fullAdd)
               console.log(fullAdd)
-              // const patchBody = {
-              //   "firstName": `${}`,
-              //   "lastName": `${}`,
-              //   "address": `${fullAdd}`,
-              //   "telephone": `${}`,
-              // }
-              // console.log("here is the patch body", patchBody)
-              // const patchedUser = await patchUser(firstNameRef.current.value, lastNameRef.current.value, fullAdd, telephoneRef.current.value, currentUser.id, token)
-              // console.log("patchedUser: ", patchedUser)
-              // if (patchedUser.error){
-              // alert("There was an error updating the user!")
-              // }else{
-              // localStorage.setItem('user', JSON.stringify(patchedUser))
-              // }
               
+              // let persInfoObj = 
+              setPersInfo({
+                firstName: firstNameRef.current.value,
+                lastName: lastNameRef.current.value,
+                address: {
+                  add1: add1Ref.current.value,
+                  add2: add2Ref.current.value,
+                  city: cityRef.current.value,
+                  state: stateRef.current.value,
+                  zip: zipRef.current.value
+                },
+                telephone: telephoneRef.current.value
+              })
+              console.log("Personal Info:", persInfo)
               let billingVar = billingRef.current?.value ? billingRef.current.value : fullAdd
-              const newPayment = await postPaymentDetails(token, total.toFixed(2), newOrder.id, ccnRef.current.value, cvcRef.current.value, expRef.current.value, billingVar, nameRef.current.value, currentUser.id)
+              const newPayment = await postPaymentDetails(token, total.toFixed(2), freshOrder.id, ccnRef.current.value, cvcRef.current.value, expRef.current.value, billingVar, nameRef.current.value, currentUser.id)
+              setOrderPayment(newPayment)
               console.log("the payment: ", newPayment)
-              
+              navigate('/ordercomplete')
               } catch (error) {
                 console.error("There was a problem placing your order:", error)
                 throw error
@@ -102,14 +110,14 @@ const ReviewOrder = ({cart, token}) => {
                 <hr />
                 {shippingIsOpen?
               <form id="order-form" onSubmit={handleSubmit}>
-                <input ref={firstNameRef} type= "text" placeholder= "First Name "/>
-                <input ref={lastNameRef} type= "text" placeholder= "Last Name "/>
-                <input ref={add1Ref} type= "text" placeholder= "Address line 1"/>
-                <input ref={add2Ref} type= "text" placeholder= "Address line 2"/>
-                <input ref={cityRef} type= "text" placeholder= "City"/>
-                <input ref={stateRef} type= "text" placeholder= "State"/>
-                <input ref={zipRef} type= "number" placeholder= "Zip"/>
-                <input ref={telephoneRef} type= "tel" placeholder= "Phone number"/>
+                <input ref={firstNameRef} type= "text" placeholder= "First Name " defaultValue={persInfo?.firstName}/>
+                <input ref={lastNameRef} type= "text" placeholder= "Last Name " defaultValue={persInfo?.lastName}/>
+                <input ref={add1Ref} type= "text" placeholder= "Address line 1" defaultValue={persInfo?.address?.add1}/>
+                <input ref={add2Ref} type= "text" placeholder= "Address line 2" defaultValue={persInfo?.address?.add2}/>
+                <input ref={cityRef} type= "text" placeholder= "City" defaultValue={persInfo?.address?.city}/>
+                <input ref={stateRef} type= "text" placeholder= "State" defaultValue={persInfo?.address?.state}/>
+                <input ref={zipRef} type= "number" placeholder= "Zip" defaultValue={persInfo?.address?.zip}/>
+                <input ref={telephoneRef} type= "tel" placeholder= "Phone number" defaultValue={persInfo?.telephone}/>
               </form>
                : null}
                 <div><b>Payment Details: </b> <button className="arrow-button" onClick={()=> setPaymentIsOpen(!paymentIsOpen)}><IoIosArrowDown/></button></div>

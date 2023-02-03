@@ -267,9 +267,9 @@ export const postOrderLine = async (token, orderId, productId, quantity) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        orderId,
-        productId,
-        quantity,
+        orderId: orderId,
+        productId: productId,
+        quantity: quantity,
       }),
     });
     const orderLine = await response.json();
