@@ -17,12 +17,14 @@ import AuthForm from './front-end/components/AuthForm';
 function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
+  const [persInfo, setPersInfo] = useState({})
   const [sessionId, setSessionId] = useState(0);
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [newOrder, setNewOrder] = useState({})
   const [editTrigger, setEditTrigger] = useState(false);
-  
-
+  const [orderPayment, setOrderPayment] = useState({})
+  const [shippingAddress, setShippingAddress] = useState("")
   // REVISIT: you're calling fetchMe() without a token and then
   // saying fetchMe() needs a token on auth.js
 
@@ -122,7 +124,7 @@ function App() {
           {token &&
           <Route path='/profile/myorders' element={<OrderHistory />}/>
           }
-          <Route path='/revieworder' element={<ReviewOrder token={token} cart={cart} />}/>
+          <Route path='/revieworder' element={<ReviewOrder persInfo={persInfo} setPersInfo={setPersInfo} shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} token={token} cart={cart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
 
           <Route 
             path='/products' 
@@ -136,7 +138,7 @@ function App() {
                     />}/>
          
           <Route path='/checkout' element={<Checkout />}/>
-          <Route path='/ordercomplete' element={<OrderComplete />}/>
+          <Route path='/ordercomplete' element={<OrderComplete shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} cart={cart} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
           {/* <Route path='/userlist' element={<UserList />} */}
         </Routes>
       </div>
