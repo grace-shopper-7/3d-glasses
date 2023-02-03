@@ -56,11 +56,11 @@ function App() {
     const getUserData = async () => {
       const userData = await fetchMe(token);
       setUser(userData);
+      console.log("Token, sessionId, user:", token, sessionId, user);
     }
     getUserData();
   }, [token]);
   
-  console.log("Token, sessionId, user:", token, sessionId, user);
 
   // useEffect(()=>{
   //   if (!token && !user) {

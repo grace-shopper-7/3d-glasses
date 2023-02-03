@@ -38,7 +38,7 @@ const ReviewOrder = ({cart, token}) => {
         .reduce((a, b) => {
           return a + b;
         }, ) 
-  const currentUser = localStorage.getItem("user")
+  const currentUser = JSON.parse(localStorage.getItem("user"))
   console.log ("currentUser init log: ", currentUser)
   const handleSubmit = async (e) => {
   e.preventDefault()
@@ -55,17 +55,19 @@ const ReviewOrder = ({cart, token}) => {
               const fullAdd = `${add1Ref.current.value} ${add2Ref?.current.value}, ${cityRef.current.value}, ${stateRef.current.value} ${zipRef.current.value}`
               console.log(fullAdd)
               // const patchBody = {
-              //   // id: currentUser.id,
-              //   // username: currentUser.username,
-              //   firstName: firstNameRef.current.value,
-              //   lastName: lastNameRef.current.value,
-              //   address: fullAdd,
-              //   telephone: telephoneRef.current.value,
-              //   // email: currentUser.email,
+              //   "firstName": `${}`,
+              //   "lastName": `${}`,
+              //   "address": `${fullAdd}`,
+              //   "telephone": `${}`,
               // }
-              // const patchedUser = await patchUser(patchBody, currentUser.id, token)
+              // console.log("here is the patch body", patchBody)
+              // const patchedUser = await patchUser(firstNameRef.current.value, lastNameRef.current.value, fullAdd, telephoneRef.current.value, currentUser.id, token)
               // console.log("patchedUser: ", patchedUser)
+              // if (patchedUser.error){
+              // alert("There was an error updating the user!")
+              // }else{
               // localStorage.setItem('user', JSON.stringify(patchedUser))
+              // }
               
               let billingVar = billingRef.current?.value ? billingRef.current.value : fullAdd
               const newPayment = await postPaymentDetails(token, total.toFixed(2), newOrder.id, ccnRef.current.value, cvcRef.current.value, expRef.current.value, billingVar, nameRef.current.value, currentUser.id)

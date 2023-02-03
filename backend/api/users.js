@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 const { getUserByUsername, createUser, editUser } = require("../db/users");
 const { requireUser } = require("./helpers");
 
-// const { requireUser } = require('./utils');
+// const { requireUser } = require("./utils");
 
 usersRouter.use((req, res, next) => {
   console.log("A request is being made to /users.");
@@ -124,23 +124,21 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
 // GET  /api/users/:username/orderhistory * REQUIRES LOGIN
 
 // PATCH /api/users/:userId * REQUIRES LOGIN
-usersRouter.patch("/:userId", async (req, res, next) => {
+usersRouter.patch("/:userId", requireUser, async (req, res, next) => {
   const userId = req.params.userId;
   // const updateFields = { id: req.params.userId, ...req.body };
   const userObj = {
-    // id: userId,
-    // username: req.body.username,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    address: req.body.address,
-    telephone: req.body.telephone,
-    // email: req.body.email,
+    firstName: `${req.body.firstName}`,
+    lastName: `${req.body.lastName}`,
+    address: `${req.body.address}`,
+    telephone: `${req.body.telephone}`,
   };
   try {
-    const updatedUser = await editUser(userId, userObj);
+    const updatedUser = await editUser(userObj, userId);
     res.send(updatedUser);
     console.log(updatedUser);
   } catch ({ name, message }) {
+    res.send({ name, message });
     next({ name, message });
   }
 });
