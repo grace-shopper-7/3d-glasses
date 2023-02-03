@@ -1,0 +1,19 @@
+.allProducts {
+    display: flex;
+  
+    flex-wrap: wrap;
+  }
+  
+  .products {
+    flex-basis: 200px;
+    flex-grow: 1;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+    margin: 5px 10px;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 50vh;
+    /* flex: 1; */
+    justify-content: space-between;
+  }

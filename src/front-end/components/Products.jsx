@@ -3,6 +3,7 @@ import { deleteProduct, fetchProducts, patchCartItem, patchProduct, postItemToCa
 import { userReducer } from "../state/reducers";
 import AddProduct from "./AddProduct";
 import SingleProduct from "./SingleProduct"
+import "./styles/products.css"
 
 
 const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user }) => {
@@ -58,8 +59,10 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
             { (adminUser.id === 1) &&
             <AddProduct token={token} editTrigger={editTrigger} setEditTrigger={setEditTrigger} user={user} />
             }
+            <div className="allProducts">
             {productList.map((product) => {
                 return (
+                    
                     <div className="products" key={product.id}>
                         <img src={product.photoURL} height="200px" alt="Photo of glasses" />
                         <br />
@@ -165,6 +168,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                         }
                     </div>)
                 })}
+                </div>
         </div>
         )
 }
