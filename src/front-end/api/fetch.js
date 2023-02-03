@@ -163,6 +163,28 @@ export const fetchSessionByUser = async (userId, token) => {
   }
 };
 
+export const fetchUsers = async (token) => {
+  try {
+    const response = await fetch(`${API_URL}/users`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const result = await response.json();
+    
+    for (const user of result) {
+      delete user.password;
+    };
+    
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //POST
 export const postReviewToProduct = async (body, productId, token) => {
   try {
