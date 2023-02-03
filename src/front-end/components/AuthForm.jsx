@@ -60,10 +60,10 @@ return(
                     setToken(result.userdata.token)
                     localStorage.setItem('token', result.userdata.token);
                     setUser(result.userdata.user)
-                    localStorage.setItem('user', result.userdata.user);
+                    localStorage.setItem('user', JSON.stringify(result.userdata.user));
                     setSessionId(result.session.id);
                     localStorage.setItem('sessionId', result.session.id);
-                    localStorage.setItem('username', result.user.username);
+                    localStorage.setItem('username', result.userdata.user.username);
                 }
                 navigate('/')
             } else {

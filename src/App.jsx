@@ -54,9 +54,11 @@ function App() {
 
   useEffect(()=>{
     const getUserData = async () => {
-      const userData = await fetchMe(token);
-      setUser(userData);
-      console.log("Token, sessionId, user:", token, sessionId, user);
+      if (token && !user) {
+        const userData = await fetchMe(token);
+        setUser(userData);
+        console.log("Token, sessionId, user:", token, sessionId, user);
+      }
     }
     getUserData();
   }, [token]);
