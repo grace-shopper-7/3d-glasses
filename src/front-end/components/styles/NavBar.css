@@ -1,12 +1,24 @@
-.navbar {
+.navbarTop {
     display: flex;
-    justify-content: space-around;
-    padding: 5px;
-    font-size: 10px;
-    color: rgba(65,75,86,1)
+    flex-direction: row;
+    justify-content: center;
+    font-size: 36px;
+    color: rgba(65,75,86,1);
+}
+.navbarBottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 36px;
+    color: rgba(65,75,86,1);
 }
 
-.header {
-    font-size: 16px;
-    color: rgba(65,75,86,1)
+.navigation {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.homepage {
+    padding: 10px;
 }

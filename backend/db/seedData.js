@@ -236,41 +236,86 @@ async function createInitialProducts() {
   try {
     const productsToCreate = [
       {
-        name: "glasses",
-        description: "desc1",
+        name: "Four Eyes",
+        description: "Double the eyes",
         sku: "001-001-001",
         category: "glasses",
-        price: "4.99",
+        price: "6.96",
         photoURL:
           "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
       },
 
       {
-        name: "glasses1",
-        description: "desc2",
+        name: "Stunnars",
+        description: "Be stunnin",
         sku: "002-002-002",
         category: "glasses",
-        price: "2.99",
+        price: "7.96",
         photoURL:
           "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
       },
 
       {
-        name: "glasses2",
-        description: "desc3",
+        name: "Ray Stoppas",
+        description: "Doofenshmirtz",
         sku: "003-003-003",
         category: "glasses",
-        price: "5.99",
+        price: "8.96",
         photoURL:
           "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
       },
 
       {
-        name: "glasses3",
-        description: "desc4",
+        name: "Eye Spy",
+        description: "Juni Cortez",
         sku: "004-004-004",
         category: "glasses",
-        price: "7.99",
+        price: "9.96",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
+      {
+        name: "Fom Tord",
+        description: "Fashionable",
+        sku: "005-005-005",
+        category: "glasses",
+        price: "10.96",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
+      {
+        name: "Loliver Peopls",
+        description: "Dirty Martiny",
+        sku: "006-006-006",
+        category: "glasses",
+        price: "11.96",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
+      {
+        name: "Bay-Rans",
+        description: "Ban the rays",
+        sku: "007-007-007",
+        category: "glasses",
+        price: "12.96",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
+      {
+        name: "Koapley",
+        description: "Oak Tree",
+        sku: "008-008-008",
+        category: "glasses",
+        price: "13.96",
+        photoURL:
+          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+      },
+      {
+        name: "Sain Laurant",
+        description: "Miracles",
+        sku: "009-009-009",
+        category: "glasses",
+        price: "14.96",
         photoURL:
           "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
       },
