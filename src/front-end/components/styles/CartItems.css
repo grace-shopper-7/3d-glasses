@@ -14,9 +14,11 @@
     background-image: radial-gradient(rgb(168, 172, 248) 0.5px, rgb(253, 253, 253) 0.5px);
     background-size: 10px 10px;
   }
-
-  .aboveCart {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
+ 
+ .shopping-cart {
+  margin-top: 40%;
+ }
+ 
+ p {
+  line-height: 1em;
+ }

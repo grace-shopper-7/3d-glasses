@@ -7,11 +7,12 @@
 
 p {
   font-family: Gotham;
-  font-size: 16px;
   color: rgba(65,75,86,1);
   text-decoration: none;  
-  font-size: 20px;
+  font-size: 36px;
+  margin: 10px;
 }
+
   .products {
     size: 33%;
     font-size: 28px;
@@ -44,3 +45,15 @@ p {
   height: 20px;
   margin-bottom: 10px;
  }
+ 
+ .cancelButton {
+  padding: 0px;
+}
+.add-product-form {
+  padding-bottom: 6px;
+}
+
+.totalProductForm {
+  border: 2px solid rgba(225, 224, 224, 0.784);
+  border-radius: 4px;
+}

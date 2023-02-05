@@ -43,7 +43,7 @@ const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPric
         };
         return (
             <div className="shopping-cart">
-                <div classname="aboveCart">
+                <div className="aboveCart">
                     <p>Your Shopping Cart</p> 
                     <button onClick={handleCartClear}>Clear Cart</button>
                 </div>
