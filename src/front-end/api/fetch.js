@@ -31,6 +31,22 @@ export const fetchOrdersByUser = async (userId, token) => {
   }
 };
 
+export const fetchFullOrdersByUser = async (userId, token) => {
+  try {
+    const response = await fetch(`${API_URL}/orderdetails/history/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const orders = await response.json();
+    return orders;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const fetchOrderLinesByOrderId = async (orderId, token) => {
   try {
     const response = await fetch(`${API_URL}/orderlines/${orderId}`, {

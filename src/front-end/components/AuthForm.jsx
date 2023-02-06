@@ -95,7 +95,7 @@ return(
             { isLogIn === 1 && (
                 <>
                 <label htmlFor="password"></label>
-                <input className="authInput" type="password" minLength={8} required={true} placeholder="Password" ref={confirmRef} />
+                <input className="authInput" type="password" minLength={8} required={true} placeholder="Confirm Password" ref={confirmRef} />
                 </>
             )}
         </div>

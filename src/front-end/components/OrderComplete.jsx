@@ -11,18 +11,6 @@ const OrderComplete = ({token, sessionId, editTrigger, shippingAddress, setShipp
         }
         navigate('/')
     }
-    // let isPageLeaving = false; 
-    // if (!location.pathname.includes('/ordercomplete')){
-    //     isPageLeaving = true
-    // }
-    // useEffect(() => {
-    //     if(isPageLeaving){
-    //     setCart([])
-    //     for (let i=0; i<cart.length; i++) {
-    //         deleteCartItem(token, cart[i].id)
-    //     }
-    //     };
-    // }, [isPageLeaving]);
     useEffect(() => {
         const getCartItems = async () => {
             const cartItems = await fetchCartBySession(sessionId, token);
@@ -35,7 +23,7 @@ const OrderComplete = ({token, sessionId, editTrigger, shippingAddress, setShipp
     let secretCCN = orderPayment.ccn.slice(-4)
     console.log(secretCCN)
     return (
-        <div>
+        <div className='order-complete'>
             <h1>Thank you for your purchase!</h1>
             <b>ORDER REVIEW:</b>
             <hr />

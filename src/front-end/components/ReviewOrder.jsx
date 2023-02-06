@@ -84,6 +84,7 @@ const ReviewOrder = ({setNewLines, persInfo, setPersInfo, shippingAddress, setSh
               setOrderPayment(newPayment)
               navigate('/ordercomplete')
               } catch (error) {
+                window.alert("Please submit shipping and payment details");
                 console.error("There was a problem placing your order:", error)
                 throw error
               }

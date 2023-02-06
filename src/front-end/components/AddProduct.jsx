@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { postProduct } from "../api/fetch";
-import "./styles/products.css";
+import "./styles/Products.css";
 
 
 const AddProduct = ({ token, editTrigger, setEditTrigger, user }) => {

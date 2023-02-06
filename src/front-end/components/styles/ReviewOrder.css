@@ -7,12 +7,16 @@
   justify-content: center;
 }
 .itemsInCart {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   height: min-content;
   justify-content: center;
-  left: 20px;
-  width: 75%;
+  align-items: center;
+  width: 35rem;
+}
+
+.itemsInCart img{
+  max-width: fit-content;
 }
 
 .shoppingCartTitle {

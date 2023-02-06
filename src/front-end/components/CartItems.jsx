@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { useState } from "react"
-import { IoIosArrowDown } from 'react-icons/io';
 import { IoTrashOutline } from 'react-icons/io5';
 import { deleteCartItem, patchCartItem } from "../api/fetch";
 

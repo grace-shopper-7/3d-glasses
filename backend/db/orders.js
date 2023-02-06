@@ -20,7 +20,7 @@ async function createOrderDetails({ userId, amount }) {
   }
 }
 
-async function getFullOrders() {
+async function getFullOrders(userId) {
   try {
     const { rows: orders } = await client.query(`
           SELECT order_details.*, users.username AS "username"
@@ -40,6 +40,7 @@ async function getFullOrders() {
 
       order.productDetails = orderLineToAdd;
     }
+    // const filteredOrders = orders.filter((order) => order.userId === userId);
 
     return orders;
   } catch (error) {

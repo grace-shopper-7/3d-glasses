@@ -1,11 +1,9 @@
 import { NavLink } from "react-router-dom"
 import { fetchCartBySession } from "../api/fetch"
 import CartItems from "./CartItems"
-import { useState } from "react"
 import { deleteCartItem } from "../api/fetch"
-import { useCart } from "../state/context"
 import { useEffect } from "react"
-import "./styles/cartItems.css"
+import "./styles/CartItems.css"
 
 //PRODUCT DETAILS FOR PRICE, ID, QTY
 const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {

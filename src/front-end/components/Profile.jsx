@@ -1,5 +1,4 @@
-import { patchUser } from "../api/fetch"
-import { useState, useEffect, useRef } from "react"
+import { useState} from "react"
 import PersonalInfo from "./PersonalInfo";
 import OrderHistory from "./OrderHistory";
 const Profile = ({persInfo, setPersInfo, setUser, user, token}) => {

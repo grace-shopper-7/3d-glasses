@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { deleteProduct, fetchProducts, patchCartItem, patchProduct, postItemToCart } from "../api/fetch"
 import AddProduct from "./AddProduct";
-import SingleProduct from "./SingleProduct"
 import "./styles/Products.css";
 
 
@@ -62,7 +61,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
             <p className="productsTitle">Products</p>
             <input
                 className="search"
-                placeholder="Search for posts by Title"
+                placeholder="Search Glasses By Name"
                 value={searchTerm}
                 type="text"
                 onChange={(e) => setSearchTerm(e.target.value)}
