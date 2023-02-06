@@ -125,7 +125,7 @@ async function createInitialUsers() {
   try {
     const usersToCreate = [
       {
-        username: "albert",
+        username: "AdminAlbert",
         password: "bertie99",
         // firstName: "Albert",
         // lastName: "bertie",
@@ -134,7 +134,7 @@ async function createInitialUsers() {
         email: "user@123.com",
       },
       {
-        username: "sandra",
+        username: "AdminSandra",
         password: "sandra123",
         // firstName: "Sandra",
         // lastName: "Parker",
@@ -143,7 +143,7 @@ async function createInitialUsers() {
         email: "",
       },
       {
-        username: "glamgal",
+        username: "AdminGlamgal",
         password: "glamgal123",
         // firstName: "Glamgal",
         // lastName: "Glamerous",
@@ -152,7 +152,7 @@ async function createInitialUsers() {
         email: "Glamgal@123.com",
       },
       {
-        username: "faker",
+        username: "AdminFaker",
         password: "fakerboi",
         // firstName: "Faker",
         // lastName: "Gamer",
@@ -172,61 +172,61 @@ async function createInitialUsers() {
   }
 }
 
-async function editInitialUsers() {
-  console.log("Starting to edit users...");
-  try {
-    const usersToEdit = [
-      {
-        id: 1,
-        username: "albert",
-        password: "bertie99",
-        firstName: "Alberto",
-        lastName: "Bernie",
-        address: "123 Elmer Fudd Lane",
-        telephone: "565-656-5656",
-        email: "user@12334.com",
-      },
-      {
-        id: 2,
-        username: "sandra",
-        password: "sandra123",
-        firstName: "Sandran",
-        lastName: "Parkery",
-        address: "123 Elmer Lane",
-        telephone: "123-123-1234",
-        email: "somethingsomething@hotmail.com",
-      },
-      {
-        id: 3,
-        username: "glamgal",
-        password: "glamgal123",
-        firstName: "Glamgal",
-        lastName: "Glamerous",
-        address: "123 Elmer Lane",
-        telephone: "867-5309",
-        email: "Glamgal@123.com",
-      },
-      {
-        id: 4,
-        username: "faker",
-        password: "fakerboi",
-        firstName: "Faker",
-        lastName: "Gamer",
-        address: "1111 Gamer Street",
-        telephone: "867-530-9999",
-        email: "faker@lol.dota",
-      },
-    ];
-    const users = await Promise.all(usersToEdit.map(editUser));
+// async function editInitialUsers() {
+//   console.log("Starting to edit users...");
+//   try {
+//     const usersToEdit = [
+//       {
+//         id: 1,
+//         username: "albert",
+//         password: "bertie99",
+//         firstName: "Alberto",
+//         lastName: "Bernie",
+//         address: "123 Elmer Fudd Lane",
+//         telephone: "565-656-5656",
+//         email: "user@12334.com",
+//       },
+//       {
+//         id: 2,
+//         username: "sandra",
+//         password: "sandra123",
+//         firstName: "Sandran",
+//         lastName: "Parkery",
+//         address: "123 Elmer Lane",
+//         telephone: "123-123-1234",
+//         email: "somethingsomething@hotmail.com",
+//       },
+//       {
+//         id: 3,
+//         username: "glamgal",
+//         password: "glamgal123",
+//         firstName: "Glamgal",
+//         lastName: "Glamerous",
+//         address: "123 Elmer Lane",
+//         telephone: "867-5309",
+//         email: "Glamgal@123.com",
+//       },
+//       {
+//         id: 4,
+//         username: "faker",
+//         password: "fakerboi",
+//         firstName: "Faker",
+//         lastName: "Gamer",
+//         address: "1111 Gamer Street",
+//         telephone: "867-530-9999",
+//         email: "faker@lol.dota",
+//       },
+//     ];
+//     const users = await Promise.all(usersToEdit.map(editUser));
 
-    console.log("Users edited:");
-    console.log(users);
-    console.log("Finished editing users!");
-  } catch (error) {
-    console.error("Error editing users!");
-    throw error;
-  }
-}
+//     console.log("Users edited:");
+//     console.log(users);
+//     console.log("Finished editing users!");
+//   } catch (error) {
+//     console.error("Error editing users!");
+//     throw error;
+//   }
+// }
 
 async function createInitialProducts() {
   console.log("Starting to create Products");
@@ -239,7 +239,7 @@ async function createInitialProducts() {
         category: "glasses",
         price: "6.96",
         photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+          "https://cdn.shopify.com/s/files/1/0573/4884/9821/products/170556_Matsuda_2809H-V2_BS-BL_2_1400x.jpg?v=1645116885",
       },
 
       {
@@ -249,7 +249,7 @@ async function createInitialProducts() {
         category: "glasses",
         price: "7.96",
         photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+          "https://cdn.shopify.com/s/files/1/0283/2150/products/d_1800x1800_58995140-d079-4c17-b8f9-6ed51fc9a836_1024x1024.jpg?v=1656618523",
       },
 
       {
@@ -259,7 +259,7 @@ async function createInitialProducts() {
         category: "glasses",
         price: "8.96",
         photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+          "https://cdn.shopify.com/s/files/1/0440/3576/8475/products/Terza_Frame_0085_front_400X400.jpg?v=1655809549",
       },
 
       {
@@ -269,7 +269,7 @@ async function createInitialProducts() {
         category: "glasses",
         price: "9.96",
         photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+          "https://cdn.shopify.com/s/files/1/0148/9585/products/BLNDRS_HardThunder_EclipseX2_Quarter_712x.jpg?v=1613151840",
       },
       {
         name: "Fom Tord",
@@ -278,7 +278,7 @@ async function createInitialProducts() {
         category: "glasses",
         price: "10.96",
         photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+          "https://cdn.shopify.com/s/files/1/0017/7874/5403/products/the-influencer-sunglasses-686212.jpg?v=1670000462",
       },
       {
         name: "Loliver Peopls",
@@ -287,7 +287,7 @@ async function createInitialProducts() {
         category: "glasses",
         price: "11.96",
         photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+          "https://optimaxweb.glassesusa.com/image/upload/f_auto,q_auto/ms/media/catalog_product/1/000164__f_1.jpg",
       },
       {
         name: "Bay-Rans",
@@ -296,7 +296,7 @@ async function createInitialProducts() {
         category: "glasses",
         price: "12.96",
         photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+          "https://images.ray-ban.com/is/image/RayBan/8056597259835__002.png?impolicy=RB_RB_FBShare",
       },
       {
         name: "Koapley",
@@ -305,7 +305,7 @@ async function createInitialProducts() {
         category: "glasses",
         price: "13.96",
         photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+          "https://assets.oakley.com/is/image/OakleyEYE/888392105271_radar-ev-pitch_polished-white-prizm-field_main_001.png?impolicy=SEO_4x3",
       },
       {
         name: "Sain Laurant",
@@ -314,7 +314,7 @@ async function createInitialProducts() {
         category: "glasses",
         price: "14.96",
         photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
+          "https://m.media-amazon.com/images/I/61GJprnA3YL._UX569_.jpg",
       },
     ];
     const products = await Promise.all(productsToCreate.map(createProducts));
