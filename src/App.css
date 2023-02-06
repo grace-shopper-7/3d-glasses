@@ -5,23 +5,8 @@
   text-align: center;
 }
 
-a:link    { 
-  font-family: sentinel;
+a{
   color: rgba(65,75,86,1); 
   text-decoration: none; 
 }
-  a:visited { 
-    font-family: sentinel;    
-    color: rgba(65,75,86,1); 
-    text-decoration: none; 
-  }
-  a:hover   { 
-    font-family: sentinel;    
-    color: rgba(65,75,86,1); 
-    text-decoration: none; 
-  }
-  a:active  { 
-    font-family: sentinel;    
-    color: rgba(65,75,86,1); 
-    text-decoration: none; 
-  }
+ 

@@ -44,8 +44,11 @@ const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPric
         return (
             <div className="shopping-cart">
                 <div className="aboveCart">
-                    <p>Your Shopping Cart</p> 
-                    <button onClick={handleCartClear}>Clear Cart</button>
+                    <div className="cart-buttons">
+                        <button className="cart-close" onClick={closeModal}>X</button>
+                        <button className="clear-cart" onClick={handleCartClear}>Clear Cart</button>
+                    </div>
+                    <p className="cart-title">Your Shopping Cart</p> 
                 </div>
                 {cart?.map((cartItem) => {
                     return (
@@ -68,8 +71,9 @@ const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPric
         )
     } else {
         return (
-            <div className="shopping-cart">
-                <p>Your Shopping Cart Is Empty</p>
+            <div className="aboveCart">
+            <button className="cart-close" onClick={closeModal}>X</button>
+            <p id='empty-cart'>Your Shopping Cart Is Empty</p>
             </div>
         )
     }

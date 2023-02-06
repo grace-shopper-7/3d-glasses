@@ -1,17 +1,15 @@
 .wrapper {
-
   width: 210px;
   height: 110px;
   perspective: 1000px;
   position: relative;
   align-content: center;
   justify-content: center;
-  left: 30em;
 }
 
 .carousel {
   transform-style: preserve-3d;
-  animation: rotate 25s infinite linear;
+  animation: rotate 10s infinite linear ;
   width: 210px;
   height: 210px;
   position: absolute;
@@ -21,12 +19,13 @@
 }
 
 .panel {
+  pointer-events: none;
   position: absolute;
   top: 10px;
   bottom: 0px;
   left: 10px;
   font-size: 64px;
-  font-family: sentinel;
+  font-family: 'Yeseva One', cursive;  
   color: rgba(65, 75, 86, 1);
   width: 210px;
   height: 210px;

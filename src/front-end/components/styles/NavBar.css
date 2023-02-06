@@ -16,6 +16,7 @@
 .navigation {
     display: flex;
     justify-content: center;
+    position: sticky;
     padding: 10px;
 }
 

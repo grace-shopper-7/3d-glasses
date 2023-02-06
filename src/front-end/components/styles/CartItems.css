@@ -1,5 +1,6 @@
-.cart-items {
+/* .cart-items {
     size: 33%;
+    background-color:red;
     font-size: 28px;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
     margin: 5px 10px;
@@ -13,12 +14,13 @@
     justify-content: space-between;
     background-image: radial-gradient(rgb(168, 172, 248) 0.5px, rgb(253, 253, 253) 0.5px);
     background-size: 10px 10px;
-  }
- 
- .shopping-cart {
-  margin-top: 40%;
- }
- 
- p {
-  line-height: 1em;
- }
+  } */
+
+/* .cart-items{
+  background-color: red;
+} */
+
+ /* .shopping-cart {
+  margin-top: 0%;
+ } */
+

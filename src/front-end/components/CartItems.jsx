@@ -53,8 +53,6 @@ const CartItems = ({cartItem, cart, setCart, token, openModal, closeModal, editT
         <div className="cart-item">       
             <b>{cartItem.name}</b>
             <button onClick={handleDelete}><IoTrashOutline /></button>
-            
-                
                 {/* <button onClick={incrementCounter}>+</button> <button onClick={decrementCounter}>-</button> */}
                 { (editId != cartItem.id) &&
                 <div className="quantity">

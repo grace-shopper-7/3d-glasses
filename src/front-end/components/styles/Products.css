@@ -5,15 +5,15 @@
     width: 100%;
 }
 
-p {
-  font-family: Gotham;
-  color: rgba(65,75,86,1);
-  text-decoration: none;  
-  font-size: 36px;
-  margin: 10px;
-}
+/* .single-product {
+} */
 
-  .products {
+.products {
+    /* font-family: 'Yeseva One', cursive;     */
+    color: rgba(65,75,86,1);
+    text-decoration: none;  
+    font-size: 36px;
+    margin: 10px;
     size: 33%;
     font-size: 28px;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
@@ -23,7 +23,7 @@ p {
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: 279px;
+    min-height: fit-content;
     flex: 0 1 30%;
     justify-content: space-between;
     background-image: radial-gradient(rgb(168, 172, 248) 0.5px, rgb(253, 253, 253) 0.5px);
