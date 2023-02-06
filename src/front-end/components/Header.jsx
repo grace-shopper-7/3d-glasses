@@ -56,7 +56,7 @@ const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSe
         </NavLink>
         :
         <NavLink to='/' className='site-logo'>
-       <h1>3D GLASSES</h1>
+       {/* <h1>3D GLASSES</h1> */}
         </NavLink>}
         <div className="signout"> 
           {(token && localStorage)
