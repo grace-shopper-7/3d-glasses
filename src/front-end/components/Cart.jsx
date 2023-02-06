@@ -5,6 +5,7 @@ import { useState } from "react"
 import { deleteCartItem } from "../api/fetch"
 import { useCart } from "../state/context"
 import { useEffect } from "react"
+import "./styles/cartItems.css"
 
 //PRODUCT DETAILS FOR PRICE, ID, QTY
 const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
@@ -42,8 +43,10 @@ const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPric
         };
         return (
             <div className="shopping-cart">
-                <p>Your Shopping Cart</p> 
-                <button onClick={handleCartClear}>Clear Cart</button>
+                <div className="aboveCart">
+                    <p>Your Shopping Cart</p> 
+                    <button onClick={handleCartClear}>Clear Cart</button>
+                </div>
                 {cart?.map((cartItem) => {
                     return (
                     <div className="cart-items" key={cartItem.id}>

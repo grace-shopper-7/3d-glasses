@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { postProduct } from "../api/fetch";
+import "./styles/products.css";
+
 
 const AddProduct = ({ token, editTrigger, setEditTrigger, user }) => {
     const [ addProduct, setAddProduct ] = useState(0);
@@ -10,7 +12,7 @@ const AddProduct = ({ token, editTrigger, setEditTrigger, user }) => {
     const [ productPhoto, setProductPhoto ] = useState("");
     
     return(
-        <div className="add-product-form">
+        <div className="totalProductForm">
             { (!addProduct) &&
                 <form className="add-product-form" onSubmit={async (e) => {
                     e.preventDefault();
@@ -50,7 +52,7 @@ const AddProduct = ({ token, editTrigger, setEditTrigger, user }) => {
                     <p></p>
                     <button type="submit">Submit New Product</button>
                 </form>
-                <form onSubmit={async (e) => {
+                <form className="cancelButton" onSubmit={async (e) => {
                     e.preventDefault();
                     setAddProduct("");
                 }}>

@@ -60,7 +60,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
 
     return(
         <div>
-            <p>Products</p>
+            <p className="productsTitle">Products</p>
             <input
                 className="search"
                 placeholder="Search for posts by Title"
@@ -97,7 +97,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                         <p>{errorMessage}</p>
                         }
                         </div>
-                        <p>{product.description} </p>
+                        <p >{product.description} </p>
                         {/* - - - - - - - - - - - - - - EDIT PRODUCT BUTTON HERE - - - - - - - - - - - - - - */}
                         { ((product.id != editId) && (user.id === 1)) &&
                             <form className="edit-product-form" onSubmit={async (e) => {

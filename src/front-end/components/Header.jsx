@@ -7,7 +7,7 @@ import Cart from './Cart'
 import {AiFillCloseSquare, AiOutlineShoppingCart} from 'react-icons/ai'
 
 import { useLocation, useNavigate } from 'react-router-dom'
-import './styles/NavBar.css'
+import './styles/Header.css'
 
 // import AuthForm from './AuthForm'
 
@@ -17,6 +17,7 @@ const Header = ({token, setToken, setUser, cart, setCart, sessionId, setSessionI
   const location = useLocation();
   const navigate= useNavigate();
   const localUser = localStorage.getItem("username");
+  console.log("THIS IS LOCAL USER", localUser)
   
   const handleLeave = async() => {
     setCart([])
@@ -55,12 +56,13 @@ const Header = ({token, setToken, setUser, cart, setCart, sessionId, setSessionI
         </NavLink>
         :
         <NavLink to='/' className='site-logo'>
-       <h1>3D GLASSES</h1>
+       {/* <h1>3D GLASSES</h1> */}
         </NavLink>}
-        <div className="nav-sign-in"> 
+        <div className="signout"> 
           {(token && localStorage)
           ? <>
               <p className='greeting'>Hey, {localUser}!</p>
+              <div>
               <NavLink to='/'>
               <button className='sign-in-out-button' onClick={() => {
                 closeModal();
@@ -71,10 +73,11 @@ const Header = ({token, setToken, setUser, cart, setCart, sessionId, setSessionI
               null
               :
               <>
-                <p style={{height: '1rem'}}></p>
+                {/* <p style={{height: '1rem'}}></p> */}
                   <button className='cart-button' onClick={!modalIsOpen? openModal : closeModal}><AiOutlineShoppingCart /></button>
               </>
               }
+              </div>
             </>
           : null 
           } 

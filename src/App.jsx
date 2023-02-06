@@ -11,6 +11,8 @@ import OrderComplete from './front-end/components/OrderComplete';
 import Navbar from './front-end/components/Navbar';
 import AuthForm from './front-end/components/AuthForm';
 import AdminPage from './front-end/components/AdminPage';
+import Carousel from './front-end/components/Carousel'
+
 
 function App() {
   const [token, setToken] = useState("");
@@ -85,7 +87,8 @@ function App() {
   // },[]); // Blank array ensures the "Guest Check-in" only happens when someone first loads/visits the page.
 
   return (
-    <div className="App">
+    <div className="App" >
+      <Carousel/>
       <Header 
         token={token} 
         setToken={setToken} 

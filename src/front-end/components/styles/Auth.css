@@ -1,0 +1,31 @@
+h2 {
+    font-size: 50px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: rgba(65,75,86,1);
+
+}
+.authForm {
+    background-color: rgba(190, 194, 204, 0.414);
+    border-radius: 4px;
+}
+
+.authInput {
+    width: 200px;
+    height: 50px;
+    border: 0;
+    border-radius: 4px;
+    padding: 6px 20px 0;
+    margin: 2px;
+    font-size: 16px;
+}
+
+.submitInput {
+    width: 240px;
+    height: 50px;
+    border: 0;
+    border-radius: 4px;
+    padding: 6px 20px 0;
+    margin: 2px;
+    font-size: 16px;
+}

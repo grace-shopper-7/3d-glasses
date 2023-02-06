@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { registerUser, logInUser } from "../api/auth"
 import {useNavigate} from 'react-router-dom'
 import { fetchSessionByUser, postSession } from "../api/fetch";
+import "./styles/Auth.css"
 
 const AuthForm = ({ setToken, setUser, setSessionId, token, user }) => {
     const [ isLogIn, setIsLogIn ] = useState(0);
@@ -34,15 +35,15 @@ const AuthForm = ({ setToken, setUser, setSessionId, token, user }) => {
       }
 
 return(
-    <div >
+    <div className="thisIsHeader">
         <p> {authPageData.headerString[isLogIn]} </p>
         <button className="headerButton" onClick={toggleAuthPage}> {authPageData.headerButton[isLogIn]} </button>
-        <h2> {authPageData.authPrompt[isLogIn]} </h2>
+        
         <form className="authForm"
         onSubmit={async (e) => {
             e.preventDefault() 
-        try {
-            if ( !isLogIn || comparePasswords() ) {
+            try {
+                if ( !isLogIn || comparePasswords() ) {
                 const result = await authPageData.authFuncs[isLogIn](usernameRef.current.value, passwordRef.current.value, emailRef?.current?.value) 
                 console.log("THIS IS MY RESULTHEHERHEHRHE:", result)
                 if (!result.session) {
@@ -74,30 +75,31 @@ return(
             throw error
         } }}> 
          <div> 
+            <h2> {authPageData.authPrompt[isLogIn]} </h2>
             { isLogIn === 1 && (
                 <>
-                <label htmlFor="email"> Email: </label>
-                <input type="text" minLength={5} required={true} placeholder="email" ref={emailRef} />
+                <label htmlFor="Email"></label>
+                <input className="authInput" type="text" minLength={5} required={true} placeholder="Email" ref={emailRef} />
                 </>
             )}
         </div>
         <div> 
-            <label htmlFor="username"> Username: </label>
-            <input type="text" minLength={1} required={true} placeholder="Username" ref={usernameRef} />
+            <label htmlFor="username"></label>
+            <input className="authInput" type="text" minLength={1} required={true} placeholder="Username" ref={usernameRef} />
         </div>
         <div> 
-            <label htmlFor="password"> Password: </label>
-            <input type="password" minLength={8} required={true} placeholder="Password" ref={passwordRef} />
+            <label htmlFor="password"></label>
+            <input className="authInput" type="password" minLength={8} required={true} placeholder="Password" ref={passwordRef} />
         </div>
         <div> 
             { isLogIn === 1 && (
                 <>
-                <label htmlFor="password"> Confirm Password: </label>
-                <input type="password" minLength={8} required={true} placeholder="Password" ref={confirmRef} />
+                <label htmlFor="password"></label>
+                <input className="authInput" type="password" minLength={8} required={true} placeholder="Password" ref={confirmRef} />
                 </>
             )}
         </div>
-        <input type="submit" value={authPageData.submitButton[isLogIn]} />
+        <input className="submitInput" type="submit" value={authPageData.submitButton[isLogIn]} />
         </form>
     </div>
 )
