@@ -1,13 +1,11 @@
 import { fetchCartBySession, postItemToCart } from "../api/fetch"
 import { useCart } from "../state/context"
 
-const SingleProduct = ({ product, products, }) => {
+const SingleProduct = ({ product }) => {
     const addItem = useCart()
-    console.log("this is a single product", product)
     async function addToCart(e) {
         e.preventDefault()   
         const cart = await fetchCartBySession(1)
-        console.log(cart)
         const addBody = {
             productId: product.id,
             quantity: product.quantity

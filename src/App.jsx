@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import './App.css';
-import { fetchMe, guestLogin } from './front-end/api/auth';
+import { fetchMe } from './front-end/api/auth';
 import Home from './front-end/components/Homepage';
 import Header from './front-end/components/Header';
 import Profile from './front-end/components/Profile';
@@ -66,7 +66,6 @@ function App() {
     getUserData();
   }, [token]);
   
-
   // useEffect(()=>{
   //   if (!token && !user) {
   //     // Guest Check-in time
@@ -88,7 +87,6 @@ function App() {
 
   return (
     <div className="App" >
-      {/* <Carousel/> */}
       <Header 
         token={token} 
         setToken={setToken} 
@@ -123,9 +121,7 @@ function App() {
           {token &&
           <Route path='/profile' element={<Profile setUser={setUser} user={user} token={token} persInfo={persInfo} setPersInfo={setPersInfo}/>}/>
           }
-          {/* {token &&
-          <Route path='/profile/myorders' element={<OrderHistory shippingAddress={shippingAddress} user={user} token={token}/>}/>
-          } */}
+         
           <Route path='/revieworder' element={<ReviewOrder user={user} newLines={newLines} setNewLines={setNewLines} persInfo={persInfo} setPersInfo={setPersInfo} shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} token={token} cart={cart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
 
           <Route 
@@ -143,7 +139,6 @@ function App() {
           { (token && user.id === 1) &&
           <Route path='/admin' element={<AdminPage token={token} />} />
           }
-          {/* <Route path='*' element={<Navigate replace to='/' />} /> */}
         </Routes>
       </div>
     </div>

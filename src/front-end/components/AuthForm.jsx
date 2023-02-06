@@ -1,20 +1,15 @@
 import { useState, useRef } from "react";
 import { registerUser, logInUser } from "../api/auth"
 import {useNavigate} from 'react-router-dom'
-import { fetchSessionByUser, postSession } from "../api/fetch";
+import { fetchSessionByUser } from "../api/fetch";
 import "./styles/Auth.css"
 
 const AuthForm = ({ setToken, setUser, setSessionId, token, user }) => {
     const [ isLogIn, setIsLogIn ] = useState(0);
-    const [ username, setUsername ] = useState("")
     let usernameRef = useRef("")
     let passwordRef = useRef("")
     let emailRef = useRef("")
     let confirmRef = useRef("")
-    // let firstNameRef = useRef()
-    // let lastNameRef = useRef()
-    // let addressRef = useRef()
-    // let telephoneRef = useRef()
     const navigate = useNavigate()
 
 
@@ -45,15 +40,12 @@ return(
             try {
                 if ( !isLogIn || comparePasswords() ) {
                 const result = await authPageData.authFuncs[isLogIn](usernameRef.current.value, passwordRef.current.value, emailRef?.current?.value) 
-                console.log("THIS IS MY RESULTHEHERHEHRHE:", result)
                 if (!result.session) {
                     setToken(result.token)
                     localStorage.setItem('token', result.token);
                     setUser(result.user)
                     localStorage.setItem('user', JSON.stringify(result.user));
                     const response = await fetchSessionByUser(result?.user.id, result?.token);
-                    console.log(response);
-                    console.log("fetchSessionByUser:", response);
                     setSessionId(response.id);
                     localStorage.setItem('sessionId', response.id);
                     localStorage.setItem('username', result.user.username);
@@ -95,7 +87,7 @@ return(
             { isLogIn === 1 && (
                 <>
                 <label htmlFor="password"></label>
-                <input className="authInput" type="password" minLength={8} required={true} placeholder="Password" ref={confirmRef} />
+                <input className="authInput" type="password" minLength={8} required={true} placeholder="Confirm Password" ref={confirmRef} />
                 </>
             )}
         </div>

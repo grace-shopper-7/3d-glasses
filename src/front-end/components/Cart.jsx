@@ -1,11 +1,8 @@
 import { NavLink } from "react-router-dom"
 import { fetchCartBySession } from "../api/fetch"
 import CartItems from "./CartItems"
-import { useState } from "react"
 import { deleteCartItem } from "../api/fetch"
-import { useCart } from "../state/context"
 import { useEffect } from "react"
-import "./styles/cartItems.css"
 
 //PRODUCT DETAILS FOR PRICE, ID, QTY
 const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
@@ -13,16 +10,13 @@ const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPric
 
     useEffect(() => {
         const getCartItems = async () => {
-            console.log("Cart.jsx/UseEffect/SessionId:", sessionId);
             const cartItems = await fetchCartBySession(sessionId, token);
-            console.log("Cart.jsx/UseEffect/CartItems:", cartItems);
             setCart(cartItems);
         }
         getCartItems();
-        // console.log("Cart.jsx/UseEffect/Cart:", cart);
     }, [editTrigger])
 
-    let interimPrice = (+totalPrice);
+    let interimPrice = 0;
 
     const handleCartClear = async () => {
         for (let i=0; i<cart.length; i++) {
@@ -39,7 +33,6 @@ const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPric
         for (let i = 0; i < cart.length; i++) {
             let itemPrice = (+cart[i].price * cart[i].quantity);
             interimPrice += itemPrice;
-            console.log(interimPrice);
         };
         return (
             <div className="shopping-cart">

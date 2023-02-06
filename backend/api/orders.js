@@ -1,6 +1,10 @@
 const express = require("express");
 const orderDetailsRouter = express.Router();
-const { createOrderDetails, getOrdersByUserId } = require("../db/orders");
+const {
+  createOrderDetails,
+  getOrdersByUserId,
+  getFullOrders,
+} = require("../db/orders");
 const { requireUser } = require("./helpers");
 
 orderDetailsRouter.use((req, res, next) => {
@@ -33,6 +37,21 @@ orderDetailsRouter.get("/:userId", requireUser, async (req, res, next) => {
     next({ name, message });
   }
 });
+
+// GET /api/orderdetails/history/:userId * REQUIRES LOGIN
+orderDetailsRouter.get(
+  "/history/:userId",
+  requireUser,
+  async (req, res, next) => {
+    const userId = req.params.userId;
+    try {
+      const userOrders = await getFullOrders(userId);
+      res.send(userOrders);
+    } catch ({ name, message }) {
+      next({ name, message });
+    }
+  }
+);
 
 // // PATCH /api/sessions/:sessionId
 // orderDetailsRouter.patch('/:sessionId', requireUser, async (req, res, next) => {

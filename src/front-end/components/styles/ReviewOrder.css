@@ -7,12 +7,16 @@
   justify-content: center;
 }
 .itemsInCart {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   height: min-content;
   justify-content: center;
-  left: 20px;
-  width: 75%;
+  align-items: center;
+  width: 35rem;
+}
+
+.itemsInCart img{
+  max-width: fit-content;
 }
 
 .shoppingCartTitle {
@@ -25,14 +29,6 @@ color: red;
   justify-content: center;
   width: 100%;
 }
-
-/* p {
-font-family: Gotham;
-color: rgba(65,75,86,1);
-text-decoration: none;  
-font-size: 36px;
-margin: 10px;
-} */
 
 .order-fields{
   display: inline-block;
