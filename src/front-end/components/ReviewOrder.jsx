@@ -1,19 +1,14 @@
-// orderSummary
-import { NavLink } from "react-router-dom"
 import { fetchCartBySession, postOrder, postOrderLine, postPaymentDetails } from "../api/fetch"
-import CartItems from "./CartItems"
 import OrderLine from "./OrderLine"
 import "./styles/ReviewOrder.css"
 import { useState, useRef } from "react"
 import { IoIosArrowDown } from 'react-icons/io'
-import { patchUser } from "../api/fetch"
 import {useNavigate, useLocation} from 'react-router-dom'
-import OrderComplete from "./OrderComplete"
+
 import "./styles/ReviewOrder.css";
 
 
-
-const ReviewOrder = ({persInfo, setPersInfo, shippingAddress, setShippingAddress, orderPayment, setOrderPayment, totalPrice, setTotalPrice, cart, token, newOrder, setNewOrder}) => {
+const ReviewOrder = ({setNewLines, persInfo, setPersInfo, shippingAddress, setShippingAddress, orderPayment, setOrderPayment, totalPrice, setTotalPrice, cart, token, newOrder, setNewOrder}) => {
   const navigate = useNavigate()
   const location = useLocation()
   const [paymentIsOpen, setPaymentIsOpen] = useState(false);
@@ -30,8 +25,15 @@ const ReviewOrder = ({persInfo, setPersInfo, shippingAddress, setShippingAddress
   const cvcRef = useRef()
   const ccnRef = useRef()
   const expRef = useRef()
-  const billingRef = useRef()
   const nameRef = useRef()
+  const firstBNameRef = useRef()
+  const lastBNameRef = useRef()
+  const billingAdd1Ref = useRef()
+  const billingAdd2Ref = useRef()
+  const billingCityRef = useRef()
+  const billingStateRef = useRef()
+  const billingZipRef = useRef()
+  const billingPhoneRef = useRef()
   
   if (!cart.length) {
     navigate('/')
@@ -50,23 +52,20 @@ const ReviewOrder = ({persInfo, setPersInfo, shippingAddress, setShippingAddress
   e.preventDefault()
           try {
             setTotalPrice(total)
+
             const freshOrder = await postOrder(token, currentUser.id, total.toFixed(2))
-            console.log("the order: ", freshOrder)
             setNewOrder(freshOrder)
 
             const newOrderLines = await Promise.all(
-              cart.map(item => 
-                {console.log("token:", token, "freshOrder.id", freshOrder.id,"item.id", item.productId, "item.quantity", item.quantity)
-                console.log("item:", item)
-                postOrderLine(token, freshOrder.id, item.productId, item.quantity)})
-            )
-              console.log("order lines: ", newOrderLines)
+              cart.map(async item => 
+                {const orderLine = await postOrderLine(token, freshOrder.id, item.productId, item.quantity)
+                return orderLine
+                })
+              )
+              setNewLines(newOrderLines)
 
               const fullAdd = `${add1Ref.current.value} ${add2Ref?.current.value}, ${cityRef.current.value}, ${stateRef.current.value} ${zipRef.current.value}`
               setShippingAddress(fullAdd)
-              console.log(fullAdd)
-              
-              // let persInfoObj = 
               setPersInfo({
                 firstName: firstNameRef.current.value,
                 lastName: lastNameRef.current.value,
@@ -79,11 +78,10 @@ const ReviewOrder = ({persInfo, setPersInfo, shippingAddress, setShippingAddress
                 },
                 telephone: telephoneRef.current.value
               })
-              console.log("Personal Info:", persInfo)
-              let billingVar = billingRef.current?.value ? billingRef.current.value : fullAdd
+              let billingVar = differentAdd ? `${firstBNameRef?.current.value} ${lastBNameRef?.current.value}, ${billingAdd1Ref?.current.value} ${billingAdd2Ref?.current.value}, ${billingCityRef?.current.value}, ${billingStateRef?.current.value} ${billingZipRef?.current.value}`
+              : fullAdd
               const newPayment = await postPaymentDetails(token, total.toFixed(2), freshOrder.id, ccnRef.current.value, cvcRef.current.value, expRef.current.value, billingVar, nameRef.current.value, currentUser.id)
               setOrderPayment(newPayment)
-              console.log("the payment: ", newPayment)
               navigate('/ordercomplete')
               } catch (error) {
                 console.error("There was a problem placing your order:", error)
@@ -140,14 +138,14 @@ const ReviewOrder = ({persInfo, setPersInfo, shippingAddress, setShippingAddress
                 <label> Different from shipping<input type="checkbox" onClick={()=> setDifferentAdd(!differentAdd)}/></label>
                 {differentAdd?
                 <div>
-                  <input type= "text" placeholder= "First Name "/>
-                  <input type= "text" placeholder= "Last Name "/>
-                  <input ref={billingRef} type= "text" placeholder= "Address line 1"/>
-                  <input type= "text" placeholder= "Address line 2"/>
-                  <input type= "text" placeholder= "City"/>
-                  <input type= "text" placeholder= "State"/>
-                  <input type= "number" placeholder= "Zip"/>
-                  <input type= "tel" placeholder= "Phone number"/>
+                  <input ref={firstBNameRef} type="text" placeholder="First Name "/>
+                  <input ref={lastBNameRef} type= "text" placeholder="Last Name "/>
+                  <input ref={billingAdd1Ref} type="text" placeholder="Address line 1"/>
+                  <input ref={billingAdd2Ref} type= "text" placeholder="Address line 2"/>
+                  <input ref={billingCityRef} type= "text" placeholder="City"/>
+                  <input ref={billingStateRef} type= "text" placeholder="State"/>
+                  <input ref={billingZipRef} type= "number" placeholder="Zip"/>
+                  <input ref={billingPhoneRef} type= "tel" placeholder="Phone number"/>
                 </div>
                : null}
               </form>

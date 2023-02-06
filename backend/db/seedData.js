@@ -46,11 +46,8 @@ async function createTables() {
           id SERIAL PRIMARY KEY,
           username VARCHAR(255) UNIQUE NOT NULL,
           password VARCHAR(255) NOT NULL,
-          "firstName" VARCHAR(255),
-          "lastName" VARCHAR(255),
-          address VARCHAR(255),
-          telephone VARCHAR(25),
-          email VARCHAR(255) UNIQUE NOT NULL
+          email VARCHAR(255) UNIQUE NOT NULL,
+          regdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
       CREATE TABLE products (
@@ -88,7 +85,7 @@ async function createTables() {
           "orderId" INTEGER REFERENCES order_details(id),
           "productId" INTEGER REFERENCES products(id),
           quantity INTEGER,
-          UNIQUE ("orderId", "productId")
+          UNIQUE ("orderId", id, "productId")
       );
 
       CREATE TABLE session (
@@ -130,37 +127,37 @@ async function createInitialUsers() {
       {
         username: "albert",
         password: "bertie99",
-        firstName: "Albert",
-        lastName: "bertie",
-        address: "123 Elmer Lane",
-        telephone: "555-555-5555",
+        // firstName: "Albert",
+        // lastName: "bertie",
+        // address: "123 Elmer Lane",
+        // telephone: "555-555-5555",
         email: "user@123.com",
       },
       {
         username: "sandra",
         password: "sandra123",
-        firstName: "Sandra",
-        lastName: "Parker",
-        address: "123 Elmer Lane",
-        telephone: "123-123-1234",
+        // firstName: "Sandra",
+        // lastName: "Parker",
+        // address: "123 Elmer Lane",
+        // telephone: "123-123-1234",
         email: "",
       },
       {
         username: "glamgal",
         password: "glamgal123",
-        firstName: "Glamgal",
-        lastName: "Glamerous",
-        address: "123 Elmer Lane",
-        telephone: "",
+        // firstName: "Glamgal",
+        // lastName: "Glamerous",
+        // address: "123 Elmer Lane",
+        // telephone: "",
         email: "Glamgal@123.com",
       },
       {
         username: "faker",
         password: "fakerboi",
-        firstName: "Faker",
-        lastName: "Gamer",
-        address: "1111 Gamer Street",
-        telephone: "",
+        // firstName: "Faker",
+        // lastName: "Gamer",
+        // address: "1111 Gamer Street",
+        // telephone: "",
         email: "faker@lol.dota",
       },
     ];
@@ -556,7 +553,6 @@ async function rebuildDB() {
     await dropTables();
     await createTables();
     await createInitialUsers();
-    // await editInitialUsers();
     await createInitialProducts();
     await createInitalOrderDetails();
     await createInitialOrderLines();

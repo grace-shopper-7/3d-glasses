@@ -1,21 +1,19 @@
-const Profile = () => {
+import { patchUser } from "../api/fetch"
+import { useState, useEffect, useRef } from "react"
+import PersonalInfo from "./PersonalInfo";
+import OrderHistory from "./OrderHistory";
+const Profile = ({persInfo, setPersInfo, setUser, user, token}) => {
+    const [showPersonalInfo, setShowPersonalInfo] = useState(true);
+    
+    
     return (
         <div>
-             {/* const patchBody = {
-                "firstName": `${}`,
-                "lastName": `${}`,
-                "address": `${fullAdd}`,
-                "telephone": `${}`,
-              }
-              console.log("here is the patch body", patchBody)
-              const patchedUser = await patchUser(firstNameRef.current.value, lastNameRef.current.value, fullAdd, telephoneRef.current.value, currentUser.id, token)
-              console.log("patchedUser: ", patchedUser)
-              if (patchedUser.error){
-              alert("There was an error updating the user!")
-              }else{
-              localStorage.setItem('user', JSON.stringify(patchedUser))
-              }
-               */}
+            <header>
+            <button onClick={() => setShowPersonalInfo(true)}>Personal Info</button>
+            <button onClick={() => setShowPersonalInfo(false)}>Order History</button>
+            </header>
+            {showPersonalInfo? <PersonalInfo setUser={setUser} user={user} token={token} persInfo={persInfo} setPersInfo={setPersInfo}/>
+            : <OrderHistory user={user} token={token}/>}
         </div>
     )
 }

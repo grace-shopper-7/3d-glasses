@@ -8,7 +8,7 @@ async function createOrderLine({ orderId, productId, quantity }) {
       `
             INSERT INTO order_lines("orderId", "productId", quantity)
             VALUES ($1, $2, $3)
-            ON CONFLICT ("productId", "orderId") DO NOTHING
+            ON CONFLICT ("productId", "orderId", id) DO NOTHING
             RETURNING *;
         `,
       [orderId, productId, quantity]

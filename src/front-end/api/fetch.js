@@ -15,46 +15,6 @@ export const fetchProducts = async () => {
   }
 };
 
-export function fetchDummyProducts() {
-  let products = [
-    {
-      id: 1,
-      quantity: 2,
-      details: {
-        name: "Goofy Glasses",
-        price: 10.99,
-        description: "The goofiest damn glasses you've ever seen",
-        photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
-      },
-    },
-    {
-      id: 2,
-      quantity: 2,
-      details: {
-        name: "Glass Glasses",
-        price: 600,
-        description: "Glasses 3D printed out of glass",
-        photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
-      },
-    },
-    {
-      id: 3,
-      quantity: 4,
-      details: {
-        name: "g g g g g glases",
-        price: 2,
-        description: "Trash glasses",
-        photoURL:
-          "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
-      },
-    },
-  ];
-  console.log("THESE ARE THE PRODUCTS", products);
-  return products;
-}
-
 export const fetchOrdersByUser = async (userId, token) => {
   try {
     const response = await fetch(`${API_URL}/orderdetails/${userId}`, {
@@ -113,56 +73,6 @@ export const fetchCartBySession = async (sessionId, token) => {
     throw error;
   }
 };
-
-export function fetchDummyCartBySession() {
-  // const [total, setTotal] = useState(0.0);
-  // useEffect(() => {
-  //   const newTotal = cart.order_items.reduce((accumulator, object) => {
-  //     return accumulator + object.price;
-  //   }, 0);
-  //   setTotal(newTotal);
-  // }, cart.order_items);
-  let cart = {
-    id: 5,
-    order_items: [
-      {
-        id: 1,
-        quantity: 2,
-        details: {
-          name: "Goofy Glasses",
-          price: 10.99,
-          description: "The goofiest damn glasses you've ever seen",
-          photoURL:
-            "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
-        },
-      },
-      {
-        id: 2,
-        quantity: 2,
-        details: {
-          name: "Glass Glasses",
-          price: 600,
-          description: "Glasses 3D printed out of glass",
-          photoURL:
-            "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
-        },
-      },
-      {
-        id: 3,
-        quantity: 4,
-        details: {
-          name: "g g g g g glases",
-          price: 2,
-          description: "Trash glasses",
-          photoURL:
-            "http://cdn.shopify.com/s/files/1/2633/2144/products/caddis-life-readers-porgy-backstage-reading-glasses-gloss-black-readers-0-00-blue-light-reading-glasses-31051380359356.jpg?v=1660783260",
-        },
-      },
-    ],
-  };
-  console.log(cart);
-  return cart;
-}
 
 export const fetchSessionByUser = async (userId, token) => {
   try {
@@ -442,10 +352,10 @@ export const patchUser = async (
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        firstName,
-        lastName,
-        address,
-        telephone,
+        firstName: `${firstName}`,
+        lastName: `${lastName}`,
+        address: `${address}`,
+        telephone: `${telephone}`,
       }),
     });
     const result = await response.json();

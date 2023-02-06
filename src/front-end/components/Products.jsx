@@ -39,7 +39,7 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
             console.log(newItem);
             if (newItem.error) {
                 let searchItems = cart.filter((cartItem) => cartItem.productId === productId);
-                console.log("SUCCESS", searchItems[0].id);
+                console.log("SUCCESS", searchItems[0]?.id);
                 let updatedItem = await patchCartItem((searchItems[0].quantity+1), searchItems[0].id, token);
                 console.log("EVEN MORE SUCCESS", updatedItem);
                 if (editTrigger) {

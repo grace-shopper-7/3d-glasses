@@ -10,6 +10,8 @@ const {
   editUser,
   getAllUsers,
   getUserById,
+  createUserInfo,
+  getInfoByUserId,
 } = require("../db/users");
 const { requireUser } = require("./helpers");
 
@@ -140,7 +142,7 @@ usersRouter.get("/me", async (req, res, next) => {
   } else {
     next({
       name: "AuthorizationHeaderError",
-      message: `Authorization token must start with '${prefix}' ya dingus!`,
+      message: `Authorization token must start with '${prefix}'`,
     });
   }
 });
@@ -168,7 +170,7 @@ usersRouter.patch("/:userId", requireUser, async (req, res, next) => {
     telephone: `${req.body.telephone}`,
   };
   try {
-    const updatedUser = await editUser(userObj, userId);
+    const updatedUser = await editUser(userId, userObj);
     res.send(updatedUser);
     console.log(updatedUser);
   } catch ({ name, message }) {

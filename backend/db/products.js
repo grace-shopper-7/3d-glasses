@@ -20,12 +20,10 @@ async function createProducts({
           `,
       [name, description, sku, category, price, photoURL]
     );
-
-    // console.log("This is a user ------------>", user);
     return products;
   } catch (error) {
     console.error("Error in createProducts", error);
-    throw error
+    throw error;
   }
 }
 
@@ -45,23 +43,26 @@ async function getProductById(id) {
     return product;
   } catch (error) {
     console.error("Error in getProductById", error);
-    throw error
+    throw error;
   }
 }
 
 // Revisit: look into reducing sent information for bulk product listings
 async function getProductsWithoutReviews() {
   try {
-    const { rows } = await client.query(`
+    const { rows } = await client.query(
+      `
       SELECT * 
       FROM products
       WHERE "category"=$1;
-    `, ["glasses"]);
+    `,
+      ["glasses"]
+    );
 
     return rows;
   } catch (error) {
     console.error("Error in getRewiewsWithoutReviews", error);
-    throw error
+    throw error;
   }
 }
 
@@ -73,39 +74,45 @@ async function getAllProducts() {
         From products
         JOIN reviews ON products.id = reviews."productId";
         `);
-      return rows;
+    return rows;
   } catch (error) {
     console.error("Error in getAllProducts", error);
-    throw error
+    throw error;
   }
 }
 
 // revisit to inquire on range of prices
 async function getProductsByPrice(price) {
   try {
-    const { rows: products } = await client.query(`
+    const { rows: products } = await client.query(
+      `
         SELECT *
         From products
         WHERE price = $1
-        `, [price]);
-    return products
+        `,
+      [price]
+    );
+    return products;
   } catch (error) {
     console.error("Error in getProductsByPrice", error);
-    throw error
+    throw error;
   }
 }
 
 async function getProductsByCategory(category) {
   try {
-    const { rows: products } = await client.query(`
+    const { rows: products } = await client.query(
+      `
         SELECT *
         From products
         WHERE category = $1
-        `, [category]);
-    return products
+        `,
+      [category]
+    );
+    return products;
   } catch (error) {
     console.error("Error in getProductsByCategory", error);
-    throw error
+    throw error;
   }
 }
 
@@ -147,10 +154,9 @@ async function deleteProduct(id) {
     return deleted;
   } catch (error) {
     console.error("Error in deleteProducts", error);
-    throw error
+    throw error;
   }
 }
-
 
 module.exports = {
   createProducts,
@@ -158,7 +164,7 @@ module.exports = {
   getProductsWithoutReviews,
   getAllProducts,
   getProductsByPrice,
-  getProductsByCategory, 
+  getProductsByCategory,
   updateProduct,
   deleteProduct,
 };

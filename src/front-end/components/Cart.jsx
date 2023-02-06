@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { fetchCartBySession, fetchDummyCartBySession, fetchSessionByUser } from "../api/fetch"
+import { fetchCartBySession } from "../api/fetch"
 import CartItems from "./CartItems"
 import { useState } from "react"
 import { deleteCartItem } from "../api/fetch"
@@ -19,7 +19,7 @@ const Cart = ({openModal, closeModal, sessionId, token, cart, setCart, totalPric
             setCart(cartItems);
         }
         getCartItems();
-        console.log("Cart.jsx/UseEffect/Cart:", cart);
+        // console.log("Cart.jsx/UseEffect/Cart:", cart);
     }, [editTrigger])
 
     let interimPrice = (+totalPrice);
