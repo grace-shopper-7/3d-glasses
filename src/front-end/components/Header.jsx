@@ -8,6 +8,7 @@ import {AiFillCloseSquare, AiOutlineShoppingCart} from 'react-icons/ai'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import './styles/Header.css'
+import Carousel from './Carousel'
 
 // import AuthForm from './AuthForm'
 
@@ -49,19 +50,11 @@ const Header = ({token, setToken, setUser, cart, setCart, sessionId, setSessionI
   }
   return (
     <>
-      <div className='header'>{
-        location.pathname.includes('ordercomplete')?
-        <NavLink onClick={handleLeave} to='/' className='site-logo'>
-       <h1>3D GLASSES</h1>
-        </NavLink>
-        :
-        <NavLink to='/' className='site-logo'>
-       {/* <h1>3D GLASSES</h1> */}
-        </NavLink>}
-        <div className="signout"> 
+      <div className='header'>
+      <Carousel />
+        <div className='signout'> 
           {(token && localStorage)
           ? <>
-              <p className='greeting'>Hey, {localUser}!</p>
               <div>
               <NavLink to='/'>
               <button className='sign-in-out-button' onClick={() => {
@@ -78,19 +71,19 @@ const Header = ({token, setToken, setUser, cart, setCart, sessionId, setSessionI
               </>
               }
               </div>
+              <p className='greeting'>Hey, {localUser}!</p>
             </>
           : null 
           } 
         </div>
       </div>
       <Modal 
-      closeTimeoutMS={300}
       isOpen={modalIsOpen}
       onRequestClose={closeModal}
-      className={"AuthModal"}
-      overlayClassName='AuthOverlay'
+      className={"CartModal"}
+      overlayClassName='CartOverlay'
       portalClassName="ModalPortal"
-      contentLabel="Login Modal"
+      contentLabel="CartModal"
       >
         <Cart 
           cart={cart} 

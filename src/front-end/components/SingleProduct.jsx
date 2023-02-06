@@ -16,7 +16,7 @@ const SingleProduct = ({ product, products, }) => {
         addItem(newItem)
     }
     return (
-        <div>
+        <div className="single-product">
             <img src={product.photoURL} height="200px" alt="Photo of glasses" />
             <br />
             <div>

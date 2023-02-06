@@ -90,7 +90,7 @@ const ReviewOrder = ({setNewLines, persInfo, setPersInfo, shippingAddress, setSh
             }
     return (
       <div className="orderPreview">
-          <p classname="shoppingCartTitle">Your Shopping Cart</p> 
+          <p className="shoppingCartTitle">Your Shopping Cart</p> 
           <div className="entireCart">
             <div className="itemsInCart">
             {cart.map((cartItem) => {
@@ -114,7 +114,7 @@ const ReviewOrder = ({setNewLines, persInfo, setPersInfo, shippingAddress, setSh
                   <div><b>Shipping Address: </b> <button className="arrow-button" onClick={()=> setShippingIsOpen(!shippingIsOpen)}><IoIosArrowDown/></button></div>
                   <hr />
                   {shippingIsOpen?
-                <form id="order-form" onSubmit={handleSubmit}>
+                <form id="order-form" className='order-fields' onSubmit={handleSubmit}>
                   <input ref={firstNameRef} type= "text" placeholder= "First Name " defaultValue={persInfo?.firstName}/>
                   <input ref={lastNameRef} type= "text" placeholder= "Last Name " defaultValue={persInfo?.lastName}/>
                   <input ref={add1Ref} type= "text" placeholder= "Address line 1" defaultValue={persInfo?.address?.add1}/>
@@ -128,7 +128,7 @@ const ReviewOrder = ({setNewLines, persInfo, setPersInfo, shippingAddress, setSh
                 <div><b>Payment Details: </b> <button className="arrow-button" onClick={()=> setPaymentIsOpen(!paymentIsOpen)}><IoIosArrowDown/></button></div>
                 <hr />
                 {paymentIsOpen?
-              <form>
+              <form className='order-fields' >
                 <input ref={ccnRef} type= "tel" placeholder= "Card number"/>
                 <input ref={cvcRef} type= "tel" placeholder= "CVC "/>
                 <input ref={expRef} type= "date" placeholder= "Expiration "/>
@@ -137,7 +137,7 @@ const ReviewOrder = ({setNewLines, persInfo, setPersInfo, shippingAddress, setSh
                 <b>Billing Address: </b>
                 <label> Different from shipping<input type="checkbox" onClick={()=> setDifferentAdd(!differentAdd)}/></label>
                 {differentAdd?
-                <div>
+                <div className='order-fields' >
                   <input ref={firstBNameRef} type="text" placeholder="First Name "/>
                   <input ref={lastBNameRef} type= "text" placeholder="Last Name "/>
                   <input ref={billingAdd1Ref} type="text" placeholder="Address line 1"/>

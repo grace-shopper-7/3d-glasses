@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { deleteProduct, fetchProducts, patchCartItem, patchProduct, postItemToCart } from "../api/fetch"
-import { userReducer } from "../state/reducers";
 import AddProduct from "./AddProduct";
 import SingleProduct from "./SingleProduct"
-import "./styles/products.css";
+import "./styles/Products.css";
 
 
 const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user }) => {

@@ -88,7 +88,7 @@ function App() {
 
   return (
     <div className="App" >
-      <Carousel/>
+      {/* <Carousel/> */}
       <Header 
         token={token} 
         setToken={setToken} 
