@@ -65,28 +65,29 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
 
                 return (
                     <div className="products" key={product.id}>
-                        <img src={product.photoURL} width="100%" alt="Photo of glasses" />
-                        <br />
-                        <div>
-                        <b>{product.name} | ${product.price}</b> 
-                        <form value={product.id} className="add-to-cart" onSubmit={ async (e) => {
-                            e.preventDefault();
-                            await handleSubmit(product.id);
-                            setProductId(product.id);
-                            if (!editTrigger) {
-                                setEditTrigger(true)
-                            } else {
-                                setEditTrigger(false)
-                            }
-                        }}
-                        >
-                        <button value={product.id} className="productButton" type="submit">Add To Cart</button>
-                        </form>
-                        { (errorMessage && (productId === product.id)) &&     
-                        <p>{errorMessage}</p>
-                        }
+                        <div className="product-image">
+                            <img src={product.photoURL} width="100%" alt="Photo of glasses" />
                         </div>
-                        <p >{product.description} </p>
+                        <div>
+                            <b>{product.name} | ${product.price}</b> 
+                            <form value={product.id} className="add-to-cart" onSubmit={ async (e) => {
+                                e.preventDefault();
+                                await handleSubmit(product.id);
+                                setProductId(product.id);
+                                if (!editTrigger) {
+                                    setEditTrigger(true)
+                                } else {
+                                    setEditTrigger(false)
+                                }
+                            }}
+                            >
+                            <button value={product.id} className="productButton" type="submit">Add To Cart</button>
+                            </form>
+                            { (errorMessage && (productId === product.id)) &&     
+                            <p>{errorMessage}</p>
+                            }
+                            <p >{product.description} </p>
+                        </div>
                         {/* - - - - - - - - - - - - - - EDIT PRODUCT BUTTON HERE - - - - - - - - - - - - - - */}
                         { ((product.id != editId) && (user.id === 1)) &&
                             <form className="edit-product-form" onSubmit={async (e) => {
@@ -113,13 +114,21 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                                 setEditId(0);
                             }}>
                                 <label className="postLabel" htmlFor='newName'>New Name:</label>
+                                <br/>
                                 <input className="input" type='text' name='newName' value={newName} onChange={(event) => setNewName(event.target.value)} />
+                                <br/>
                                 <label className="postLabel" htmlFor='newDesc'>New Description:</label>
+                                <br/>
                                 <input className="input" type='text' name='newDesc' value={newDesc} onChange={(event) => setNewDesc(event.target.value)} />
+                                <br/>
                                 <label className="postLabel" htmlFor='newPrice'>New Price:</label>
+                                <br/>
                                 <input className="input" type='text' name='newPrice' value={newPrice} onChange={(event) => setNewPrice(event.target.value)} />
+                                <br/>
                                 <label className="postLabel" htmlFor='newPhoto'>New PhotoURL:</label>
+                                <br/>
                                 <input className="input" type='text' name='newPhoto' value={newPhoto} onChange={(event) => setNewPhoto(event.target.value)} />
+                                <br/>
                                 <button type="submit">Submit Changes</button>
                             </form>
                         }

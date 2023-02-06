@@ -39,15 +39,25 @@ const AddProduct = ({ token, editTrigger, setEditTrigger, user }) => {
                     setProductPhoto("");
                 }}>
                     <label className="postLabel" htmlFor='productName'>Product Name:</label>
+                                <br/>
                     <input className="input" type='text' name='productName' value={productName} placeholder="Goofy Name" onChange={(event) => setProductName(event.target.value)} />
+                                <br/>
                     <label className="postLabel" htmlFor='productDesc'>Product Description:</label>
+                                <br/>
                     <input className="input" type='text' name='productDesc' value={productDesc} placeholder="Goofy Description" onChange={(event) => setProductDesc(event.target.value)} />
+                                <br/>
                     <label className="postLabel" htmlFor='productSKU'>Product SKU:</label>
+                                <br/>
                     <input className="input" type='text' name='productSKU' value={productSKU} placeholder="001-001-001"onChange={(event) => setProductSKU(event.target.value)} />
+                                <br/>
                     <label className="postLabel" htmlFor='productPrice'>Product Price:</label>
+                                <br/>
                     <input className="input" type='text' name='productPrice' value={productPrice} placeholder="0.00"onChange={(event) => setProductPrice(event.target.value)} />
+                                <br/>
                     <label className="postLabel" htmlFor='productPhoto'>Product PhotoURL:</label>
+                                <br/>
                     <input className="input" type='text' name='productPhoto' value={productPhoto} placeholder="Goofy URL"onChange={(event) => setProductPhoto(event.target.value)} />
+                                <br/>
                     <p></p>
                     <button type="submit">Submit New Product</button>
                 </form>
