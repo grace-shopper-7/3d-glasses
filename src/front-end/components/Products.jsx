@@ -6,7 +6,6 @@ import "./styles/Products.css";
 
 const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user }) => {
     const [ productList, setProductList ] = useState([]);
-    const [ newQuantity, setNewQuantity ] = useState(0);
     const [ productId, setProductId ] = useState(0);
     const [ errorMessage, setErrorMessage ] = useState("");
     const [ searchTerm, setSearchTerm ] = useState('');
@@ -17,36 +16,28 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
     const [ newDesc, setNewDesc ] = useState("");
     const [ newPrice, setNewPrice ] = useState(null);
     const [ newPhoto, setNewPhoto ] = useState("");
-    // const user = JSON.parse(localStorage.getItem("user"))
 
     useEffect(() => {
         const getProducts = async () => {
         const products = await fetchProducts()
-        // console.log("UseEffect/FetchProducts:", products)
         setProductList(products)
         }
         getProducts()
-        // console.log("UseEffect/ProductList:", productList)
     }, [editTrigger]);
 
     const handleSubmit = async (productId) => {
         if (token) {
-            console.log("Firing postitemtocart!");
             let quantity = 1;
             let newItem = await postItemToCart( token, sessionId, productId, quantity)
-            console.log(newItem);
             if (newItem.error) {
                 let searchItems = cart.filter((cartItem) => cartItem.productId === productId);
-                console.log("SUCCESS", searchItems[0]?.id);
                 let updatedItem = await patchCartItem((searchItems[0].quantity+1), searchItems[0].id, token);
-                console.log("EVEN MORE SUCCESS", updatedItem);
                 if (editTrigger) {
                     setEditTrigger(false);
                 } else {
                     setEditTrigger(true);
                 }
             } else {
-                console.log("FAILURE");
             }
         } else {
             setErrorMessage("You must be logged in to add product to cart.")
@@ -100,7 +91,6 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                         { ((product.id != editId) && (user.id === 1)) &&
                             <form className="edit-product-form" onSubmit={async (e) => {
                                 e.preventDefault();
-                                console.log("Editing Product", product.id, ":", product.name);
                                 setEditId(product.id);
                                 setNewName(product.name);
                                 setNewDesc(product.description);
@@ -115,7 +105,6 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                             <form className="edit-product-form" onSubmit={async (e) => {
                                 e.preventDefault();
                                 const editedProduct = await patchProduct(product.id, newName, newDesc, newPrice, newPhoto, token);
-                                console.log("editedRoutine:", editedProduct);
                                 if (editTrigger) {
                                     setEditTrigger(false)
                                 } else {
@@ -138,7 +127,6 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                         { ((product.id != deleteId) && (user.id === 1)) &&
                             <form onSubmit={async (e) => {
                                 e.preventDefault();
-                                console.log("Deleting Product:", product.id, ":", product.name);
                                 setDeleteId(product.id);
                                 setEditId(0);
                             }}>
@@ -152,7 +140,6 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                                 <form onSubmit={async (e) => {
                                     e.preventDefault();
                                     const deletedProduct = await deleteProduct(product.id, token);
-                                    console.log("deletedProduct:", deletedProduct);
                                     if (editTrigger) {
                                         setEditTrigger(false)
                                     } else {
@@ -164,7 +151,6 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
                                 </form>
                                 <form onSubmit={async (e) => {
                                     e.preventDefault();
-                                    console.log(`Product ${product.name} was not deleted.`);
                                     if (editTrigger) {
                                         setEditTrigger(false)
                                     } else {

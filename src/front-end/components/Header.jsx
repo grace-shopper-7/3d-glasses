@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-// import { useUser } from '../state/context'
 import { deleteCartItem } from '../api/fetch'
 import Modal from 'react-modal'
 import Cart from './Cart'
@@ -10,7 +9,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import './styles/Header.css'
 import Carousel from './Carousel'
 
-// import AuthForm from './AuthForm'
 
 
 const Header = ({token, setToken, setUser, cart, setCart, sessionId, setSessionId, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
@@ -18,8 +16,7 @@ const Header = ({token, setToken, setUser, cart, setCart, sessionId, setSessionI
   const location = useLocation();
   const navigate= useNavigate();
   const localUser = localStorage.getItem("username");
-  console.log("THIS IS LOCAL USER", localUser)
-  
+
   const handleLeave = async() => {
     setCart([])
     for (let i=0; i<cart.length; i++) {
@@ -33,7 +30,6 @@ const Header = ({token, setToken, setUser, cart, setCart, sessionId, setSessionI
   }
   
   function closeModal() {
-    // console.log("localStorage:", localStorage)
     setIsOpen(false);
   }
   
@@ -66,7 +62,6 @@ const Header = ({token, setToken, setUser, cart, setCart, sessionId, setSessionI
               null
               :
               <>
-                {/* <p style={{height: '1rem'}}></p> */}
                   <button className='cart-button' onClick={!modalIsOpen? openModal : closeModal}><AiOutlineShoppingCart /></button>
               </>
               }

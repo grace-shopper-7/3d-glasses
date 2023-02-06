@@ -1,4 +1,4 @@
-import { fetchCartBySession, postOrder, postOrderLine, postPaymentDetails } from "../api/fetch"
+import { postOrder, postOrderLine, postPaymentDetails } from "../api/fetch"
 import OrderLine from "./OrderLine"
 import "./styles/ReviewOrder.css"
 import { useState, useRef } from "react"
@@ -8,9 +8,8 @@ import {useNavigate, useLocation} from 'react-router-dom'
 import "./styles/ReviewOrder.css";
 
 
-const ReviewOrder = ({setNewLines, persInfo, setPersInfo, shippingAddress, setShippingAddress, orderPayment, setOrderPayment, totalPrice, setTotalPrice, cart, token, newOrder, setNewOrder}) => {
+const ReviewOrder = ({setNewLines, persInfo, setPersInfo, setShippingAddress, setOrderPayment, setTotalPrice, cart, token, setNewOrder}) => {
   const navigate = useNavigate()
-  const location = useLocation()
   const [paymentIsOpen, setPaymentIsOpen] = useState(false);
   const [shippingIsOpen, setShippingIsOpen] = useState(false);
   const [differentAdd, setDifferentAdd] = useState(false)
@@ -38,7 +37,6 @@ const ReviewOrder = ({setNewLines, persInfo, setPersInfo, shippingAddress, setSh
   if (!cart.length) {
     navigate('/')
   }
-  // {location.pathname.includes("ordercomplete") ? <OrderComplete cart={cart} fullAdd={fullAdd} total={total}/> : null}
 
   let total = cart
       ?.map((orderItem) => {
@@ -47,7 +45,6 @@ const ReviewOrder = ({setNewLines, persInfo, setPersInfo, shippingAddress, setSh
           return a + b;
         }, 0) 
   const currentUser = JSON.parse(localStorage.getItem("user"))
-  console.log ("currentUser init log: ", currentUser)
   const handleSubmit = async (e) => {
   e.preventDefault()
           try {
@@ -85,7 +82,6 @@ const ReviewOrder = ({setNewLines, persInfo, setPersInfo, shippingAddress, setSh
               navigate('/ordercomplete')
               } catch (error) {
                 window.alert("Please submit shipping and payment details");
-                console.error("There was a problem placing your order:", error)
                 throw error
               }
             }

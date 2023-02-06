@@ -29,7 +29,6 @@ body {
   min-height: 100vh;
   background-image: radial-gradient(rgb(20, 27, 161) 0.5px, rgb(253, 253, 253) 0.5px);
   background-size: 10px 10px;
-  /* background: linear-gradient(135deg, rgba(68, 76, 247, 0.333) 25%, transparent 25%) -10px 0px / 20px 20px, linear-gradient(225deg, rgb(68, 76, 247) 25%, transparent 25%) -10px 0px / 20px 20px, linear-gradient(315deg, rgba(68, 76, 247, 0.333) 25%, transparent 25%) 0px 0px / 20px 20px, linear-gradient(45deg, rgb(68, 76, 247) 25%, rgb(229, 229, 247) 25%) 0px 0px / 20px 20px; */
 }
 
 h1 {

@@ -8,12 +8,6 @@ const OrderLine = ({cartItem, cart}) => {
     const handleClick = () => {
         setIsOpen(!isOpen)
     }
-    // const handleDelete = () => {
-    //     const filteredCart = cart.order_items.filter(item => 
-    //         item.id !== id)
-    //     return filteredCart
-    // }
-    // let itemID = cartItem.id
     return(
         <div className="cart-item">  
         <img src={cartItem.photoURL} height="100px" alt="Photo of glasses" />     

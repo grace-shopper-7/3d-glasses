@@ -14,14 +14,11 @@ const OrderComplete = ({token, sessionId, editTrigger, shippingAddress, setShipp
     useEffect(() => {
         const getCartItems = async () => {
             const cartItems = await fetchCartBySession(sessionId, token);
-            console.log("Cart.jsx/UseEffect/CartItems:", cartItems);
             setCart(cartItems);
         }
         getCartItems();
-        console.log("OrderComplete.jsx/UseEffect:", cart);
     }, [editTrigger])
     let secretCCN = orderPayment.ccn.slice(-4)
-    console.log(secretCCN)
     return (
         <div className='order-complete'>
             <h1>Thank you for your purchase!</h1>

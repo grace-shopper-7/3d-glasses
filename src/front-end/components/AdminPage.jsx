@@ -11,8 +11,6 @@ const AdminPage = ({token}) => {
         }
         getUsers();
     }, []);
-
-    console.log(userList);
     
     return (
         <div className="homepage">

@@ -1,28 +1,18 @@
-import { fetchOrdersByUser, fetchOrderLinesByOrderId, fetchFullOrdersByUser } from "../api/fetch";
+import { fetchFullOrdersByUser } from "../api/fetch";
 import { fetchMe } from "../api/auth";
 import { useEffect, useState } from "react";
 
 const OrderHistory = ({user, token}) => {
 const [userOrders, setUserOrders] = useState([])
-const [userOrderLines, setUserOrderLines] = useState([])
 
 useEffect(()=> {
     const processOrders = async() => {
         const user =await fetchMe(token)
         const orders = await fetchFullOrdersByUser(user.id, token)
-        console.log("useEffect orders:", orders)
         let filteredOrders = orders.filter(order => order.userId === user.id)
         setUserOrders(filteredOrders)
-        // console.log(orders)
-        //     if(orders)
-        //         for (let order of orders) {
-        //             let orderLines = await fetchOrderLinesByOrderId(order.id, token)
-        //             userOrderLines.push(orderLines)}
-        //             console.log(userOrderLines)
-        //         }
     } 
     processOrders()
-    console.log("User Orders:" ,userOrders)
 }, [])
 
 return ( 
@@ -31,7 +21,6 @@ return (
             {userOrders.length? 
             <div className='order-history'>
                 {userOrders?.map ( (order) => {
-                    // const newLines = await fetchOrderLinesByOrderId(order.id, token)
                     let yr = order.createdAt.slice(0, 4)
                     let mn = order.createdAt.slice(5, 7)
                     let day = order.createdAt.slice(8, 10)
@@ -43,7 +32,6 @@ return (
                             <div>
                                 <ol>
                                 {order.productDetails.map(line => {
-                                    console.log("line", line)
                                     if (line?.orderId === order.id) {
                                     return (
                                         <li key={line.id}>

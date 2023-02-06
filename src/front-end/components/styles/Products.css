@@ -5,11 +5,7 @@
     width: 100%;
 }
 
-/* .single-product {
-} */
-
 .products {
-    /* font-family: 'Yeseva One', cursive;     */
     color: rgba(65,75,86,1);
     text-decoration: none;  
     font-size: 36px;
@@ -37,7 +33,6 @@
 
   img {
     border-radius: 10px;
-    /* box-shadow: 0 0 10px 20px rgba(255, 255, 255, 0.51);  */
   }
   
  .search {

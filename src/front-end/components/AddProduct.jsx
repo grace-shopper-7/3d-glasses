@@ -26,7 +26,6 @@ const AddProduct = ({ token, editTrigger, setEditTrigger, user }) => {
                 <form className="add-product-form" onSubmit={async (e) => {
                     e.preventDefault();
                     const newProduct = await postProduct(productName, productDesc, productSKU, productPrice, productPhoto, token);
-                    console.log("New Product created:", newProduct);
                     if (editTrigger) {
                         setEditTrigger(false)
                     } else {
