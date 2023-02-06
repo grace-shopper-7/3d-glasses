@@ -9,6 +9,8 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { patchUser } from "../api/fetch"
 import {useNavigate, useLocation} from 'react-router-dom'
 import OrderComplete from "./OrderComplete"
+import "./styles/ReviewOrder.css";
+
 
 
 const ReviewOrder = ({persInfo, setPersInfo, shippingAddress, setShippingAddress, orderPayment, setOrderPayment, totalPrice, setTotalPrice, cart, token, newOrder, setNewOrder}) => {
@@ -89,39 +91,42 @@ const ReviewOrder = ({persInfo, setPersInfo, shippingAddress, setShippingAddress
               }
             }
     return (
-        <div className="orderPreview">
-            <div>
-            <p>Your Shopping Cart</p> 
+      <div className="orderPreview">
+          <p classname="shoppingCartTitle">Your Shopping Cart</p> 
+          <div className="entireCart">
+            <div className="itemsInCart">
             {cart.map((cartItem) => {
                 return (
-                <div className="cart-items" key={cartItem.id}>
+                  <div className="cart-items" key={cartItem.id}>
                     <OrderLine cartItem={cartItem} cart={cart}/>
                 </div>)
             })}
-            <aside>
-            <b>Subtotal | ${total.toFixed(2)}</b>
-            <hr />
-            <b>Shipping | Free</b>
-            <hr />
-            <b>Total ${total.toFixed(2)}</b>
-            <button type="submit" onClick={handleSubmit} form="order-form" className="checkout-button">Place Order</button>
-            </aside>
             </div>
-            <aside className="checkout-details">
-                <div><b>Shipping Address: </b> <button className="arrow-button" onClick={()=> setShippingIsOpen(!shippingIsOpen)}><IoIosArrowDown/></button></div>
-                <hr />
-                {shippingIsOpen?
-              <form id="order-form" onSubmit={handleSubmit}>
-                <input ref={firstNameRef} type= "text" placeholder= "First Name " defaultValue={persInfo?.firstName}/>
-                <input ref={lastNameRef} type= "text" placeholder= "Last Name " defaultValue={persInfo?.lastName}/>
-                <input ref={add1Ref} type= "text" placeholder= "Address line 1" defaultValue={persInfo?.address?.add1}/>
-                <input ref={add2Ref} type= "text" placeholder= "Address line 2" defaultValue={persInfo?.address?.add2}/>
-                <input ref={cityRef} type= "text" placeholder= "City" defaultValue={persInfo?.address?.city}/>
-                <input ref={stateRef} type= "text" placeholder= "State" defaultValue={persInfo?.address?.state}/>
-                <input ref={zipRef} type= "number" placeholder= "Zip" defaultValue={persInfo?.address?.zip}/>
-                <input ref={telephoneRef} type= "tel" placeholder= "Phone number" defaultValue={persInfo?.telephone}/>
-              </form>
-               : null}
+            <div className="toTheRight">
+                <aside>
+                  <b>Subtotal | ${total.toFixed(2)}</b>
+                  <hr />
+                  <b>Shipping | Free</b>
+                  <hr />
+                  <b>Total ${total.toFixed(2)}</b>
+                  <button type="submit" onClick={handleSubmit} form="order-form" className="checkout-button">Place Order</button>
+                </aside>
+    
+                <aside>
+                  <div><b>Shipping Address: </b> <button className="arrow-button" onClick={()=> setShippingIsOpen(!shippingIsOpen)}><IoIosArrowDown/></button></div>
+                  <hr />
+                  {shippingIsOpen?
+                <form id="order-form" onSubmit={handleSubmit}>
+                  <input ref={firstNameRef} type= "text" placeholder= "First Name " defaultValue={persInfo?.firstName}/>
+                  <input ref={lastNameRef} type= "text" placeholder= "Last Name " defaultValue={persInfo?.lastName}/>
+                  <input ref={add1Ref} type= "text" placeholder= "Address line 1" defaultValue={persInfo?.address?.add1}/>
+                  <input ref={add2Ref} type= "text" placeholder= "Address line 2" defaultValue={persInfo?.address?.add2}/>
+                  <input ref={cityRef} type= "text" placeholder= "City" defaultValue={persInfo?.address?.city}/>
+                  <input ref={stateRef} type= "text" placeholder= "State" defaultValue={persInfo?.address?.state}/>
+                  <input ref={zipRef} type= "number" placeholder= "Zip" defaultValue={persInfo?.address?.zip}/>
+                  <input ref={telephoneRef} type= "tel" placeholder= "Phone number" defaultValue={persInfo?.telephone}/>
+                </form>
+                  : null}
                 <div><b>Payment Details: </b> <button className="arrow-button" onClick={()=> setPaymentIsOpen(!paymentIsOpen)}><IoIosArrowDown/></button></div>
                 <hr />
                 {paymentIsOpen?
@@ -147,7 +152,9 @@ const ReviewOrder = ({persInfo, setPersInfo, shippingAddress, setShippingAddress
                : null}
               </form>
             : null}
-            </aside>
+                  </aside>
+            </div>
+            </div>
         </div>
     )}
 
