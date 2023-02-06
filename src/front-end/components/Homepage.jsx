@@ -3,9 +3,10 @@ import React from "react";
 const Home = () => {
     return (
         <div className="homepage">
-            <h1>Hello and welcome to 3D Glasses-dot-com!</h1>
-            <p>We are currently undergoing maintenance, 
-                please check back soon for the full user experience!</p>
+              <div><img src= "https://c.wallhere.com/photos/97/c5/1926x1280_px_beach_sunglasses-513828.jpg!d"
+              ></img></div>
+             <h1>Hello and welcome to 3D Glasses-dot-com! </h1>
+           
         </div>
     );
 };

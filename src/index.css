@@ -62,6 +62,10 @@ button:hover {
   transform: scale(1.1);
 }
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
