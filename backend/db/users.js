@@ -16,7 +16,7 @@ async function createUser({ username, password, email }) {
         INSERT INTO users( username, password, email )
         VALUES ($1, $2, $3)
         ON CONFLICT (username) DO NOTHING
-        RETURNING id, username, email;
+        RETURNING id, username, email, regdate;
         `,
       [username, hashedPassword, email]
     );
@@ -24,26 +24,6 @@ async function createUser({ username, password, email }) {
     // console.log("This is a user ------------>", user);
     return user;
   } catch (error) {
-    throw error;
-  }
-}
-
-async function editUser({ firstName, lastName, address, telephone, id }) {
-  try {
-    const {
-      rows: [user],
-    } = await client.query(
-      `
-      UPDATE users
-      SET "firstName"=$2, "lastName"=$3, address=$4, telephone=$5
-      WHERE id=$1
-      RETURNING *;
-        `,
-      [id, firstName, lastName, address, telephone]
-    );
-    return user;
-  } catch (error) {
-    console.error("Error in editUser:", error);
     throw error;
   }
 }
@@ -113,7 +93,7 @@ async function getAllUsers() {
 }
 
 // PATCH Functions
-async function modifyUser({ id, ...fields }) {
+async function editUser({ id, ...fields }) {
   const keys = Object.keys(fields);
 
   const setString = keys

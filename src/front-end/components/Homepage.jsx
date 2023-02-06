@@ -1,6 +1,7 @@
 import React from "react";
 
-const Home = () => {
+const Home = ({user}) => {
+    console.log(user)
     return (
         <div className="homepage">
             <h1>Hello and welcome to 3D Glasses-dot-com!</h1>

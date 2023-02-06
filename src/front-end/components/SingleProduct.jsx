@@ -1,4 +1,4 @@
-import { fetchCartBySession, fetchDummyCartBySession, postItemToCart } from "../api/fetch"
+import { fetchCartBySession, postItemToCart } from "../api/fetch"
 import { useCart } from "../state/context"
 
 const SingleProduct = ({ product, products, }) => {

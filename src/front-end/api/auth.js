@@ -21,13 +21,13 @@ export const registerUser = async (username, password, email) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${result1.token}`
+        Authorization: `Bearer ${result1.token}`,
       },
     });
     const result2 = await response2.json();
     console.log("THIS IS THE RESULT IN REGISTERUSER(session)", result2);
 
-    const toReturn = {userdata: result1, session: result2};
+    const toReturn = { userdata: result1, session: result2 };
     return toReturn;
   } catch (err) {
     console.error("There was a problem registering: ", err);
@@ -64,7 +64,7 @@ export const fetchMe = async (token) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     });
 

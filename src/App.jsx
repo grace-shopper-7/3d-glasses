@@ -5,10 +5,8 @@ import { fetchMe, guestLogin } from './front-end/api/auth';
 import Home from './front-end/components/Homepage';
 import Header from './front-end/components/Header';
 import Profile from './front-end/components/Profile';
-import OrderHistory from './front-end/components/OrderHistory';
 import Products from './front-end/components/Products';
 import ReviewOrder from './front-end/components/ReviewOrder';
-import Checkout from './front-end/components/Checkout';
 import OrderComplete from './front-end/components/OrderComplete';
 import Navbar from './front-end/components/Navbar';
 import AuthForm from './front-end/components/AuthForm';
@@ -22,6 +20,7 @@ function App() {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [newOrder, setNewOrder] = useState({})
+  const [newLines, setNewLines] = useState([])
   const [editTrigger, setEditTrigger] = useState(false);
   const [orderPayment, setOrderPayment] = useState({})
   const [shippingAddress, setShippingAddress] = useState("")
@@ -101,11 +100,11 @@ function App() {
         editTrigger={editTrigger}
         setEditTrigger={setEditTrigger}
       />
-      <Navbar token={token} user={user} />
+      <Navbar token={token} user={user} cart={cart} setCart={setCart}/>
       <div className='mainBody'>
         <Routes>
           <Route path='/' 
-            element={<Home />}
+            element={<Home user={user}/>}
           />
           {!token &&
           <Route 
@@ -119,12 +118,12 @@ function App() {
                     />}/>
           }
           {token &&
-          <Route path='/profile' element={<Profile />}/>
+          <Route path='/profile' element={<Profile setUser={setUser} user={user} token={token} persInfo={persInfo} setPersInfo={setPersInfo}/>}/>
           }
-          {token &&
-          <Route path='/profile/myorders' element={<OrderHistory user={user} token={token}/>}/>
-          }
-          <Route path='/revieworder' element={<ReviewOrder persInfo={persInfo} setPersInfo={setPersInfo} shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} token={token} cart={cart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
+          {/* {token &&
+          <Route path='/profile/myorders' element={<OrderHistory shippingAddress={shippingAddress} user={user} token={token}/>}/>
+          } */}
+          <Route path='/revieworder' element={<ReviewOrder user={user} newLines={newLines} setNewLines={setNewLines} persInfo={persInfo} setPersInfo={setPersInfo} shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} token={token} cart={cart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
 
           <Route 
             path='/products' 
@@ -137,12 +136,11 @@ function App() {
                       user={user}
                     />}/>
          
-          <Route path='/checkout' element={<Checkout />}/>
-          <Route path='/ordercomplete' element={<OrderComplete token={token} sessionId={sessionId} editTrigger={editTrigger} setEditTrigger={setEditTrigger} shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} cart={cart} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
+          <Route path='/ordercomplete' element={<OrderComplete newLines={newLines} setNewLines={setNewLines} token={token} sessionId={sessionId} editTrigger={editTrigger} setEditTrigger={setEditTrigger} shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} cart={cart} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
           { (token && user.id === 1) &&
           <Route path='/admin' element={<AdminPage token={token} />} />
           }
-          <Route path='*' element={<Navigate replace to='/' />} />
+          {/* <Route path='*' element={<Navigate replace to='/' />} /> */}
         </Routes>
       </div>
     </div>

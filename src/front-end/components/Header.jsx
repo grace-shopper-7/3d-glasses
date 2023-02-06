@@ -12,7 +12,7 @@ import './styles/NavBar.css'
 // import AuthForm from './AuthForm'
 
 
-const Header = ({token, setToken, user, setUser, cart, setCart, sessionId, setSessionId, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
+const Header = ({token, setToken, setUser, cart, setCart, sessionId, setSessionId, totalPrice, setTotalPrice, editTrigger, setEditTrigger}) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate= useNavigate();
