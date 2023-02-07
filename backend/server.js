@@ -1,8 +1,7 @@
 const chalk = require("chalk");
-const app = require("./backend/app");
+const app = require("./app");
 
-const PORT = process.env["PORT"] ?? 8080;
-// const server = http.createServer(app);
+const { PORT = 8080 } = process.env;
 
 app.listen(PORT, () => {
   console.log(

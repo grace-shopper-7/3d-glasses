@@ -80,6 +80,7 @@ usersRouter.post("/register", async (req, res, next) => {
 
 // POST /api/users/login
 usersRouter.post("/login", async (req, res, next) => {
+  console.log("inLogin");
   const { username, password } = req.body;
 
   console.log(username, password);
