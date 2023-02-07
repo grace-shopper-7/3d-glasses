@@ -39,8 +39,9 @@ return(
             e.preventDefault() 
             try {
                 if ( !isLogIn || comparePasswords() ) {
-                const result = await authPageData.authFuncs[isLogIn](usernameRef.current.value, passwordRef.current.value, emailRef?.current?.value) 
-                if (!result.session) {
+                const result = await authPageData.authFuncs[isLogIn](usernameRef.current.value, passwordRef.current.value, emailRef?.current?.value);
+                console.log(result);
+                if (!result.session && result.user) {
                     setToken(result.token)
                     localStorage.setItem('token', result.token);
                     setUser(result.user)
@@ -49,7 +50,7 @@ return(
                     setSessionId(response.id);
                     localStorage.setItem('sessionId', response.id);
                     localStorage.setItem('username', result.user.username);
-                } else {
+                } else if (result.userdata && result.session) {
                     setToken(result.userdata.token)
                     localStorage.setItem('token', result.userdata.token);
                     setUser(result.userdata.user)
