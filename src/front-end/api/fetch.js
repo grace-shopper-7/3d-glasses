@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
-const PORT = 3000;
-const API_URL = `http://localhost:${PORT}/api`;
+const API_URL = `/api`;
 
 //GET
 export const fetchProducts = async () => {
   try {
-    const response = await fetch(`${API_URL}/products/`);
+    const response = await fetch(`${API_URL}/products`);
     const products = await response.json();
+    console.log(products);
     return products;
   } catch (error) {
     throw error;

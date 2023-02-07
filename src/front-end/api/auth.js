@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api";
+const API_URL = "/api";
 
 export const registerUser = async (username, password, email) => {
   console.log("THESE ARE THEM:", username, password, email);

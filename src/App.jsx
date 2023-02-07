@@ -26,8 +26,6 @@ function App() {
   const [editTrigger, setEditTrigger] = useState(false);
   const [orderPayment, setOrderPayment] = useState({})
   const [shippingAddress, setShippingAddress] = useState("")
-  // REVISIT: you're calling fetchMe() without a token and then
-  // saying fetchMe() needs a token on auth.js
 
   // useEffect(() => {
   //   if(!user) {
