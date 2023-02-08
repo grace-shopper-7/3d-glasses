@@ -1,9 +1,9 @@
-const { Pool } = require("pg");
+const { Client } = require("pg");
 
 const connectionString =
   process.env.DATABASE_URL || "http://localhost:5432/threedglasses";
 
-const client = new Pool({
+const client = new Client({
   connectionString,
   ssl:
     process.env.NODE_ENV === "production"

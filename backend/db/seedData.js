@@ -313,8 +313,7 @@ async function createInitialProducts() {
         sku: "009-009-009",
         category: "glasses",
         price: "14.96",
-        photoURL:
-          "https://m.media-amazon.com/images/I/61GJprnA3YL._UX569_.jpg",
+        photoURL: "https://m.media-amazon.com/images/I/61GJprnA3YL._UX569_.jpg",
       },
     ];
     const products = await Promise.all(productsToCreate.map(createProducts));
@@ -550,6 +549,7 @@ async function createInitialCartItems() {
 
 async function rebuildDB() {
   try {
+    client.connect();
     await dropTables();
     await createTables();
     await createInitialUsers();
