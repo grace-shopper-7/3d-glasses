@@ -2,7 +2,7 @@
 
 Live Demo: [urlhere](urlhere)
 
-3D Glasses is an e-commerce site for users to request custom, 3D printed solutions for all their eyewear needs. This was a group project built over 3 weeks during Fullstack academy's 2211 cohort and is intended to showcase a minimum viable product for an ecommerce web app.
+3D Glasses is an e-commerce site for users to request custom, 3D printed solutions for all their eyewear needs. This was a group project built over 3 weeks during Fullstack academy's 2211 cohort and is intended to showcase a minimum viable product for an e-commerce web app.
 
 ## Table of Contents
 
@@ -81,7 +81,7 @@ Project may be worked on intermittently due to group members moving on to new pr
 
 ## Contact
 
-Created by [Spencer Hurd](github.com/spencer-hurd), [Delores Curtis](https://github.com/trese19), [Trenton Toplikar](https://github.com/TrentonToplikar), and [Tyler Gunlock](https://github.com/Gunny434).
+Created by [Spencer Hurd](https://github.com/spencer-hurd), [Delores Curtis](https://github.com/trese19), [Trenton Toplikar](https://github.com/TrentonToplikar), and [Tyler Gunlock](https://github.com/Gunny434).
 
 Feel free to contact us if you have any questions.
 
