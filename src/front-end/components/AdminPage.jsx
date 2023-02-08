@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchUsers } from "../api/fetch";
 
-const AdminPage = ({token}) => {
+const AdminPage = ({token, productList, setProductList, editTrigger, setEditTrigger}) => {
     const [ userList, setUserList ] = useState([]);
 
     useEffect(()=> {

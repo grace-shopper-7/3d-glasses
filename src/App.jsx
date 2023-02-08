@@ -26,6 +26,7 @@ function App() {
   const [editTrigger, setEditTrigger] = useState(false);
   const [orderPayment, setOrderPayment] = useState({})
   const [shippingAddress, setShippingAddress] = useState("")
+  const [ productList, setProductList ] = useState([]);
 
   // useEffect(() => {
   //   if(!user) {
@@ -131,11 +132,13 @@ function App() {
                       setEditTrigger={setEditTrigger}
                       cart={cart} 
                       user={user}
+                      productList={productList}
+                      setProductList={setProductList}
                     />}/>
          
           <Route path='/ordercomplete' element={<OrderComplete newLines={newLines} setNewLines={setNewLines} token={token} sessionId={sessionId} editTrigger={editTrigger} setEditTrigger={setEditTrigger} shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} orderPayment={orderPayment} setOrderPayment={setOrderPayment} newOrder={newOrder} setNewOrder={setNewOrder} cart={cart} setCart={setCart} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>}/>
           { (token && user.id === 1) &&
-          <Route path='/admin' element={<AdminPage token={token} />} />
+          <Route path='/admin' element={<AdminPage token={token}  productList={productList} setProductList={setProductList} editTrigger={editTrigger} setEditTrigger={setEditTrigger}/>}/>
           }
         </Routes>
       </div>

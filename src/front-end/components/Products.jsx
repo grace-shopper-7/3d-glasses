@@ -4,8 +4,8 @@ import AddProduct from "./AddProduct";
 import "./styles/Products.css";
 
 
-const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user }) => {
-    const [ productList, setProductList ] = useState([]);
+const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user, productList, setProductList }) => {
+    // const [ productList, setProductList ] = useState([]);
     const [ productId, setProductId ] = useState(0);
     const [ errorMessage, setErrorMessage ] = useState("");
     const [ searchTerm, setSearchTerm ] = useState('');
