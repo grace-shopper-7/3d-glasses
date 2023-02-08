@@ -1,14 +1,12 @@
-require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const router = require("./api");
 const app = express();
 const cors = require("cors");
 const client = require("./db/client");
-const path = require('path');
+const path = require("path");
 client.connect();
 
-// Setup your Middleware and API Router here
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
@@ -30,7 +28,6 @@ app.get("*", (req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  // console.error("SERVER ERROR");
   if (res.statusCode < 400) res.status(500);
   res.send({
     error: error.message,

@@ -23,6 +23,46 @@ usersRouter.use((req, res, next) => {
   next();
 });
 
+// GET  /api/users/ * REQUIRES LOGIN
+usersRouter.get("/", requireUser, async (req, res, next) => {
+  try {
+    const users = await getAllUsers();
+    res.send(users);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+// GET  /api/users/me * REQUIRES LOGIN
+usersRouter.get("/me", async (req, res, next) => {
+  const prefix = "Bearer ";
+  const auth = req.header("Authorization");
+  if (!auth) {
+    res.status(401);
+    next({
+      error: "AuthorizationHeaderError",
+      message: UnauthorizedError(),
+      name: "AuthorizationHeaderError",
+    });
+  } else if (auth.startsWith(prefix)) {
+    const token = auth.slice(prefix.length);
+    try {
+      const { id } = jwt.verify(token, JWT_SECRET);
+      if (id) {
+        const user = await getUserById(id);
+        res.send(user);
+      }
+    } catch ({ name, message }) {
+      next({ name, message });
+    }
+  } else {
+    next({
+      name: "AuthorizationHeaderError",
+      message: `Authorization token must start with '${prefix}'`,
+    });
+  }
+});
+
 // POST /api/users/register
 usersRouter.post("/register", async (req, res, next) => {
   const { username, password, email } = req.body;
@@ -113,46 +153,6 @@ usersRouter.post("/login", async (req, res, next) => {
         message: "Username or password is incorrect.",
       });
     }
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
-
-// GET  /api/users/me * REQUIRES LOGIN
-usersRouter.get("/me", async (req, res, next) => {
-  const prefix = "Bearer ";
-  const auth = req.header("Authorization");
-  if (!auth) {
-    res.status(401);
-    next({
-      error: "AuthorizationHeaderError",
-      message: UnauthorizedError(),
-      name: "AuthorizationHeaderError",
-    });
-  } else if (auth.startsWith(prefix)) {
-    const token = auth.slice(prefix.length);
-    try {
-      const { id } = jwt.verify(token, JWT_SECRET);
-      if (id) {
-        const user = await getUserById(id);
-        res.send(user);
-      }
-    } catch ({ name, message }) {
-      next({ name, message });
-    }
-  } else {
-    next({
-      name: "AuthorizationHeaderError",
-      message: `Authorization token must start with '${prefix}'`,
-    });
-  }
-});
-
-// GET  /api/users/ * REQUIRES LOGIN
-usersRouter.get("/", requireUser, async (req, res, next) => {
-  try {
-    const users = await getAllUsers();
-    res.send(users);
   } catch ({ name, message }) {
     next({ name, message });
   }

@@ -9,8 +9,8 @@
     "preview": "vite preview",
     "seed": "node ./backend/db/seed.cjs",
     "seed:dev": "nodemon ./backend/db/seed.cjs",
-    "start": "node ./backend/server.js",
-    "start:dev": "npm run dev && nodemon ./backend/server.js"
+    "start": "node -r dotenv/config ./backend/server.js",
+    "start:dev": "(npm run dev) & nodemon -r dotenv/config ./backend/server.js"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^1.16.4",
