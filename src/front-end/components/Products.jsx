@@ -29,15 +29,17 @@ const Products = ({ token, sessionId, editTrigger, setEditTrigger, cart, user })
         if (token) {
             let quantity = 1;
             let newItem = await postItemToCart( token, sessionId, productId, quantity)
+            console.log(token, sessionId, productId, quantity)
+            console.log("newItem", newItem)
             if (newItem.error) {
                 let searchItems = cart.filter((cartItem) => cartItem.productId === productId);
                 let updatedItem = await patchCartItem((searchItems[0].quantity+1), searchItems[0].id, token);
+                console.log(updatedItem)
                 if (editTrigger) {
                     setEditTrigger(false);
                 } else {
                     setEditTrigger(true);
                 }
-            } else {
             }
         } else {
             setErrorMessage("You must be logged in to add product to cart.")

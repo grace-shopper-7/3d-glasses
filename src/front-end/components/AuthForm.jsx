@@ -40,13 +40,14 @@ return(
             try {
                 if ( !isLogIn || comparePasswords() ) {
                 const result = await authPageData.authFuncs[isLogIn](usernameRef.current.value, passwordRef.current.value, emailRef?.current?.value);
-                console.log(result);
+                console.log("usernameRef, passwordRef", result);
                 if (!result.session && result.user) {
                     setToken(result.token)
                     localStorage.setItem('token', result.token);
                     setUser(result.user)
                     localStorage.setItem('user', JSON.stringify(result.user));
                     const response = await fetchSessionByUser(result?.user.id, result?.token);
+                    console.log("this is my response", response)
                     setSessionId(response.id);
                     localStorage.setItem('sessionId', response.id);
                     localStorage.setItem('username', result.user.username);

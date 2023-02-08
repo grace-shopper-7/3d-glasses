@@ -37,29 +37,29 @@ usersRouter.get("/", requireUser, async (req, res, next) => {
 usersRouter.get("/me", async (req, res, next) => {
   const prefix = "Bearer ";
   const auth = req.header("Authorization");
-  if (!auth) {
-    res.status(401);
-    next({
-      error: "AuthorizationHeaderError",
-      message: UnauthorizedError(),
-      name: "AuthorizationHeaderError",
-    });
-  } else if (auth.startsWith(prefix)) {
-    const token = auth.slice(prefix.length);
-    try {
+  try {
+    if (!auth) {
+      res.status(401);
+      next({
+        error: "AuthorizationHeaderError",
+        message: UnauthorizedError(),
+        name: "AuthorizationHeaderError",
+      });
+    } else if (auth.startsWith(prefix)) {
+      const token = auth.slice(prefix.length);
       const { id } = jwt.verify(token, JWT_SECRET);
       if (id) {
         const user = await getUserById(id);
         res.send(user);
       }
-    } catch ({ name, message }) {
-      next({ name, message });
+    } else {
+      next({
+        name: "AuthorizationHeaderError",
+        message: `Authorization token must start with '${prefix}'`,
+      });
     }
-  } else {
-    next({
-      name: "AuthorizationHeaderError",
-      message: `Authorization token must start with '${prefix}'`,
-    });
+  } catch (error) {
+    next(error);
   }
 });
 

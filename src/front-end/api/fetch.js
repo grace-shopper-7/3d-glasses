@@ -91,6 +91,7 @@ export const fetchCartBySession = async (sessionId, token) => {
 };
 
 export const fetchSessionByUser = async (userId, token) => {
+  console.log("userid and token", userId, token);
   try {
     const response = await fetch(`${API_URL}/sessions/${userId}`, {
       method: "GET",

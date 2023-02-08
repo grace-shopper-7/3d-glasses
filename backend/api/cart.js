@@ -9,6 +9,18 @@ cartRouter.use((req, res, next) => {
   next();
 });
 
+// GET /api/sessions/:userId * REQUIRES LOGIN
+cartRouter.get("/:userId", requireUser, async (req, res, next) => {
+  const userId = req.params.userId;
+
+  try {
+    const userSession = await getCartByUserId(userId);
+    res.send(userSession);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
 // POST /api/sessions
 cartRouter.post("/", requireUser, async (req, res, next) => {
   const userId = req.user.id;
@@ -31,18 +43,6 @@ cartRouter.patch("/:sessionId", requireUser, async (req, res, next) => {
   try {
     const updatedCart = await updateCart(fields);
     res.send(updatedCart);
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
-
-// GET /api/sessions/:userId * REQUIRES LOGIN
-cartRouter.get("/:userId", requireUser, async (req, res, next) => {
-  const userId = req.params.userId;
-
-  try {
-    const userSession = await getCartByUserId(userId);
-    res.send(userSession);
   } catch ({ name, message }) {
     next({ name, message });
   }

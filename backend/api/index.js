@@ -8,29 +8,29 @@ const { JWT_SECRET } = process.env;
 router.use(async (req, res, next) => {
   const prefix = "Bearer ";
   const auth = req.header("Authorization");
+  console.log("auth in auth", auth);
 
-  if (!auth) {
-    console.log("No auth, moving to next.");
-    next();
-  } else if (auth.startsWith(prefix)) {
-    const token = auth.slice(prefix.length);
+  try {
+    if (!auth) {
+      console.log("No auth, moving to next.");
+      next();
+    } else if (auth.startsWith(prefix)) {
+      const token = auth.slice(prefix.length);
 
-    try {
       const { id } = jwt.verify(token, JWT_SECRET);
-
       if (id) {
         req.user = await getUserById(id);
         // console.log("Authorization successful. Moving to next.");
         next();
       }
-    } catch ({ name, message }) {
-      next({ name, message });
+    } else {
+      next({
+        name: "AuthorizationHeaderError",
+        message: `Authorization token must start with ${prefix}`,
+      });
     }
-  } else {
-    next({
-      name: "AuthorizationHeaderError",
-      message: `Authorization token must start with ${prefix}`,
-    });
+  } catch (error) {
+    next(error);
   }
 });
 
@@ -74,12 +74,12 @@ router.use("/cartitems", cartItemsRouter);
 const reviewsRouter = require("./reviews");
 router.use("/reviews", reviewsRouter);
 
-router.use((error, req, res, next) => {
-  res.send({
-    error: "ERROR",
-    name: error.name,
-    message: error.message,
-  });
-});
+// router.use((error, req, res, next) => {
+//   res.send({
+//     error: "ERROR",
+//     name: error.name,
+//     message: error.message,
+//   });
+// });
 
 module.exports = router;
